@@ -1,8 +1,8 @@
 # Samys-Cookbook
-Making a simple app using React, Flask and MySQL.
+Making a simple app using React and Flask.
 # What
 - This will be a simple site to host my recipes.
-- It will have a react front-end, a flask back-end with a MySQL db.
+- It will have a react front-end, a flask back-end with a Sqlite(for now atleast) db.
 - I will have to learn both react (from scratch) and flask (of which I do have a basic knowledge).\
 # My Plans
 ## Front-End (made on 20211105 00:15:45, I don't know what will actually happen)
@@ -62,6 +62,6 @@ Making a simple app using React, Flask and MySQL.
 - **/about**
 - There will be an easter egg, find it if you can ;)
 ## DB
-- Look at the database_design.graphml (or .pdf/.jpeg) file.
+- Look at the database_design.graphml (or .jpg) file.
 - I don't know how a db this complex will be stored, i might have to use plain sql cause i don't know how the flask sqlalchemy stuff works.
 - this is going to be tricky
