@@ -1,11 +1,11 @@
 {
     "name": "Lemon Tea",
-    "prep_time": 10,
+    "prep_time": 5,
     "description": "A refreshing tea infused with mint a lemon. Perfect for a chilly evening.",
     "difficulty": 1,
-    "vegetarian": "True",
+    "vegetarian": true,
     "quantity": 1,
-    "unit": "cup",
+    "unit": "cup(s)",
     "contributor_name": "Samy",
     "recipe_tags": [{
         "name": "beverage"
@@ -19,13 +19,13 @@
         "hindi_name_latin": "Paani",
         "hindi_name_devnagari": "पानी",
         "quantity": 1,
-        "unit": "cup"
+        "unit": "cup(s)"
     }, {
         "english_name": "Sugar",
-        "hindi_name_latin": "chini",
+        "hindi_name_latin": "Chini",
         "hindi_name_devnagari": "चीनी",
         "quantity": 2,
-        "unit": "teaspoon"
+        "unit": "teaspoon(s)"
     }, {
         "english_name": "Mint Leaves",
         "hindi_name_latin": "Pudine ki pattiyan",
@@ -37,7 +37,7 @@
         "hindi_name_latin": "Nimbu",
         "hindi_name_devnagari": "नींबू",
         "quantity": 1,
-        "unit": "Tablespoon"
+        "unit": "lemon(s)"
     }],
     "recipe_steps": [{
         "serial_number": 1,
