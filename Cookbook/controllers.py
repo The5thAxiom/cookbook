@@ -39,9 +39,8 @@ def skills():
 @app.route('/recipe/all')
 def allRecipe():
     allRecipes = []
-    recipeIds = models.Recipe.query.all()
-    for r in recipeIds:
-        allRecipes.append(models.getFullRecipe(r))
+    for recipe in models.Recipe.query.all():
+        allRecipes.append(models.getFullRecipe(recipe))
     return jsonify(allRecipes)
 
 @app.route('/recipe')
@@ -49,8 +48,7 @@ def recipeGET():
     num = request.args.get("id")
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        recipe = models.getFullRecipe(recipeById)
-        return jsonify(recipe)
+        return jsonify(models.getFullRecipe(recipeById))
     else:
         return "invalid id"
 
@@ -58,8 +56,7 @@ def recipeGET():
 def recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        recipe = models.getFullRecipe(recipeById)
-        return jsonify(recipe)
+        return jsonify(models.getFullRecipe(recipeById))
     else:
         return "invalid id"
 
