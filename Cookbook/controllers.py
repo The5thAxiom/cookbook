@@ -1,161 +1,36 @@
-import re
-from flask_sqlalchemy import FSADeprecationWarning
 from Cookbook import app, db
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from Cookbook import models
-import pprint
-
-# takes a 'Cookbook.models.Recipe' type of object, returned by a query
-def getRecipe(recipeById):
-    contributorName = models.Contributor.query.filter_by(id = recipeById.contributor_id).first().name
-    tags = models.Tags.query.filter_by(recipe_id = recipeById.id)
-    recipeTags = []
-    for tag in tags:
-        newTag = {
-            "name": tag.name
-        }
-        recipeTags.append(newTag)
-    ingredients = models.Recipe_Ingredients.query.filter_by(recipe_id = recipeById.id)
-    recipeIngredients = []
-    for ingredient in ingredients:
-        ig = models.Ingredient.query.filter_by(id = ingredient.ingredient_id).first()
-        newRecipeIngredient = {
-            "english_name": ig.english_name,
-            "hindi_name_latin": ig.hindi_name_latin,
-            "hindi_name_devnagari": ig.hindi_name_devnagari,
-            "quantity": ingredient.quantity,
-            "unit": ingredient.unit
-        }
-        recipeIngredients.append(newRecipeIngredient)
-    recipeSteps = []
-    steps = models.Recipe_Steps.query.filter_by(recipe_id = recipeById.id)
-    for step in steps:
-        newRecipeStep = {
-            "serial_number": step.serial_number,
-            "instruction": step.instruction
-        }
-        recipeSteps.append(newRecipeStep)
-
-    recipe = {
-        "name": recipeById.name,
-        "prep_time": recipeById.prep_time,
-        "description": recipeById.description,
-        "difficulty": recipeById.difficulty,
-        "vegetarian": recipeById.vegetarian,
-        "quantity": recipeById.quantity,
-        "unit": recipeById.unit,
-        "contributor_name": contributorName,
-        "recipe_tags": recipeTags,
-        "recipe_ingredients": recipeIngredients,
-        "recipe_steps": recipeSteps
-    }
-    return recipe
 
 @app.route('/')
-def home():
-    home = """
+def index():
+    index = """
     <h1> The Home Page </h1>
     <a href = "/recipes">recipes</a><br>
     <a href = "/skills">skills</a><br>
     <a href = "/get-recipes">get-recipe</a><br>
     <a href = "/about">about</a>
     """
-    return home
+    return index
 
 @app.route('/add-recipe', methods = ['POST'])
 def addRecipe():
     if request.method == 'POST':
+        # get the new recipe from the POST request
         newRecipeFull = request.get_json(force = True)
-        print(newRecipeFull)
-        contributor = {
-            "name": newRecipeFull["contributor_name"]
-        }
-        contributorExists = False
-        allContributors = models.Contributor.query.all()
-        for i in allContributors:
-            if contributor["name"] == i.name:
-                contributorExists = True
-                contributorId = i.id
-        if not contributorExists:
-            newContributor = models.Contributor(**contributor)
-            db.session.add(newContributor)
-            db.session.commit()
-            contributorId = newContributor.id
-        trues = ["True", "true", True]
-        newRecipe = {
-            "name": newRecipeFull["name"],
-            "prep_time": newRecipeFull["prep_time"],
-            "description": newRecipeFull["description"],
-            "difficulty": newRecipeFull["difficulty"],
-            "contributor_id": contributorId,
-            "vegetarian": True if newRecipeFull["vegetarian"] in trues else False,
-            "quantity": newRecipeFull["quantity"],
-            "unit": newRecipeFull["unit"]
-        }
-        allRecipes = models.Recipe.query.all()
-        recipeExists = False
-        for i in allRecipes:
-            if newRecipe["name"] == i.name:
-                recipeExists = True
-        if recipeExists:
-            return "recipe already exists"
-        newRecipe = models.Recipe(**newRecipe)
-        db.session.add(newRecipe)
-        db.session.commit()
-        newRecipeId = newRecipe.id
-        for step in newRecipeFull["recipe_steps"]:
-            newRecipeStep = {
-                "recipe_id": newRecipeId,
-                "serial_number": step["serial_number"],
-                "instruction": step["instruction"]
-            }
-            print(newRecipeStep)
-            db.session.add(models.Recipe_Steps(**newRecipeStep))
-        for tag in newRecipeFull["recipe_tags"]:
-            newTag = {
-                "recipe_id": newRecipeId,
-                "name": tag["name"]
-            }
-            db.session.add(models.Tags(**newTag))
-        for ingredient in newRecipeFull["recipe_ingredients"]:
-            newIngredient = {
-                "english_name": ingredient["english_name"],
-                "hindi_name_latin": ingredient["hindi_name_latin"],
-                "hindi_name_devnagari": ingredient["hindi_name_devnagari"]
-            }
-            allIngredients = models.Ingredient.query.all()
-            ingredientExists = False
-            for i in allIngredients:
-                if newIngredient["english_name"] == i.english_name:
-                    ingredientExists = True
-                    newRecipeIngredient = {
-                        "recipe_id": newRecipeId,
-                        "ingredient_id": i.id,
-                        "quantity": ingredient["quantity"],
-                        "unit": ingredient["unit"]
-                    }
-                    db.session.add(models.Recipe_Ingredients(**newRecipeIngredient))
-            if not ingredientExists:
-                newIngredient = models.Ingredient(**newIngredient)
-                db.session.add(newIngredient)
-                db.session.commit()
-                ingredientId = newIngredient.id
-                # recipe_ingredient:
-                newRecipeIngredient = {
-                    "recipe_id": newRecipeId,
-                    "ingredient_id": ingredientId,
-                    "quantity": ingredient["quantity"],
-                    "unit": ingredient["unit"]
-                }
-                db.session.add(models.Recipe_Ingredients(**newRecipeIngredient))
-        db.session.commit()
+
+        # we don't need to do anything if the recipe exists already
+        if models.Recipe.query.filter_by(name = newRecipeFull["name"]).first() is not None:
+            return "recipe exists already"
+
+        models.addFullRecipe(newRecipeFull)
         return "success"
     else:
-        return "error"
+        return "error: post karo na kuch, ye get ka kya karu mai"
 
 @app.route('/recipes')
 def recipes():
-    return "<h1>The recipes Page!!!</h1>"
+    return "<h1>The recipes Page!!!</h1><a href = '/recipe/1'>1</a><br><a href = '/recipe/2'>2</a><br><a href = '/recipe/all'>all</a>"
 
 @app.route('/skills')
 def skills():
@@ -166,14 +41,24 @@ def allRecipe():
     allRecipes = []
     recipeIds = models.Recipe.query.all()
     for r in recipeIds:
-        allRecipes.append(getRecipe(r))
+        allRecipes.append(models.getFullRecipe(r))
     return jsonify(allRecipes)
+
+@app.route('/recipe')
+def recipeGET():
+    num = request.args.get("id")
+    recipeById = models.Recipe.query.filter_by(id = num).first()
+    if recipeById is not None:
+        recipe = models.getFullRecipe(recipeById)
+        return jsonify(recipe)
+    else:
+        return "invalid id"
 
 @app.route('/recipe/<int:num>')
 def recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        recipe = getRecipe(recipeById)
+        recipe = models.getFullRecipe(recipeById)
         return jsonify(recipe)
     else:
         return "invalid id"
@@ -189,3 +74,7 @@ def getRecipes():
 @app.route('/about')
 def about():
     return "<h1>The about Page!!!</h1>"
+
+@app.route('/daya')
+def daya():
+    return "Kuch to gadbad hai..."
