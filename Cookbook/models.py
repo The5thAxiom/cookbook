@@ -163,6 +163,7 @@ def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, retur
 
     # now, we compile everything we took before and then return it!
     recipe = {
+        "id": recipeById.id,
         "name": recipeById.name,
         "prep_time": recipeById.prep_time,
         "description": recipeById.description,
@@ -176,3 +177,9 @@ def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, retur
         "recipe_steps": recipeSteps
     }
     return recipe
+
+def getAllRecipes():
+    allRecipes = []
+    for recipe in Recipe.query.all():
+        allRecipes.append(getFullRecipe(recipe))
+    return allRecipes

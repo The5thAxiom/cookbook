@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{name}}</title>
+</head>
+
+<body>
+    <h1> How to make {{name}}</h1>
+    <q>{{description}}</q>
+    <h2>Ingredients</h2>
+    <ul>
+        {% for i in recipe_ingredients %}
+        <li>{{i.quantity}} {{i.unit}} of {{i.english_name}} ({{i.hindi_name_latin}}, {{i.hindi_name_devnagari}})</li>
+        {% endfor %}
+    </ul>
+    <h2>Steps</h2>
+    <ol>
+        {% for step in recipe_steps %}
+        <li>{{step.instruction}}</li>
+        {% endfor %}
+    </ol>
+</body>
+
+</html>

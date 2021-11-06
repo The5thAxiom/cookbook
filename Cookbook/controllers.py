@@ -4,14 +4,7 @@ from Cookbook import models
 
 @app.route('/')
 def index():
-    index = """
-    <h1> The Home Page </h1>
-    <a href = "/recipes">recipes</a><br>
-    <a href = "/skills">skills</a><br>
-    <a href = "/get-recipes">get-recipe</a><br>
-    <a href = "/about">about</a>
-    """
-    return index
+    return render_template("index.html")
 
 @app.route('/add-recipe', methods = ['POST'])
 def addRecipe():
@@ -30,7 +23,11 @@ def addRecipe():
 
 @app.route('/recipes')
 def recipes():
-    return "<h1>The recipes Page!!!</h1><a href = '/recipe/1'>1</a><br><a href = '/recipe/2'>2</a><br><a href = '/recipe/all'>all</a>"
+    context = {
+        "userName": "Samridh",
+        "allRecipes": models.getAllRecipes()
+    }
+    return render_template("recipes.html", **context)
 
 @app.route('/skills')
 def skills():
@@ -38,10 +35,7 @@ def skills():
 
 @app.route('/recipe/all')
 def allRecipe():
-    allRecipes = []
-    for recipe in models.Recipe.query.all():
-        allRecipes.append(models.getFullRecipe(recipe))
-    return jsonify(allRecipes)
+    return jsonify(models.getAllRecipes())
 
 @app.route('/recipe')
 def recipeGET():
@@ -56,7 +50,8 @@ def recipeGET():
 def recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        return jsonify(models.getFullRecipe(recipeById))
+        return render_template("individualRecipe.html", **models.getFullRecipe(recipeById))
+        #return jsonify(models.getFullRecipe(recipeById))
     else:
         return "invalid id"
 
@@ -64,7 +59,7 @@ def recipe(num):
 def skill():
     return "<h1>An individual skill Page!!!</h1>"
 
-@app.route('/get-recipes')
+@app.route('/what-can-i-make')
 def getRecipes():
     return "<h1>The What can I get Page!!!</h1>"
 

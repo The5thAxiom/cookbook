@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Samy's Recipes</title>
+</head>
+
+<body>
+    <h1> Welcome {{userName}}!</h1>
+    <ol>
+        {% for x in allRecipes %}
+        <li> <a href='{{"/recipe/%s" %x["id"]|urlencode}}'> {{ x["name"] }} </a> takes only {{ x["prep_time"] }} minutes to make!</li>
+        {% endfor %}
+    </ol>
+
+</body>
+
+</html>
