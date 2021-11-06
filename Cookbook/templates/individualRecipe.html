@@ -2,21 +2,23 @@
 <html>
 
 <head>
-    <title>{{name}}</title>
+    <title>{{recipe.name}}</title>
 </head>
 
 <body>
-    <h1> How to make {{name}}</h1>
-    <q>{{description}}</q>
+    <h1> How to make {{recipe.name}}</h1>
+    <p>-By {{recipe.contributor_name}}</p>
+    <q>{{recipe.description}}</q>
+    <p>This recipe takes only {{recipe.prep_time}} minutes, makes {{recipe.quantity}} {{recipe.unit}} and is {{diff}} to make.</p>
     <h2>Ingredients</h2>
     <ul>
-        {% for i in recipe_ingredients %}
+        {% for i in recipe.recipe_ingredients %}
         <li>{{i.quantity}} {{i.unit}} of {{i.english_name}} ({{i.hindi_name_latin}}, {{i.hindi_name_devnagari}})</li>
         {% endfor %}
     </ul>
     <h2>Steps</h2>
     <ol>
-        {% for step in recipe_steps %}
+        {% for step in recipe.recipe_steps %}
         <li>{{step.instruction}}</li>
         {% endfor %}
     </ol>

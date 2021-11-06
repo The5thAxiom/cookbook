@@ -21,7 +21,7 @@ class Recipe(db.Model):
     #header_image = db.Column(db.Blob(), nullable = False)
     prep_time = db.Column(db.Integer, nullable = False)
     description = db.Column(db.Text, nullable = False)
-    difficulty = db.Column(db.String, nullable = False)
+    difficulty = db.Column(db.Integer, nullable = False)
     #contributor_id = db.Column(db.Integer, db.ForeignKey("Contributor.id"), nullable = False)
     contributor_id = db.Column(db.Integer, nullable = False)
     vegetarian = db.Column(db.Boolean, nullable = False)

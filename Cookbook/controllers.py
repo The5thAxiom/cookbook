@@ -50,7 +50,23 @@ def recipeGET():
 def recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        return render_template("individualRecipe.html", **models.getFullRecipe(recipeById))
+        if recipeById.difficulty <= 1:
+            diff = "very easy"
+        elif recipeById.difficulty == 2:
+            diff = "easy"
+        elif recipeById.difficulty == 3:
+            diff = "fairly simple"
+        elif recipeById.difficulty == 4:
+            diff = "a bit tricky"
+        elif recipeById.difficulty >= 5:
+            diff = "quite tricky"
+        else:
+            diff = "fun"
+        context = {
+            "diff": diff,
+            "recipe": models.getFullRecipe(recipeById)
+        }
+        return render_template("individualRecipe.html", **context)
         #return jsonify(models.getFullRecipe(recipeById))
     else:
         return "invalid id"
