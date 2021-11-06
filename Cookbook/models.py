@@ -97,7 +97,7 @@ def addFullRecipe(newRecipeFull):
             "serial_number": step["serial_number"],
             "instruction": step["instruction"]
         }))
-        db.session.commit()
+    db.session.commit()
 
     # adding all the tags
     for tag in newRecipeFull["recipe_tags"]:
@@ -105,7 +105,7 @@ def addFullRecipe(newRecipeFull):
             "recipe_id": newRecipe.id,
             "name": tag["name"]
         }))
-        db.session.commit()
+    db.session.commit()
 
     # add all the ingredients (if they don't exist already)
     for ingredient in newRecipeFull["recipe_ingredients"]:
@@ -126,7 +126,7 @@ def addFullRecipe(newRecipeFull):
                 "quantity": ingredient["quantity"],
                 "unit": ingredient["unit"]
         }))
-        db.session.commit()
+    db.session.commit()
 
 def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, returned by a query and returns a recipe
     # What we need to do: get all info about the recipe(contributor, tags, ingredients and steps) and then compile it all to return it
