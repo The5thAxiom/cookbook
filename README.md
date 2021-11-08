@@ -1,5 +1,8 @@
 # Samys-Cookbook
 Making a simple app using React and Flask.
+# Notes
+- Initially, this project will have a plain html front-end (using render_template in flask).
+- I will make a react JS front-end after I actually learn React.
 # What
 - This will be a simple site to host my recipes.
 - It will have a react front-end, a flask back-end with a Sqlite(for now atleast) db.
