@@ -19,40 +19,32 @@ def addRecipe():
         models.addFullRecipe(newRecipeFull)
         return "success"
     else:
-        tags = []
-        for tag in models.Tags.query.all():
-            tags.append({
-                "id": tag.id,
-                "name": tag.name
-                })
-        contributors = []
-        for c in models.Contributor.query.all():
-            contributors.append({
-                "id": c.id,
-                "name": c.name
-            })
-        ingredients = []
-        for i in models.Ingredient.query.all():
-            ingredients.append({
-                "id": i.id,
-                "english_name": i.english_name,
-                "hindi_name_latin": i.hindi_name_latin,
-                "hindi_name_devnagari": i.hindi_name_devnagari
-            })
-        context = {
+        tags = [{
+            "id": tag.id,
+            "name": tag.name
+        } for tag in models.Tags.query.all()]
+        contributors = [{
+            "id": c.id,
+            "name": c.name
+        } for c in models.Contributor.query.all()]
+        ingredients = [{
+            "id": i.id,
+            "english_name": i.english_name,
+            "hindi_name_latin": i.hindi_name_latin,
+            "hindi_name_devnagari": i.hindi_name_devnagari
+        } for i in models.Ingredient.query.all()]
+        return render_template("add-recipe.html", **{
             "existing_tags": tags,
             "existing_contributors": contributors,
             "existing_ingredients": ingredients
-        }
-        return render_template("add-recipe.html", **context)
+        })
 
 @app.route('/recipes')
 def recipes():
-    context = {
+    return render_template("recipes.html", **{
         "userName": "Samridh",
         "allRecipes": models.getAllRecipes()
-    }
-    return render_template("recipes.html", **context)
+    })
 
 @app.route('/skills')
 def skills():
@@ -61,10 +53,6 @@ def skills():
 @app.route('/recipe/all')
 def allRecipe():
     return jsonify(models.getAllRecipes())
-
-@app.route('/recipe')
-def recipeGET():
-    return recipe(request.args.get("id"))
 
 @app.route('/recipe/<int:num>')
 def recipe(num):
@@ -82,11 +70,10 @@ def recipe(num):
             diff = "quite tricky"
         else:
             diff = "fun"
-        context = {
+        return render_template("individualRecipe.html", **{
             "diff": diff,
             "recipe": models.getFullRecipe(recipeById)
-        }
-        return render_template("individualRecipe.html", **context)
+        })
     else:
         return "invalid id"
 
@@ -96,11 +83,11 @@ def skill():
 
 @app.route('/what-can-i-make')
 def getRecipes():
-    return "<h1>The What can I get Page!!!</h1>"
+    return render_template("what-can-i-make.html")
 
 @app.route('/about')
 def about():
-    return "<h1>The about Page!!!</h1>"
+    return render_template("about.html")
 
 @app.route('/daya')
 def daya():
@@ -109,33 +96,25 @@ def daya():
 # routes which only return JSON
 # This MIGHT be useful for the React front-end
 
-@app.route('/API')
-def API():
-    return "API page"
+# the 'skill' routes currently return recipes
+#   change this when you make the functions:
+#       models.getAllSkills() and models.getFullSkill()
+@app.route('/API/skill/all')
+def API_allSkills():
+    return jsonify(models.getAllRecipes())
 
-@app.route('/API/add-recipe', methods = ['GET', 'POST'])
-def API_addRecipe():
-    if request.method == 'POST':
-        # get the new recipe from the POST request
-        newRecipeFull = request.get_json(force = True)
-
-        # we don't need to do anything if the recipe exists already
-        if models.Recipe.query.filter_by(name = newRecipeFull["name"]).first() is not None:
-            return "recipe exists already"
-
-        models.addFullRecipe(newRecipeFull)
-        return "success"
+@app.route('/API/skill/<int:num>')
+def API_skills(num):
+    recipeById = models.Recipe.query.filter_by(id = num).first()
+    if recipeById is not None:
+        return jsonify({
+            "found": True,
+            "recipe": models.getFullRecipe(recipeById)
+        })
     else:
-        return "recipe form here"
+        return jsonify({"found": False})
 
-@app.route('/API/recipes')
-def API_recipes():
-    return "recipes here"
-
-@app.route('/API/skills')
-def API_skills():
-    return "<h1>The skills Page!!!</h1>"
-
+# these routes work well (and ONLY return JSON)
 @app.route('/API/recipe/all')
 def API_allRecipe():
     return jsonify(models.getAllRecipes())
@@ -144,15 +123,9 @@ def API_allRecipe():
 def API_recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        return jsonify({"found": True, "recipe": models.getFullRecipe(recipeById)})
+        return jsonify({
+            "found": True,
+            "recipe": models.getFullRecipe(recipeById)
+        })
     else:
         return jsonify({"found": False})
-
-@app.route('/API/recipe', methods = ['GET'])
-def API_recipeGET():
-    id = request.args.get("id")
-    print("id:", id, type(id))
-    if id == '0':
-        return jsonify(models.getAllRecipes())
-    else:
-        return API_recipe(request.args.get("id"))

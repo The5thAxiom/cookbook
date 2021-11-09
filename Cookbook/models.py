@@ -135,11 +135,9 @@ def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, retur
     contributorName = Contributor.query.filter_by(id = recipeById.contributor_id).first().name
 
     # get all the tags
-    recipeTags = []
-    for tag in Tags.query.filter_by(recipe_id = recipeById.id):
-        recipeTags.append({
+    recipeTags = [{
             "name": tag.name
-        })
+        } for tag in Tags.query.filter_by(recipe_id = recipeById.id)]
 
     # get all the ingredients
     recipeIngredients = []
@@ -154,15 +152,13 @@ def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, retur
         })
 
     # get all the steps
-    recipeSteps = []
-    for step in Recipe_Steps.query.filter_by(recipe_id = recipeById.id):
-        recipeSteps.append({
+    recipeSteps = [{
             "serial_number": step.serial_number,
             "instruction": step.instruction
-        })
+        } for step in Recipe_Steps.query.filter_by(recipe_id = recipeById.id)]
 
     # now, we compile everything we took before and then return it!
-    recipe = {
+    return {
         "id": recipeById.id,
         "name": recipeById.name,
         "prep_time": recipeById.prep_time,
@@ -176,10 +172,6 @@ def getFullRecipe(recipeById): # takes a 'Cookbook.Recipe' type of object, retur
         "recipe_ingredients": recipeIngredients,
         "recipe_steps": recipeSteps
     }
-    return recipe
 
 def getAllRecipes():
-    allRecipes = []
-    for recipe in Recipe.query.all():
-        allRecipes.append(getFullRecipe(recipe))
-    return allRecipes
+    return [getFullRecipe(recipe) for recipe in Recipe.query.all()]

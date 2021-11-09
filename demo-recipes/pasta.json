@@ -1,0 +1,78 @@
+{
+    "name": "Pasta Aglio e Olio",
+    "prep_time": 30,
+    "description": "A classic pasta that can never go wrong.",
+    "difficulty": 2,
+    "vegetarian": true,
+    "quantity": 1,
+    "unit": "plate",
+    "contributor_name": "Samy",
+    "recipe_tags": [{
+        "name": "pasta"
+    }, {
+        "name": "itailian"
+    }, {
+        "name": "garlic"
+    }, {
+        "name": "spaghetti"
+    }],
+    "recipe_ingredients": [{
+        "english_name": "Spaghetti",
+        "hindi_name_latin": "Spageti",
+        "hindi_name_devnagari": "स्पगेटी",
+        "quantity": 250,
+        "unit": "grams"
+    }, {
+        "english_name": "Garlic",
+        "hindi_name_latin": "Lehsun",
+        "hindi_name_devnagari": "लहसुन",
+        "quantity": 5,
+        "unit": "cloves"
+    }, {
+        "english_name": "Olive oil",
+        "hindi_name_latin": "Olive ka tel",
+        "hindi_name_devnagari": "ऑलिव का तेल",
+        "quantity": 0.5,
+        "unit": "cup(s)"
+    }, {
+        "english_name": "Water",
+        "hindi_name_latin": "Paani",
+        "hindi_name_devnagari": "पानी",
+        "quantity": 1,
+        "unit": "litre"
+    }, {
+        "english_name": "Salt",
+        "hindi_name_latin": "Namak",
+        "hindi_name_devnagari": "नमक ",
+        "quantity": 4,
+        "unit": "teaspoon(s)"
+    }, {
+        "english_name": "Pepper",
+        "hindi_name_latin": "Kaali Mirch",
+        "hindi_name_devnagari": "काली मिर्च",
+        "quantity": 1,
+        "unit": "teaspoon(s)"
+    }, {
+        "english_name": "Seasonings of choice",
+        "hindi_name_latin": "Masale",
+        "hindi_name_devnagari": "मसाले",
+        "quantity": 2,
+        "unit": "teaspoon(s)"
+    }],
+    "recipe_steps": [{
+        "serial_number": 1,
+        "instruction": "Add water and salt to a pot and put it on the stove till it boils."
+    }, {
+        "serial_number": 2,
+        "instruction": "Add pasta to the water when it starts to bubble and cook it till al-dente, strain the pasta and save the water."
+    }, {
+        "serial_number": 3,
+        "instruction": "In a pan, add the oil and chopped garlic, pepper and seasonings."
+    }, {
+        "serial_number": 4,
+        "instruction": "Add a cup of pasta water to the pan and reduce it."
+    }, {
+        "serial_number": 5,
+        "instruction": "Add the pasta to the pan and cook until creamy. Enjoy!"
+    }]
+}

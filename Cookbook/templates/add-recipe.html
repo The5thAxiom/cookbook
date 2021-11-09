@@ -12,7 +12,29 @@
     <title>Add a new recipe!</title>
 </head>
 
-<body>
+<body class = "container-md">
+    <nav class="navbar bg-light">
+        <ul class = "nav">
+            <li class = "nav-item">
+                <a href="/" class="nav-link">Home</a>
+            </li>
+            <li class = "nav-item">
+                <a href="/recipes" class="nav-link">Recipes</a>
+            </li>
+            <!-- <li class = "nav-item">
+                <a href="/skills" class="nav-link">Skills</a>
+            </li> -->
+            <!-- <li class = "nav-item">
+                <a href="/add-skill" class="nav-link">New skill</a>
+            </li> -->
+            <li class = "nav-item">
+                <a href="/what-can-i-make" class="nav-link">What can I make?</a>
+            </li>
+            <li class = "nav-item">
+                <a href="/about" class="nav-link">About</a>
+            </li>
+        </ul>
+    </nav>
     <form class = "container-sm" id = "recipe-form" name = "recipe-form">
         <h1>Fill the form given below to add a new recipe!</h1>
         <div class = "form-floating mb-3">
@@ -129,53 +151,123 @@
             <div class = "form-floating">
                 <input
                     class="form-control"
-                    list="existingIngredientOptions"
+                    list="existingIngredientOptions-1"
                     autocomplete="off"
-                    id="recipe-existing-ingredient"
-                    name = "recipe-existing-ingredient"
+                    id="recipe-existing-ingredient-1"
+                    name = "recipe-existing-ingredient-1"
                     placeholder="Search ingredients"
                 >
                 <label
-                    for="recipe-existing-ingredient"
+                    for="recipe-existing-ingredient-1"
                     class="form-label"
                 >
                     Add ingredient
                 </label>
-                <datalist id="existingIngredientOptions">
+                <datalist id="existingIngredientOptions-1">
                     {% for ingredient in existing_ingredients %}
                     <option>{{ingredient.english_name}} | {{ingredient.hindi_name_devnagari}}</option>
                     {% endfor %}
                 </datalist>
             </div>
-            <button type = "button" class = "btn btn-secondary m-2">Another ingredient</button>
         </div>
+        <div id = "new-ingredients" class = "mb-3"></div>
+        <button id = "ingredient-button" type = "button" class = "btn btn-secondary m-2">Another ingredient</button>
         <div id = "adding-tags" class = "mb-3 this'll-be-repeated-on-clicking-the-button">
             Either enter a new tag or go through existing tags
             <div class = "form-floating">
                 <input
                     class="form-control"
-                    list="existingTagsOptions"
+                    list="existingTagsOptions-1"
                     autocomplete="off"
-                    id="recipe-existing-tag"
-                    namd = "recipe-existing-tag"
+                    id="recipe-existing-tag-1"
+                    name = "recipe-existing-tag-1"
                     placeholder="Search tags"
                 >
                 <label
-                    for="recipe-existing-tag"
+                    for="recipe-existing-tag-1"
                     class="form-label"
                 >
                     Add Tag
                 </label>
-                <datalist id="existingTagsOptions">
+                <datalist id="existingTagsOptions-1">
                     {% for tag in existing_tags %}
                     <option value = {{"%s"%tag.name}}></option>
                     {% endfor %}
                 </datalist>
             </div>
-            <button type = "button" class = "btn btn-secondary m-2">Another tag</button>
         </div>
+        <div id = "new-tags" class = "mb-3"></div>
+        <button id = "tag-button" type = "button" class = "btn btn-secondary m-2">Another tag</button>
         <button type = "submit" class = "btn btn-primary">Submit</button>
     </form>
 </body>
+
+<script>
+    const addingTags = document.getElementById("new-tags");
+    const addingIngredients = document.getElementById("new-ingredients");
+    const ingredientButton = document.getElementById("ingredient-button");
+    const tagButton = document.getElementById("tag-button");
+    let tagCounter = 1;
+    let ingredientCounter = 1;
+
+    function makeTagInput(id) {
+        return `<div class = "form-floating">
+                <input
+                    class="form-control"
+                    list="existingTagsOptions-` + id + `"
+                    autocomplete="off"
+                    id="recipe-existing-tag-` + id + `"
+                    name = "recipe-existing-tag-` + id + `"
+                    placeholder="Search tags"
+                >
+                <label
+                    for="recipe-existing-tag-` + id + `"
+                    class="form-label"
+                >
+                    Add Tag
+                </label>
+                <datalist id="existingTagsOptions-` + id + `">
+                    {% for tag in existing_tags %}
+                    <option value = {{"%s"%tag.name}}></option>
+                    {% endfor %}
+                </datalist>
+            </div>`
+    }
+
+    function makeIngInput(id) {
+        return `<div class = "form-floating">
+                <input
+                    class="form-control"
+                    list="existingIngredientOptions-` + id + `"
+                    autocomplete="off"
+                    id="recipe-existing-ingredient-` + id + `"
+                    name = "recipe-existing-ingredient-` + id + `"
+                    placeholder="Search ingredients"
+                >
+                <label
+                    for="recipe-existing-ingredient-` + id + `"
+                    class="form-label"
+                >
+                    Add ingredient
+                </label>
+                <datalist id="existingIngredientOptions-` + id + `">
+                    {% for ingredient in existing_ingredients %}
+                    <option>{{ingredient.english_name}} | {{ingredient.hindi_name_devnagari}}</option>
+                    {% endfor %}
+                </datalist>
+            </div>
+        `
+    }
+
+    ingredientButton.addEventListener("click", function() {
+        ingredientCounter++;
+        addingIngredients.innerHTML += makeIngInput(ingredientCounter);
+    })
+
+    tagButton.addEventListener("click", function() {
+        tagCounter++;
+        addingTags.innerHTML += makeTagInput(tagCounter);
+    })
+</script>
 
 </html>
