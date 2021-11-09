@@ -1,3 +1,4 @@
+from werkzeug.wrappers import response
 from Cookbook import app, db
 from flask import jsonify, request, render_template
 from Cookbook import models
@@ -95,33 +96,47 @@ def daya():
 # the 'skill' routes currently return recipes
 #   change this when you make the functions:
 #       models.getAllSkills() and models.getFullSkill()
+
+# the 'access control' thing is to allow react to access the json (i don't exactly know what it does)
+
+
 @app.route('/API/skill/all')
 def API_allSkills():
-    return jsonify(models.getAllRecipes())
+    response = jsonify(models.getAllRecipes())
 
 @app.route('/API/skill/<int:num>')
 def API_skills(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        return jsonify({
+        response =  jsonify({
             "found": True,
             "recipe": models.getFullRecipe(recipeById)
         })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
-        return jsonify({"found": False})
+        response = jsonify({"found": False})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 # these routes work well (and ONLY return JSON)
 @app.route('/API/recipe/all')
 def API_allRecipe():
-    return jsonify(models.getAllRecipes())
+    response = jsonify(models.getAllRecipes())
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/API/recipe/<int:num>')
 def API_recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
     if recipeById is not None:
-        return jsonify({
+        response =  jsonify({
             "found": True,
             "recipe": models.getFullRecipe(recipeById)
         })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     else:
-        return jsonify({"found": False})
+        response =  jsonify({"found": False, "recipe": None})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
