@@ -19,14 +19,7 @@ class IndividualRecipe extends React.Component {
         this.getIndividualRecipe();
     }
 
-    /*
-        this page is quite static and won't need to be rendered more than once
-        currently, the individual recipe is being called in the render method for testing rn
-            but could very well be inside componentDidMount() in prod(😎😎😎)
-    */
-
     render() {
-        this.getIndividualRecipe(); // this is called here for testing
         if (this.state.recipe !== null) {
             return (<div className = "container-md bg-light">
             <h1> How to make {this.state.recipe.name}</h1>
