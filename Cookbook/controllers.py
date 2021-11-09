@@ -50,10 +50,6 @@ def recipes():
 def skills():
     return "<h1>The skills Page!!!</h1>"
 
-@app.route('/recipe/all')
-def allRecipe():
-    return jsonify(models.getAllRecipes())
-
 @app.route('/recipe/<int:num>')
 def recipe(num):
     recipeById = models.Recipe.query.filter_by(id = num).first()
