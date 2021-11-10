@@ -1,5 +1,8 @@
 # Samys-Cookbook
 Making a simple app using React and Flask.
+# How to run
+- py server.py for the back-end
+- npm start (in cookbook-frontedn/) for the front-end
 # Notes
 - Initially, this project will have a plain html front-end (using render_template in flask).
 - I will make a react JS front-end after I actually learn React.
