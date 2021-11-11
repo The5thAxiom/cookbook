@@ -15,24 +15,30 @@ class IndividualRecipe extends React.Component {
             .catch((error) => console.log(error))
         ;
     }
+    difficulty = () => {
+        
+    }
     componentDidMount() {
         this.getIndividualRecipe();
     }
 
     render() {
         if (this.state.recipe !== null) {
-            return (<div className = "container-md bg-light">
+            return (<div className = "container-md bg-light border">
+            {this.state.recipe.recipe_tags.map(
+                tag => <span key = {tag.name} className = "badge bg-secondary m-1">{tag.name}</span>
+            )}
             <h1> How to make {this.state.recipe.name}</h1>
             <p>-By {this.state.recipe.contributor_name}</p>
             <q>{this.state.recipe.description}</q>
-            <p>This recipe takes only 
+            <p>This recipe takes only {" "}
                 <span className = "badge bg-primary">
                     {this.state.recipe.prep_time} minutes
                 </span>
                 , makes <span className = "badge bg-primary">
                     {this.state.recipe.quantity} {this.state.recipe.unit}
                 </span> 
-                and is {this.state.recipe.diff} to make.
+                {" "}and is {this.difficulty()} to make.
             </p>
             <h2>Ingredients</h2>
             <ul>

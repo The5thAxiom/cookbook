@@ -10,8 +10,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # we don't need real time u
 db = SQLAlchemy(app)
 
 # this will initialize the tables
-from Cookbook.models import *
+from cookbook_backend.models import *
 db.create_all()
 
 # the controller has the 'brains' of the app, so we run (import) that here
-from Cookbook import controllers
+from cookbook_backend import controllers

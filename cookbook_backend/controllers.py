@@ -1,7 +1,6 @@
-from werkzeug.wrappers import response
-from Cookbook import app, db
+from cookbook_backend import app, db
 from flask import jsonify, request, render_template
-from Cookbook import models
+from cookbook_backend import models
 
 @app.route('/')
 def index():
