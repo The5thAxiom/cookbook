@@ -1,5 +1,13 @@
 # Samys-Cookbook
 Making a simple app using React and Flask.
+# TODO
+## Backend
+- [ ] `/api/recipe/meta` or something to get meta-info about recipes and skills
+## Frontend
+- [ ] delete the frontend and start from scratch (non-functional react components 🤮)
+- [ ] basic react router homepage and recipe list setup
+## Other
+- [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
 # How to run
 - py server.py for the back-end
 - npm start (in cookbook-frontedn/) for the front-end
