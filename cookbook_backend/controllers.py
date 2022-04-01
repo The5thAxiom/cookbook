@@ -1,141 +1,118 @@
-from cookbook_backend import app, db
-from flask import jsonify, request, render_template
-from cookbook_backend import models
+from cookbook_backend import db
+from cookbook_backend.models import *
 
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-@app.route('/add-recipe', methods = ['GET', 'POST'])
-def addRecipe():
-    if request.method == 'POST':
-        # get the new recipe from the POST request
-        newRecipeFull = request.get_json(force = True)
-
-        # we don't need to do anything if the recipe exists already
-        if models.Recipe.query.filter_by(name = newRecipeFull["name"]).first() is not None:
-            return "recipe exists already"
-
-        models.addFullRecipe(newRecipeFull)
-        return "success"
-    else:
-        tags = [{
-            "id": tag.id,
-            "name": tag.name
-        } for tag in models.Tags.query.all()]
-        contributors = [{
-            "id": c.id,
-            "name": c.name
-        } for c in models.Contributor.query.all()]
-        ingredients = [{
-            "id": i.id,
-            "english_name": i.english_name,
-            "hindi_name_latin": i.hindi_name_latin,
-            "hindi_name_devnagari": i.hindi_name_devnagari
-        } for i in models.Ingredient.query.all()]
-        return render_template("add-recipe.html", **{
-            "existing_tags": tags,
-            "existing_contributors": contributors,
-            "existing_ingredients": ingredients
+def addFullRecipe(newRecipeFull):
+    # adding the contributor (if it doesn't exist already)
+    contributor = Contributor.query.filter_by(name = newRecipeFull["contributor_name"]).first()
+    if contributor is None:
+        contributor = Contributor(**{
+            "name": newRecipeFull["contributor_name"]
         })
+        db.session.add(contributor)
+        db.session.commit()
 
-@app.route('/recipes')
-def recipes():
-    return render_template("recipes.html", **{
-        "userName": "Samridh",
-        "allRecipes": models.getAllRecipes()
+    newRecipe = Recipe(**{
+        "name": newRecipeFull["name"],
+        "prep_time": newRecipeFull["prep_time"],
+        "description": newRecipeFull["description"],
+        "difficulty": newRecipeFull["difficulty"],
+        "contributor_id": contributor.id,
+        "vegetarian": newRecipeFull["vegetarian"],
+        "quantity": newRecipeFull["quantity"],
+        "unit": newRecipeFull["unit"]
     })
+    db.session.add(newRecipe)
+    db.session.commit()
 
-@app.route('/skills')
-def skills():
-    return "<h1>The skills Page!!!</h1>"
+    for step in newRecipeFull["recipe_steps"]:
+        db.session.add(Recipe_Steps(**{
+            "recipe_id": newRecipe.id,
+            "serial_number": step["serial_number"],
+            "instruction": step["instruction"]
+        }))
+    db.session.commit()
 
-@app.route('/recipe/<int:num>')
-def recipe(num):
-    recipeById = models.Recipe.query.filter_by(id = num).first()
-    if recipeById is not None:
-        if recipeById.difficulty <= 1:
-            diff = "very easy"
-        elif recipeById.difficulty == 2:
-            diff = "easy"
-        elif recipeById.difficulty == 3:
-            diff = "fairly simple"
-        elif recipeById.difficulty == 4:
-            diff = "a bit tricky"
-        elif recipeById.difficulty >= 5:
-            diff = "quite tricky"
-        else:
-            diff = "fun"
-        return render_template("individualRecipe.html", **{
-            "diff": diff,
-            "recipe": models.getFullRecipe(recipeById)
-        })
+    for tag in newRecipeFull["recipe_tags"]:
+        db.session.add(Tags(**{
+            "recipe_id": newRecipe.id,
+            "name": tag["name"]
+        }))
+    db.session.commit()
+
+    # add all the ingredients (if they don't exist already)
+    for ingredient in newRecipeFull["recipe_ingredients"]:
+        newIngredient = Ingredient.query.filter_by(english_name = ingredient["english_name"]).first()
+        if newIngredient is None:
+            newIngredient = Ingredient(**{
+                "english_name": ingredient["english_name"],
+                "hindi_name_latin": ingredient["hindi_name_latin"],
+                "hindi_name_devnagari": ingredient["hindi_name_devnagari"]
+            })
+            db.session.add(newIngredient)
+            db.session.commit()
+
+        db.session.add(Recipe_Ingredients(**{
+                "recipe_id": newRecipe.id,
+                "ingredient_id": newIngredient.id,
+                "quantity": ingredient["quantity"],
+                "unit": ingredient["unit"]
+        }))
+    db.session.commit()
+
+def getRecipeById(id: int) -> Recipe | None:
+    return Recipe.query.filter_by(id = id).first()
+
+def getRecipeDictionary(recipeById: Recipe) -> dict | None:
+    # What we need to do: get all info about the recipe(contributor, tags, ingredients and steps) and then compile it all to return it
+    if recipeById is None: return None
     else:
-        return "invalid id"
+        contributorName = Contributor.query.filter_by(id = recipeById.contributor_id).first().name
 
-@app.route('/skill')
-def skill():
-    return "<h1>An individual skill Page!!!</h1>"
+        recipeTags = [{
+                "name": tag.name
+            } for tag in Tags.query.filter_by(recipe_id = recipeById.id)]
 
-@app.route('/what-can-i-make')
-def getRecipes():
-    return render_template("what-can-i-make.html")
+        recipeIngredients = []
+        for recipe_ingredient in Recipe_Ingredients.query.filter_by(recipe_id = recipeById.id):
+            ingredient = Ingredient.query.filter_by(id = recipe_ingredient.ingredient_id).first()
+            recipeIngredients.append({
+                "english_name": ingredient.english_name,
+                "hindi_name_latin": ingredient.hindi_name_latin,
+                "hindi_name_devnagari": ingredient.hindi_name_devnagari,
+                "quantity": recipe_ingredient.quantity,
+                "unit": recipe_ingredient.unit
+            })
 
-@app.route('/about')
-def about():
-    return render_template("about.html")
+        recipeSteps = [
+            {
+                "serial_number": step.serial_number,
+                "instruction": step.instruction
+            } for step in Recipe_Steps.query.filter_by(recipe_id = recipeById.id)
+        ]
 
-@app.route('/daya')
-def daya():
-    return "Kuch to gadbad hai..."
+        return {
+            "id": recipeById.id,
+            "name": recipeById.name,
+            "prep_time": recipeById.prep_time,
+            "description": recipeById.description,
+            "difficulty": recipeById.difficulty,
+            "vegetarian": recipeById.vegetarian,
+            "quantity": recipeById.quantity,
+            "unit": recipeById.unit,
+            "contributor_name": contributorName,
+            "recipe_tags": recipeTags,
+            "recipe_ingredients": recipeIngredients,
+            "recipe_steps": recipeSteps
+        }
 
-# routes which only return JSON
-# This MIGHT be useful for the React front-end
+def getAllRecipes() -> list[dict]:
+    return list(map(getRecipeDictionary, Recipe.query.all()))
 
-# the 'skill' routes currently return recipes
-#   change this when you make the functions:
-#       models.getAllSkills() and models.getFullSkill()
+def getSkillById(id: int) -> Skill | None:
+    return None
 
-# the 'access control' thing is to allow react to access the json (i don't exactly know what it does)
+def getSkillDictionary(skillById: Skill) -> dict | None:
+    return None
 
-
-@app.route('/API/skill/all')
-def API_allSkills():
-    response = jsonify(models.getAllRecipes())
-
-@app.route('/API/skill/<int:num>')
-def API_skills(num):
-    recipeById = models.Recipe.query.filter_by(id = num).first()
-    if recipeById is not None:
-        response =  jsonify({
-            "found": True,
-            "recipe": models.getFullRecipe(recipeById)
-        })
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-    else:
-        response = jsonify({"found": False})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-# these routes work well (and ONLY return JSON)
-@app.route('/API/recipe/all')
-def API_allRecipe():
-    response = jsonify(models.getAllRecipes())
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
-@app.route('/API/recipe/<int:num>')
-def API_recipe(num):
-    recipeById = models.Recipe.query.filter_by(id = num).first()
-    if recipeById is not None:
-        response =  jsonify({
-            "found": True,
-            "recipe": models.getFullRecipe(recipeById)
-        })
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-    else:
-        response =  jsonify({"found": False, "recipe": None})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
+def getAllSkills() -> list[dict]:
+    return None

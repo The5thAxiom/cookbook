@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 # creating the flask app
@@ -14,4 +14,6 @@ from cookbook_backend.models import *
 db.create_all()
 
 # the controller has the 'brains' of the app, so we run (import) that here
-from cookbook_backend import controllers
+from cookbook_backend.controllers import *
+from cookbook_backend.views import *
+from cookbook_backend.endpoints import *
