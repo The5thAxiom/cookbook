@@ -15,5 +15,5 @@ db.create_all()
 
 # the controller has the 'brains' of the app, so we run (import) that here
 from cookbook_backend.controllers import *
-from cookbook_backend.views import *
+# from cookbook_backend.views import *
 from cookbook_backend.endpoints import *
