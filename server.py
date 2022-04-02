@@ -1,3 +1,3 @@
-from cookbook_backend import app
+from backend import app
 
 app.run(debug = True)

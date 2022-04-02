@@ -1,9 +1,9 @@
 from urllib import response
-from cookbook_backend import app
+from backend import app
 from flask import jsonify, request, abort, Response
-from cookbook_backend import models
-from cookbook_backend.controllers import *
-from cookbook_backend import app
+from backend import models
+from backend.controllers import *
+from backend import app
 
 @app.route('/api/recipes', methods = ['GET', 'POST'])
 def recipes():

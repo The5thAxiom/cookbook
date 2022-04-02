@@ -1,5 +1,5 @@
-from cookbook_backend import db
-from cookbook_backend.models import *
+from backend import db
+from backend.models import *
 
 def addFullRecipe(newRecipeFull):
     # adding the contributor (if it doesn't exist already)

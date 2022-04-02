@@ -1,4 +1,4 @@
-from cookbook_backend import db
+from backend import db
 
 # adding images still needs to be workshopped
 

@@ -1,7 +1,7 @@
-from cookbook_backend import app, db
+from backend import app, db
 from flask import jsonify, request, render_template
-from cookbook_backend import models
-from cookbook_backend.controllers import *
+from backend import models
+from backend.controllers import *
 
 @app.route('/')
 def index():
