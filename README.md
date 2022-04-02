@@ -10,8 +10,9 @@ Making a simple app using React and Flask.
 ## Other
 - [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
 # How to run
-- py server.py for the back-end
-- npm start (in cookbook-frontedn/) for the front-end
+- Create two terminals and run the commands below:
+   - `npm start`
+   - `npm run server`
 # Notes
 - Initially, this project will have a plain html front-end (using render_template in flask).
 - I will make a react JS front-end after I actually learn React.
