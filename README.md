@@ -2,7 +2,8 @@
 Making a simple app using React and Flask.
 # TODO
 ## Backend
-- [ ] `/api/recipe/meta` or something to get meta-info about recipes and skills
+- [x] `/api/recipe/meta` or something to get meta-info about recipes and skills
+- [ ] the backend only handles recipes now, we need the same for skills
 ## Frontend
 - [ ] delete the frontend and start from scratch (non-functional react components 🤮)
 - [ ] basic react router homepage and recipe list setup

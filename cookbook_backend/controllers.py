@@ -59,18 +59,19 @@ def addFullRecipe(newRecipeFull):
         }))
     db.session.commit()
 
-
 def getRecipeById(id: int) -> Recipe | None:
-    return Recipe.query.filter_by(id = id).first()
+    return Recipe.query.get(id)
 
-def getRecipeMeta(recipe: Recipe) -> dict:
+def getRecipeMeta(recipe: Recipe) -> dict[str, any]:
     recipe = recipe.__dict__
-    recipe.pop('_sa_instance_state')
+    if '_sa_instance_state' in recipe:
+        recipe.pop('_sa_instance_state')
+    recipe.pop('contributor_id')
     return recipe
 
-def getRecipeIngredients(recipe: Recipe) -> dict:
+def getRecipeIngredients(recipe: Recipe) -> list[dict]:
     recipeIngredients = []
-    for recipe_ingredient in Recipe_Ingredients.query.filter_by(recipe_id = recipe.id):
+    for recipe_ingredient in Recipe_Ingredients.query.filter_by(recipe_id=recipe.id):
         ingredient = Ingredient.query.filter_by(id = recipe_ingredient.ingredient_id).first()
         recipeIngredients.append({
             "english_name": ingredient.english_name,
@@ -83,27 +84,27 @@ def getRecipeIngredients(recipe: Recipe) -> dict:
 
 def getRecipeTags(recipe: Recipe) -> list[dict]:
     return [
-        {
-            "name": tag.name
-        } for tag in Tags.query.filter_by(recipe_id = recipe.id)
+        tag.name for tag in 
+            Tags.query
+                .filter_by(recipe_id = recipe.id)
     ]
 
 def getRecipeSteps(recipe: Recipe) -> list[dict]:
     return [
-        {
-            "serial_number": step.serial_number,
-            "instruction": step.instruction
-        } for step in Recipe_Steps.query.filter_by(recipe_id = recipe.id)
+        step.instruction for step in 
+            Recipe_Steps.query
+                .filter_by(recipe_id = recipe.id)
+                .order_by(Recipe_Steps.serial_number)
     ]
 
-def getContributor(recipe: Recipe) -> dict:
-    contributor = Contributor.query.filter_by(id = recipe.contributor_id).first()
+def getContributor(recipe: Recipe) -> dict[str, any]:
+    contributor = Contributor.query.get(recipe.contributor_id)
     return {
         "contributor_name": contributor.name,
         "contributor_bio": contributor.name
     }
 
-def getFullRecipe(recipeById: Recipe) -> dict:
+def getFullRecipe(recipeById: Recipe) -> dict[str, any]:
     c = getContributor(recipeById)
     return {
         "id": recipeById.id,
@@ -123,12 +124,3 @@ def getFullRecipe(recipeById: Recipe) -> dict:
 
 def getAllRecipes() -> list[dict]:
     return list(map(getFullRecipe, Recipe.query.all()))
-
-def getSkillById(id: int) -> Skill | None:
-    return None
-
-def getSkillDictionary(skillById: Skill) -> dict | None:
-    return None
-
-def getAllSkills() -> list[dict]:
-    return None

@@ -100,5 +100,3 @@ def recipes_all():
 #         response = jsonify(recipe)
 #         response.headers.add('Access-Control-Allow-Origin', '*')
 #         return response
-
-# add a route like: /api/recipe to return metadata (number, etc)
