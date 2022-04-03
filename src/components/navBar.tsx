@@ -7,22 +7,18 @@ import './navBar.css';
 export default function NavBar() {
     return (
         <nav>
-            {
-                navBarLinks.map(
-                    (link: navBarLink, index) =>
-                        <NavLink
-                            className = {currentNavLink => "navbar-link" + (
-                                currentNavLink.isActive
-                                    ? " active"
-                                    : ""
-                            )}
-                            key = {index}
-                            to = {link.to}
-                        >
-                            {link.name}
-                        </NavLink>
-                )
-            }
+            {navBarLinks.map((link: navBarLink, index) => (
+                <NavLink
+                    className={currentNavLink =>
+                        'navbar-link' +
+                        (currentNavLink.isActive ? ' active' : '')
+                    }
+                    key={index}
+                    to={link.to}
+                >
+                    {link.name}
+                </NavLink>
+            ))}
         </nav>
     );
 }

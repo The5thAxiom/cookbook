@@ -7,12 +7,12 @@ import NavBar from './components/navBar';
 export default function App() {
     return (
         <>
-            <Header/>
+            <Header />
             <main>
-                <NavBar/>
-                <Outlet/>
+                <NavBar />
+                <Outlet />
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
