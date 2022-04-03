@@ -8,8 +8,7 @@ nav {
 }
 
 .active {
-    /* display: none; */
-    background-color: red;
+    display: none;
 }
 
 .navbar-link:hover {

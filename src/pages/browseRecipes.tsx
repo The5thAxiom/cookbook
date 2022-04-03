@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from 'react';
-
-type recipeMeta = {
-    id: number;
-    description: string;
-    name: string;
-    prep_time: number;
-    difficulty: number;
-    quantity: number;
-    unit: string;
-    vegetarian: boolean;
-}
+import { NavLink } from 'react-router-dom';
+import { recipeMeta } from '../values/types';
 
 export default function BrowseRecipes() {
-    const [recipes, setRecipes] = useState({recipes: []});
+    const [recipes, setRecipes] = useState<{recipes: recipeMeta[]}>({recipes: [{} as recipeMeta]});
     useEffect(() => {
         fetch('/api/recipes/all')
-            .then((res => res.json()))
+            .then(res => res.json())
             .then(data => setRecipes(data));
     }, []);
     return (
         <>
-        {recipes && recipes.recipes.map((r: recipeMeta) =>
-            <section key = {r.id} id = {`${r.id}`}>
-                <h1>{r.name}</h1>
+        {recipes.recipes.length > 0 && recipes.recipes.map((r: recipeMeta, index: number) =>
+            <section key = {index} id = {`${r.id}`}>
+                <NavLink to = {`/recipes/${r.id}`}>
+                    <h3>{r.name}</h3>
+                </NavLink>
                 <b>{r.vegetarian ? "veg" : "non-veg"}</b> {" | "}
                 <b>{`takes ${r.prep_time} minutes`}</b> {" | "}
                 <b>{`makes ${r.quantity} ${r.unit}`}</b> {" | "}
-                <b>{`difficulty: ${r.difficulty}`}</b>
-                <br/>
+                <b>{`difficulty: ${'⭐'.repeat(r.difficulty)}`}</b>
+                <br/><br/>
                 <em>{r.description}</em>
+                {index != recipes.recipes.length - 1 && <hr/>}
             </section>
         )}
         </>

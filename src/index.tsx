@@ -4,7 +4,7 @@ import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import About from './pages/about';
 import BrowseRecipes from './pages/browseRecipes';
-import BrowseSkilss from './pages/browseSkills';
+import BrowseSkills from './pages/browseSkills';
 import CheckRecipe from './pages/checkRecipe';
 import CheckSkill from './pages/checkSkill';
 import Home from './pages/home';
@@ -20,11 +20,11 @@ root.render(
                 <Route index element = {<Home/>} />
                 <Route path = "recipes" >
                     <Route path = "browse" element = {<BrowseRecipes/>} />
-                    <Route path = "check" element = {<CheckRecipe/>} />
+                    <Route path = ":id" element = {<CheckRecipe/>} />
                 </Route>
                 <Route path = "skills" element = {<Outlet/>} >
-                    <Route path = "browse" element = {<BrowseSkilss/>} />
-                    <Route path = "check" element = {<CheckSkill/>} />
+                    <Route path = "browse" element = {<BrowseSkills/>} />
+                    <Route path = ":id" element = {<CheckSkill/>} />
                 </Route>
                 <Route path = "what-can-i-make" element = {<div>what can i make?</div>} />
                 <Route path = "about" element = {<About/>} />
