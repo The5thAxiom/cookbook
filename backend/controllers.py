@@ -121,6 +121,3 @@ def getFullRecipe(recipeById: Recipe) -> dict[str, any]:
         "recipe_ingredients": getRecipeIngredients(recipeById),
         "recipe_steps": getRecipeSteps(recipeById)
     }
-
-def getAllRecipes() -> list[dict]:
-    return list(map(getFullRecipe, Recipe.query.all()))

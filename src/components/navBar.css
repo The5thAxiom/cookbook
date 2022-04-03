@@ -1,0 +1,24 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navbar-link {
+    background-color: aliceblue;
+}
+
+.active {
+    /* display: none; */
+    background-color: red;
+}
+
+.navbar-link:hover {
+    background-color: aquamarine;
+}
+
+@media only screen and (max-width: 900px) {
+    nav {
+        flex-direction: column;
+        width: fit-content;
+    }
+}

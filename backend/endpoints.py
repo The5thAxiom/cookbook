@@ -81,9 +81,44 @@ def recipes_n_full(num):
 
 @app.route('/api/recipes/all')
 def recipes_all():
-    response = jsonify(getAllRecipes())
+    response = jsonify({"recipes": 
+        list(map(getRecipeMeta, Recipe.query.all()))
+    })
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+# @app.route('/api/recipes/all/tags')
+# def recipes_all_tags():
+#     response = jsonify({"recipes": 
+#         list(map(getRecipeTags, Recipe.query.all()))
+#     })
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
+
+# @app.route('/api/recipes/all/ingredients')
+# def recipes_all_ingredients():
+#     response = jsonify({"recipes": 
+#         list(map(getRecipeIngredients, Recipe.query.all()))
+#     })
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
+
+# @app.route('/api/recipes/all/steps')
+# def recipes_all_steps():
+#     response = jsonify({"recipes": 
+#         list(map(getRecipeSteps, Recipe.query.all()))
+#     })
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
+
+@app.route('/api/recipes/all/full')
+def recipes_all_full():
+    response = jsonify({"recipes": 
+        list(map(getRecipeMeta, Recipe.query.all()))
+    })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 # @app.route('/api/skills/all')
 # def api_allSkills():
