@@ -13,7 +13,5 @@ db = SQLAlchemy(app)
 from backend.models import *
 db.create_all()
 
-# the controller has the 'brains' of the app, so we run (import) that here
 from backend.controllers import *
-# from backend.views import *
 from backend.endpoints import *
