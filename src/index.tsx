@@ -12,8 +12,11 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
+// strict mode will run [some](https://stackoverflow.com/questions/60305074/react-strictmode-setstate-function-in-useeffect-is-run-multiple-times-when-effe) stuff
+// twice!, for debugging (checking the idempotency of some stuff, idk)
+// that is why the recipes are fetched twice
 root.render(
-  <React.StrictMode>
+//   <React.StrictMode>
         <HashRouter basename = "">
             <Routes>
             <Route path = "/" element = {<App/>}>
@@ -31,5 +34,5 @@ root.render(
             </Route>
             </Routes>
         </HashRouter>
-  </React.StrictMode>
+//   </React.StrictMode>
 );

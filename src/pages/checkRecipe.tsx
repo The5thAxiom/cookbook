@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import LoadingAnimation from '../components/loadingAnimation';
 import { recipeFull, recipeIngredient } from '../values/types';
 
 export default function CheckRecipe() {
-    const [recipe, setRecipe] = useState<recipeFull>({} as recipeFull);
+    const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const params = useParams();
     useEffect(() => {
         fetch(`/api/recipes/${params.id}/full`)
             .then(r => r.json())
             .then((r: recipeFull) => setRecipe(r));
     }, [])
-    return (
+    if (recipe) return (
         <>
+        {/* <LoadingAnimation/> */}
         <section id = "tags">
             {recipe.recipe_tags && recipe.recipe_tags.map((tag: string, index: number) =>
                 <div key = {index} className = "recipe-tag">
@@ -52,4 +54,5 @@ export default function CheckRecipe() {
         </section>
         </>
     );
+    else return (<LoadingAnimation/>);
 }

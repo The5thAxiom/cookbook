@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import LoadingAnimation from '../components/loadingAnimation';
 import { recipeMeta } from '../values/types';
 
 export default function BrowseRecipes() {
-    const [recipes, setRecipes] = useState<{recipes: recipeMeta[]}>({recipes: [{} as recipeMeta]});
+    const [recipes, setRecipes] = useState<{recipes: recipeMeta[]}>(null as any);
     useEffect(() => {
         fetch('/api/recipes/all')
             .then(res => res.json())
             .then(data => setRecipes(data));
     }, []);
-    return (
+    if (recipes) return (
         <>
-        {recipes.recipes.length > 0 && recipes.recipes.map((r: recipeMeta, index: number) =>
+        {recipes.recipes.map((r: recipeMeta, index: number) =>
             <section key = {index} id = {`${r.id}`}>
                 <NavLink to = {`/recipes/${r.id}`}>
                     <h3>{r.name}</h3>
@@ -27,4 +28,5 @@ export default function BrowseRecipes() {
         )}
         </>
     );
+    else return(<LoadingAnimation/>);
 }
