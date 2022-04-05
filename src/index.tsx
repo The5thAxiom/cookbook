@@ -10,6 +10,9 @@ import CheckSkill from './pages/checkSkill';
 import Home from './pages/home';
 import App from './App';
 
+import './index.css';
+import WhatCanIMake from './pages/whatCanIMake';
+
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
@@ -23,7 +26,7 @@ root.render(
         <Routes>
             <Route path='/' element={<App />}>
                 <Route index element={<Home />} />
-                <Route path='recipes'>
+                <Route path='recipes' element={<Outlet />}>
                     <Route path='browse' element={<BrowseRecipes />} />
                     <Route path=':id' element={<CheckRecipe />} />
                 </Route>
@@ -31,10 +34,7 @@ root.render(
                     <Route path='browse' element={<BrowseSkills />} />
                     <Route path=':id' element={<CheckSkill />} />
                 </Route>
-                <Route
-                    path='what-can-i-make'
-                    element={<div>what can i make?</div>}
-                />
+                <Route path='what-can-i-make' element={<WhatCanIMake />} />
                 <Route path='about' element={<About />} />
             </Route>
         </Routes>

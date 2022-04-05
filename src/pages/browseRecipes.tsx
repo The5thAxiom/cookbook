@@ -14,7 +14,7 @@ export default function BrowseRecipes() {
     }, []);
     if (recipes)
         return (
-            <>
+            <main>
                 {recipes.recipes.map((r: recipeMeta, index: number) => (
                     <section key={index} id={`${r.id}`}>
                         <NavLink to={`/recipes/${r.id}`}>
@@ -30,7 +30,7 @@ export default function BrowseRecipes() {
                         {index != recipes.recipes.length - 1 && <hr />}
                     </section>
                 ))}
-            </>
+            </main>
         );
     else return <LoadingAnimation />;
 }

@@ -6,7 +6,7 @@ import './navBar.css';
 
 export default function NavBar() {
     return (
-        <nav>
+        <nav id='nav-bar'>
             {navBarLinks.map((link: navBarLink, index) => (
                 <NavLink
                     className={currentNavLink =>

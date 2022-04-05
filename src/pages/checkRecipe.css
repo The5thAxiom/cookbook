@@ -1,0 +1,23 @@
+#content {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+}
+#side-bar {
+    padding: 10px;
+    width: 100%;
+    /* max-width: 50%; */
+    align-items: center;
+    background: lightgreen;
+}
+#recipe {
+    padding: 10px;
+    background: lightcoral;
+    width: 100%;
+}
+@media only screen and (max-width: 900px) {
+    #content {
+        flex-direction: column;
+        max-width: auto;
+    }
+}

@@ -1,7 +1,7 @@
 export type navBarLink = {
     to: string;
     name: string;
-}
+};
 
 export type recipeMeta = {
     id: number;
@@ -12,7 +12,7 @@ export type recipeMeta = {
     quantity: number;
     unit: string;
     vegetarian: boolean;
-}
+};
 
 export type recipeIngredient = {
     english_name: string;
@@ -20,7 +20,7 @@ export type recipeIngredient = {
     hindi_name_latin: string;
     quantity: number;
     unit: string;
-}
+};
 
 export type recipeFull = {
     id: number;
@@ -36,4 +36,14 @@ export type recipeFull = {
     recipe_ingredients: recipeIngredient[];
     recipe_steps: string[];
     recipe_tags: string[];
-}
+};
+
+export type arrowData = {
+    isLast: boolean;
+    id: number;
+    top: boolean;
+};
+
+export type tagData = {
+    tag: string;
+};

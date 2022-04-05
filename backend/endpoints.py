@@ -79,6 +79,12 @@ def recipes_n_full(num):
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+@app.route('/api/recipes/count')
+def recipes_count():
+    response = jsonify({"count": len(Recipe.query.all())})
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 @app.route('/api/recipes/all')
 def recipes_all():
     response = jsonify({"recipes": 
