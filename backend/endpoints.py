@@ -24,7 +24,6 @@ def recipes_n(num):
         abort(404)
     else:
         return jsonify(getRecipeMeta(r))
-    return response
 
 @app.route('/api/recipes/<int:num>/tags')
 def recipes_n_tags(num):
@@ -73,34 +72,33 @@ def recipes_count():
 
 @app.route('/api/recipes/all')
 def recipes_all():
-    return jsonify({"recipes": 
-        list(map(getRecipeMeta, Recipe.query.all()))
+    return jsonify({"recipes":
+        [getRecipeMeta(recipe) for recipe in Recipe.query.all()]
     })
 
 # @app.route('/api/recipes/all/tags')
 # def recipes_all_tags():
-#     return jsonify({"recipes": 
+#     return jsonify({"recipes":
 #         list(map(getRecipeTags, Recipe.query.all()))
 #     })
 
 # @app.route('/api/recipes/all/ingredients')
 # def recipes_all_ingredients():
-#     return jsonify({"recipes": 
+#     return jsonify({"recipes":
 #         list(map(getRecipeIngredients, Recipe.query.all()))
 #     })
 
 # @app.route('/api/recipes/all/steps')
 # def recipes_all_steps():
-#     return jsonify({"recipes": 
+#     return jsonify({"recipes":
 #         list(map(getRecipeSteps, Recipe.query.all()))
 #     })
 
 # @app.route('/api/recipes/all/full')
 # def recipes_all_full():
-#     return jsonify({"recipes": 
+#     return jsonify({"recipes":
 #         list(map(getRecipeMeta, Recipe.query.all()))
 #     })
-
 
 # @app.route('/api/skills/all')
 # def api_allSkills():
