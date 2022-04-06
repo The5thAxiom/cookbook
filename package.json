@@ -19,8 +19,8 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "server": "python server.py",
-        "backend": "python server.py",
+        "server": "python run.py",
+        "backend": "python run.py",
         "frontend": "npm start",
         "start": "react-scripts start",
         "build": "react-scripts build",

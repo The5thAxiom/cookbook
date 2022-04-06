@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 # creating the flask app
 app = Flask(__name__)
+CORS(app)
 
 # creating the db
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
