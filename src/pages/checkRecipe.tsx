@@ -41,34 +41,32 @@ export default function CheckRecipe() {
                     <section id='ingredients'>
                         <h2>Ingredients</h2>
                         <ol>
-                            {recipe.recipe_ingredients &&
-                                recipe.recipe_ingredients.map(
-                                    (ing: recipeIngredient, index: number) => (
-                                        <li
-                                            key={index}
-                                            className='recipe-ingredient'
-                                        >
-                                            {ing.quantity} {ing.unit} of{' '}
-                                            {ing.english_name} (
-                                            {ing.hindi_name_devnagari} |{' '}
-                                            {ing.hindi_name_latin})
-                                        </li>
-                                    )
-                                )}
+                            {recipe.recipe_ingredients.map(
+                                (ing: recipeIngredient, index: number) => (
+                                    <li
+                                        key={index}
+                                        className='recipe-ingredient'
+                                    >
+                                        {ing.quantity} {ing.unit} of{' '}
+                                        {ing.english_name} (
+                                        {ing.hindi_name_devnagari} |{' '}
+                                        {ing.hindi_name_latin})
+                                    </li>
+                                )
+                            )}
                         </ol>
                     </section>
                     <hr />
                     <section id='steps'>
                         <h2>Steps</h2>
                         <ol>
-                            {recipe.recipe_steps &&
-                                recipe.recipe_steps.map(
-                                    (step: string, index: number) => (
-                                        <li key={index} className='recipe-step'>
-                                            {step}
-                                        </li>
-                                    )
-                                )}
+                            {recipe.recipe_steps.map(
+                                (step: string, index: number) => (
+                                    <li key={index} className='recipe-step'>
+                                        {step}
+                                    </li>
+                                )
+                            )}
                         </ol>
                     </section>
                 </article>

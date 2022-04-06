@@ -12,7 +12,7 @@ export default function NextPreviousArrows(props: arrowData) {
         >
             {Number(props.id) > 1 && (
                 <NavLink
-                    className='arrow'
+                    className='arrow left-arrow'
                     to={`/recipes/${Number(props.id) - 1}`}
                 >
                     ◀
@@ -21,7 +21,7 @@ export default function NextPreviousArrows(props: arrowData) {
             {/* <NavLink to='/recipes/browse'>back</NavLink> */}
             {!props.isLast && (
                 <NavLink
-                    className='arrow'
+                    className='arrow right-arrow'
                     to={`/recipes/${Number(props.id) + 1}`}
                 >
                     ▶
