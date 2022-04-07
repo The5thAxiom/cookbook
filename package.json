@@ -18,9 +18,9 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "server": "python run.py",
-        "backend": "python run.py",
-        "frontend": "npm start",
+        "cookbook": "npm run build && flask run",
+        "full": "npm install && pip install -r requirements.txt && npm run build && flask run",
+        "server": "flask run",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",

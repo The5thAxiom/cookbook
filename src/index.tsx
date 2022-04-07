@@ -26,6 +26,7 @@ root.render(
         <Routes>
             <Route path='/' element={<App />}>
                 <Route index element={<Home />} />
+                <Route path='home' element={<Home />} />
                 <Route path='recipes' element={<Outlet />}>
                     <Route path='browse' element={<BrowseRecipes />} />
                     <Route path=':id' element={<CheckRecipe />} />
