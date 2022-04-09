@@ -1,5 +1,7 @@
 .loading-animation {
     --size: 50px;
+    background: var(--primary-pg);
+    fill: var(--orange-main);
     width: var(--size);
     height: var(--size);
     animation: spin 2s linear infinite;

@@ -4,7 +4,7 @@ import LoadingAnimation from '../components/loadingAnimation';
 import NextPreviousArrows from '../components/nextPreviousArrows';
 import RecipeTag from '../components/recipeTag';
 import { recipeFull, recipeIngredient } from '../values/types';
-import './checkRecipe.css';
+import './pages.css';
 
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
@@ -22,7 +22,7 @@ export default function CheckRecipe() {
 
     if (recipe)
         return (
-            <main id='content'>
+            <main id='content' className='contains-article-aside'>
                 <article id='recipe'>
                     <h1>{recipe.name}</h1>
                     <section id='about'>

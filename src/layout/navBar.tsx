@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { navBarLinks } from '../values/navBarLinks';
 import { navBarLink } from '../values/types';
-import './navBar.css';
+import './layout.css';
 import '../index.css';
 
 export default function NavBar() {
@@ -10,9 +10,8 @@ export default function NavBar() {
         <nav id='nav-bar'>
             {navBarLinks.map((link: navBarLink, index) => (
                 <NavLink
-                    className={currentNavLink =>
-                        'navbar-link' +
-                        (currentNavLink.isActive ? ' active' : '')
+                    className={({ isActive }) =>
+                        'navbar-link' + (isActive ? ' active' : '')
                     }
                     key={index}
                     to={link.to}

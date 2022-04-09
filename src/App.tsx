@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import Footer from './components/footer';
-import Header from './components/header';
-import NavBar from './components/navBar';
+import Footer from './layout/footer';
+import Header from './layout/header';
+import NavBar from './layout/navBar';
 
 export default function App() {
     return (

@@ -1,23 +1,33 @@
-#content {
-    display: flex;
-    flex-direction: row;
-    /* justify-content: space-evenly; */
-}
 #side-bar {
     padding: 10px;
-    width: calc(100% - 20px);
-    /* max-width: 50%; */
+    width: fit-content;
     align-items: center;
     background: var(--secondary-bg);
 }
-#recipe {
+
+main,
+article#recipe {
     padding: 10px;
     background: var(--primary-bg);
     width: calc(100% - 20px);
 }
+
+main.contains-article-aside {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    /* justify-content: space-evenly; */
+}
+
 @media only screen and (max-width: 900px) {
     #content {
         flex-direction: column;
+        width: 100%;
         max-width: auto;
+    }
+    #side-bar {
+        width: 100%;
     }
 }

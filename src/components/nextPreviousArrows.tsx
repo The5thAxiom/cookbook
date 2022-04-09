@@ -9,7 +9,7 @@ export default function NextPreviousArrows(props: arrowData) {
     return (
         <nav
             className={`next-previous-arrows${
-                props.top ? ' top-arrows' : ' botttom-arrows'
+                props.top ? ' top-arrows' : ' bottom-arrows'
             }`}
         >
             {Number(props.id) > 1 && (

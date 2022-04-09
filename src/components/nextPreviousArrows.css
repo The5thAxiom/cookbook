@@ -7,27 +7,33 @@ nav.next-previous-arrows {
 .top-arrows {
     top: 0;
 }
-.bootom-arrows {
-    top: 100px;
+
+.bottom-arrows {
+    margin-top: 100px;
+    margin-bottom: 0;
     bottom: 0;
+}
+
+.right-arrow {
+    margin-right: 0;
+    right: 0;
+}
+
+.left-arrow {
+    margin-left: 0;
 }
 
 .arrow {
     text-decoration: none;
-    color: green;
     display: block;
 }
 
-.arrow:hover {
-    color: blueviolet;
-}
-
 .arrow-icon {
-    fill: green;
+    fill: var(--green-main);
     height: 50px;
     width: 50px;
 }
 
 .arrow-icon:hover {
-    fill: red;
+    fill: var(--orange-main);
 }
