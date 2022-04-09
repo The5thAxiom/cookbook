@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { arrowData } from '../values/types';
-import arrowForward from '../assets/arrow_forward_google.svg';
-import arrowBackward from '../assets/arrow_backward_google.svg';
 import './nextPreviousArrows.css';
 
 export default function NextPreviousArrows(props: arrowData) {
