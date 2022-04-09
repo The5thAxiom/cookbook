@@ -1,13 +1,47 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+/* text colours */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--orange-main);
+}
+
+h1 {
+    font-size: xxx-large;
+}
+h2 {
+    font-size: xx-large;
+}
+
+/* text selection */
 *::selection {
-    background: red;
-    color: gold;
+    background: var(--yellow-main);
+    color: var(--green-main);
 }
 
 * br::selection {
-    background: red;
+    background: var(--yellow-main);
+}
+
+/* links */
+a {
+    /* border-radius: 5px; */
+    color: var(--orange-main);
+    text-decoration: none;
+}
+
+a:hover {
+    filter: brightness(90%);
+}
+
+a:active {
+    color: var(--yellow-main);
 }

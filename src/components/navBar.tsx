@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { navBarLinks } from '../values/navBarLinks';
 import { navBarLink } from '../values/types';
 import './navBar.css';
+import '../index.css';
 
 export default function NavBar() {
     return (

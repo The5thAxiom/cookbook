@@ -21,3 +21,13 @@ nav.next-previous-arrows {
 .arrow:hover {
     color: blueviolet;
 }
+
+.arrow-icon {
+    fill: green;
+    height: 50px;
+    width: 50px;
+}
+
+.arrow-icon:hover {
+    fill: red;
+}

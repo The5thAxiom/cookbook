@@ -1,6 +1,8 @@
+@import '../values/colors.css';
+
 header {
     padding: 10px;
-    background: lightgrey;
+    background: var(--green-main);
 }
 .header-logo {
     width: 50px;
@@ -13,5 +15,5 @@ header {
 
 footer {
     padding: 10px;
-    background: lightgrey;
+    background: var(--green-main);
 }

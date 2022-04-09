@@ -3,18 +3,20 @@ nav#nav-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background: lightblue;
+    background: var(--green-light);
 }
-.navbar-link {
-    background-color: lightblue;
-}
+
+/* .navbar-link {
+    text-decoration: none;
+    filter: brightness(90%);
+} */
 
 .active {
     display: none;
 }
 
 .navbar-link:hover {
-    background-color: aquamarine;
+    background-color: var(--green-light);
 }
 
 @media only screen and (max-width: 900px) {
