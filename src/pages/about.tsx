@@ -6,7 +6,11 @@ export default function About() {
         <main>
             <h1>About</h1>
             Made by:{' '}
-            <a target='_blank' href='https://github.com/The5thAxiom'>
+            <a
+                target='_blank'
+                rel='noreferrer'
+                href='https://github.com/The5thAxiom'
+            >
                 Samridh
             </a>
             <p>

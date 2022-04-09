@@ -27,7 +27,7 @@ export default function BrowseRecipes() {
                         <br />
                         <br />
                         <em>{r.description}</em>
-                        {index != recipes.recipes.length - 1 && <hr />}
+                        {index !== recipes.recipes.length - 1 && <hr />}
                     </section>
                 ))}
             </main>

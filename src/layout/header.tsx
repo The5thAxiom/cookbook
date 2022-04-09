@@ -12,7 +12,7 @@ export default function Header() {
                 to='/'
                 className='header-logo-link'
             >
-                <img className='header-logo' src={icon} />
+                <img alt='' className='header-logo' src={icon} />
             </NavLink>
             <h1>Cookbook</h1>
         </header>
