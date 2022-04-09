@@ -18,9 +18,7 @@ Making a simple app using React and Flask.
 - [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
 # How to run
 
--   Create two terminals and run the commands below:
-    -   `npm start`
-    -   `npm run server`
+-   Run the command `npm run cookbook`
 
 # Notes
 
