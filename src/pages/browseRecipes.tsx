@@ -17,9 +17,9 @@ export default function BrowseRecipes() {
             <main>
                 {recipes.recipes.map((r: recipeMeta, index: number) => (
                     <section key={index} id={`${r.id}`}>
-                        <NavLink to={`/recipes/${r.id}`}>
-                            <h3>{r.name}</h3>
-                        </NavLink>
+                        <h3>
+                            <NavLink to={`/recipes/${r.id}`}>{r.name}</NavLink>
+                        </h3>
                         <b>{r.vegetarian ? 'veg' : 'non-veg'}</b> {' | '}
                         <b>{`takes ${r.prep_time} minutes`}</b> {' | '}
                         <b>{`makes ${r.quantity} ${r.unit}`}</b> {' | '}

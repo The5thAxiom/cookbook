@@ -1,7 +1,17 @@
 @import '../values/colors.css';
 
+header h1,
+.header-text {
+    font-size: 5rem;
+}
+
+.header-logo-link {
+    float: left;
+}
+
 header,
 footer {
+    text-align: center;
     padding: 10px;
     background: var(--green-main);
     color: var(--primary-bg);
@@ -19,6 +29,7 @@ header a:visited:hover,
 footer a:hover,
 footer a:visited:hover {
     color: var(--yellow-main);
+    text-shadow: 1px 1px 1px var(--yellow-main);
 }
 
 header a:active,
@@ -44,7 +55,6 @@ nav#nav-bar {
 
 .navbar-link {
     display: block;
-    /* width: calc(100vw / 4); */
     width: 100%;
     text-align: center;
     padding: 10px;
@@ -54,9 +64,10 @@ nav#nav-bar {
 .navbar-link:hover {
     filter: brightness(90%);
     color: var(--yellow-main);
+    text-shadow: none;
 }
 
-.active {
+.navbar-link-active {
     display: none;
     background-color: red;
 }
@@ -66,6 +77,6 @@ nav#nav-bar {
         flex-direction: column;
     }
     .navbar-link {
-        width: 100%;
+        width: auto;
     }
 }

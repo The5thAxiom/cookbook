@@ -11,7 +11,7 @@ export default function NavBar() {
             {navBarLinks.map((link: navBarLink, index) => (
                 <NavLink
                     className={({ isActive }) =>
-                        'navbar-link' + (isActive ? ' active' : '')
+                        'navbar-link' + (isActive ? ' navbar-link-active' : '')
                     }
                     key={index}
                     to={link.to}

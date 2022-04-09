@@ -3,6 +3,7 @@ nav.next-previous-arrows {
     flex-direction: row;
     justify-content: space-between;
     font-size: xx-large;
+    width: 100%;
 }
 .top-arrows {
     top: 0;
@@ -15,7 +16,7 @@ nav.next-previous-arrows {
 }
 
 .right-arrow {
-    margin-right: 0;
+    margin-left: auto;
     right: 0;
 }
 

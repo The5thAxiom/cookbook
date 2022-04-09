@@ -10,7 +10,7 @@ export default function Header() {
             <NavLink
                 style={{ display: 'inline' }}
                 to='/'
-                className={({ isActive }) => 'header-logo-link'}
+                className='header-logo-link'
             >
                 <img className='header-logo' src={icon} />
             </NavLink>

@@ -12,6 +12,7 @@ export default function CheckRecipe() {
     const params = useParams();
 
     useEffect(() => {
+        setRecipe(null as any);
         fetch(`/api/recipes/${params.id}/full`)
             .then(r => r.json())
             .then((r: recipeFull) => setRecipe(r));

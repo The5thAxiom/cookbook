@@ -4,6 +4,6 @@ export const mainTheme = {
     yellowMain: '#fee71a',
     greenMain: '#5c7944',
     greenLight: '#abcb42',
-    primaryBg: '#e7e9e4',
+    primaryBg: '#bee5b0',
     secondaryBg: '#ffffa5',
 };
