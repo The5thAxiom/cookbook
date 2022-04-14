@@ -1,5 +1,4 @@
 import { navBarLink } from './types';
-import React from 'react';
 import HomeIcon from '../components/icons/homeIcon';
 import BrowseIcon from '../components/icons/browseIcon';
 import WhatCanIMakeIcon from '../components/icons/whatCanIMakeIcon';
