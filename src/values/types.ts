@@ -1,6 +1,13 @@
+import React, { ReactElement } from 'react';
+import { JsxElement } from 'typescript';
+
 export type navBarLink = {
     to: string;
-    name: string;
+    name: (props: navBarIcon) => JSX.Element;
+};
+
+export type navBarIcon = {
+    isActive: boolean;
 };
 
 export type recipeMeta = {

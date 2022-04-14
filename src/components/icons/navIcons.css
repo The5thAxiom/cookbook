@@ -1,0 +1,7 @@
+.navbar-icon {
+    fill: var(--orange-main);
+}
+
+a.navbar-link-active .navbar-icon {
+    fill: var(--green-main);
+}

@@ -30,7 +30,29 @@ export default function BrowseRecipes() {
                         {index !== recipes.recipes.length - 1 && <hr />}
                     </section>
                 ))}
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Morbi interdum, nisl vitae porta ultrices, elit purus
+                    pharetra erat, et cursus velit sapien ut augue. Phasellus
+                    elit magna, viverra quis justo eget, ultrices aliquet
+                    libero. Integer sollicitudin convallis tempus. Phasellus
+                    tincidunt nunc massa, vitae luctus justo aliquet vitae.
+                    Vestibulum ac scelerisque nibh, sed iaculis lorem. Aenean et
+                    lobortis dolor. Duis ac pretium lacus. Morbi molestie
+                    molestie lectus, vel aliquet dui dignissim sed. Sed dolor
+                    elit, semper eu ultrices lacinia, consectetur in justo.
+                    Phasellus pellentesque vestibulum nisl, vel ultricies nisl
+                    porta ac. Pellentesque habitant morbi tristique senectus et
+                    netus et malesuada fames ac turpis egestas. Curabitur
+                    sollicitudin ante quis convallis cursus. Pellentesque vitae
+                    placerat mauris.
+                </p>
             </main>
         );
-    else return <LoadingAnimation />;
+    else
+        return (
+            <main>
+                <LoadingAnimation />
+            </main>
+        );
 }
