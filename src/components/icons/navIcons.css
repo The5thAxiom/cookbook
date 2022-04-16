@@ -3,5 +3,5 @@
 }
 
 a.navbar-link-active .navbar-icon {
-    fill: var(--green-main);
+    fill: var(--orange-main);
 }

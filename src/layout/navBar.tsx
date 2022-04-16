@@ -16,11 +16,7 @@ export default function NavBar() {
                     className={({ isActive }) =>
                         'navbar-link' + (isActive ? ' navbar-link-active' : '')
                     }
-                    children={({ isActive }) =>
-                        isActive
-                            ? link.name({ isActive: true })
-                            : link.name({ isActive: false })
-                    }
+                    children={isActive => link.icon(isActive)}
                     key={index}
                     to={link.to}
                 />

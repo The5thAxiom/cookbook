@@ -5,9 +5,9 @@ import WhatCanIMakeIcon from '../components/icons/whatCanIMakeIcon';
 import AboutIcon from '../components/icons/aboutIcon';
 
 export const navBarLinks: navBarLink[] = [
-    { to: '/', name: HomeIcon },
-    { to: '/recipes/browse', name: BrowseIcon },
+    { to: '/', icon: HomeIcon },
+    { to: '/recipes/browse', icon: BrowseIcon },
     // {to: "/skills/browse", name: "broswe skills"},
-    { to: '/what-can-i-make', name: WhatCanIMakeIcon },
-    { to: '/about', name: AboutIcon },
+    { to: '/what-can-i-make', icon: WhatCanIMakeIcon },
+    { to: '/about', icon: AboutIcon },
 ];

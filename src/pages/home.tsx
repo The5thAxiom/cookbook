@@ -5,7 +5,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <main>
+            <main className='below-header'>
                 <h1>home</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

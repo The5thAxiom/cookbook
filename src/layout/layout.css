@@ -49,6 +49,14 @@ header .header-logo {
     transform: scale(1.2);
 }
 
+:root {
+    --navbar-height: 50px;
+}
+
+header {
+    margin-top: var(--navbar-height);
+}
+
 footer {
     bottom: 0;
 }
@@ -57,7 +65,9 @@ nav#nav-bar {
     display: flex;
     flex-direction: row;
     top: 0;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    height: var(--navbar-height);
 }
 
 .navbar-link {

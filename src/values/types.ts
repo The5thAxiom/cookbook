@@ -3,7 +3,7 @@ import { JsxElement } from 'typescript';
 
 export type navBarLink = {
     to: string;
-    name: (props: navBarIcon) => JSX.Element;
+    icon: (props: navBarIcon) => JSX.Element;
 };
 
 export type navBarIcon = {
