@@ -1,3 +1,7 @@
+:root {
+    --navbar-height: 50px;
+}
+
 body,
 div#root {
     width: 100%;

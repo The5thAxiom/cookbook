@@ -1,4 +1,5 @@
 aside#side-bar {
+    margin-top: var(--navbar-height);
     padding: 10px;
     align-items: center;
     background: var(--secondary-bg);
@@ -8,6 +9,7 @@ aside#side-bar {
 /*  */
 
 article#recipe {
+    margin-top: var(--navbar-height);
     padding: 10px;
     background: var(--primary-bg);
     width: 100%;
@@ -41,6 +43,7 @@ main.contains-article-aside {
         width: auto;
     }
     aside#side-bar {
+        margin-top: 0;
         width: auto;
     }
 }

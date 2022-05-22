@@ -49,10 +49,6 @@ header .header-logo {
     transform: scale(1.2);
 }
 
-:root {
-    --navbar-height: 50px;
-}
-
 header {
     margin-top: var(--navbar-height);
 }
