@@ -17,7 +17,7 @@ class Ingredient(db.Model):
 class Contributor(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False, unique = True)
-    bio = db.Column(db.String)
+    bio = db.Column(db.Text, nullable=True, unique=False)
     recipes = db.relationship(
         'Recipe',
         backref=db.backref('contributor', uselist=False),
@@ -36,14 +36,14 @@ class Recipe(db.Model):
     prep_time = db.Column(db.Integer, nullable = False)
     description = db.Column(db.Text, nullable = False)
     difficulty = db.Column(db.Integer, nullable = False)
+    vegetarian = db.Column(db.Boolean, nullable = False)
+    quantity = db.Column(db.Float, nullable = False)
+    unit = db.Column(db.String, nullable = False)
     contributor_id = db.Column(
         db.Integer,
         db.ForeignKey("contributor.id"),
         nullable = False
     )
-    vegetarian = db.Column(db.Boolean, nullable = False)
-    quantity = db.Column(db.Float, nullable = False)
-    unit = db.Column(db.String, nullable = False)
     steps = db.relationship(
         'Recipe_Step',
         backref = db.backref('recipe', uselist=False),
@@ -70,8 +70,9 @@ class Recipe_Step(db.Model):
         db.ForeignKey("recipe.id"),
         nullable = False
     )
+    # recipe (backref)
     serial_number = db.Column(db.Integer, nullable = False)
-    instruction = db.Column(db.String, nullable = False)
+    instruction = db.Column(db.Text, nullable = False)
 
 class Recipe_Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -92,7 +93,7 @@ class Skill(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False, unique = True)
     #header_image = db.Column(db.LargeBinary, nullable = False)
-    description = db.Column(db.String, nullable = False)
+    description = db.Column(db.Text, nullable = False)
     difficulty = db.Column(db.String, nullable = False)
     contributor_id = db.Column(
         db.Integer,
@@ -113,7 +114,7 @@ class Skill_Step(db.Model):
         nullable = False
     )
     serial_number = db.Column(db.Integer, nullable = False)
-    instruction = db.Column(db.String, nullable = False)
+    instruction = db.Column(db.Text, nullable = False)
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key = True)
