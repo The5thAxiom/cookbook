@@ -1,7 +1,7 @@
 {
     "name": "cookbook",
     "version": "0.1.0",
-    "proxy": "https://cookbook-demo-the5thaxiom.herokuapp.com/",
+    "proxy": "http://localhost:5000",
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.3",
@@ -19,9 +19,6 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "cookbook": "npm run build && flask run",
-        "full": "npm install && pip install -r requirements.txt && npm run build && flask run",
-        "server": "flask run",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
