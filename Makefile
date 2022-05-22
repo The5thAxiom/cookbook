@@ -2,9 +2,11 @@ flask:
 	flask run
 
 flask-newdb:
-	rm backend/Cookbook.db
-	./datasets/send_recipes.sh
+	rm -f backend/Cookbook.db
 	flask run
+
+flask-post:
+	cd datasets && ./send_recipes.sh
 
 react:
 	cd frontend && npm start

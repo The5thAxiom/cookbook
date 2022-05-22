@@ -110,8 +110,8 @@
       <text x="-40.9667" xml:space="preserve" y="259.2324" clip-path="url(#clipPath2)" stroke="none">vegetarian: boolean</text>
       <text x="-40.9667" xml:space="preserve" y="273.2012" clip-path="url(#clipPath2)" stroke="none">quantitiy: float</text>
       <text x="-40.9667" xml:space="preserve" y="287.1699" clip-path="url(#clipPath2)" stroke="none">unit: string</text>
-      <text x="-40.9667" xml:space="preserve" y="301.1387" clip-path="url(#clipPath2)" stroke="none">contributor_id: integer [FK: Contributor.id]</text>
-      <text x="-40.9667" xml:space="preserve" y="315.1074" clip-path="url(#clipPath2)" stroke="none">contirbutor -&gt; Contributor</text>
+      <text x="-40.9667" xml:space="preserve" y="301.1387" clip-path="url(#clipPath2)" stroke="none">contributor_id: integer [FK: User.id]</text>
+      <text x="-40.9667" xml:space="preserve" y="315.1074" clip-path="url(#clipPath2)" stroke="none">contirbutor -&gt; User</text>
       <text x="-40.9667" xml:space="preserve" y="329.0762" clip-path="url(#clipPath2)" stroke="none">steps -&gt; Recipe_Step</text>
       <text x="-40.9667" xml:space="preserve" y="343.0449" clip-path="url(#clipPath2)" stroke="none">tags -&gt; Tag</text>
       <text x="-40.9667" xml:space="preserve" y="357.0137" clip-path="url(#clipPath2)" stroke="none">ingredients -&gt; Recipe_Ingredient</text>
@@ -124,7 +124,7 @@
       <line stroke-linecap="butt" transform="matrix(1,0,0,1,52.9667,6.7375)" clip-path="url(#clipPath2)" fill="none" x1="-44.9667" x2="74.5" y1="27.2312" image-rendering="auto" y2="27.2312" stroke-miterlimit="1.45"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,60,14)" stroke-linecap="butt">
-      <text x="-19.4843" xml:space="preserve" y="18.4012" clip-path="url(#clipPath2)" stroke="none">Contributor</text>
+      <text x="-19.4843" xml:space="preserve" y="18.4012" clip-path="url(#clipPath2)" stroke="none">User</text>
       <text x="-40.9667" xml:space="preserve" y="44.3699" clip-path="url(#clipPath2)" stroke="none">id: integer [PK]</text>
       <text x="-40.9667" xml:space="preserve" y="58.3387" clip-path="url(#clipPath2)" stroke="none">name: string</text>
       <text x="-40.9667" xml:space="preserve" y="72.3074" clip-path="url(#clipPath2)" stroke="none">bio: text</text>
@@ -176,8 +176,8 @@
       <text x="108.5" xml:space="preserve" y="58.3387" clip-path="url(#clipPath2)" stroke="none">name: string</text>
       <text x="108.5" xml:space="preserve" y="72.3074" clip-path="url(#clipPath2)" stroke="none">description: text</text>
       <text x="108.5" xml:space="preserve" y="86.2762" clip-path="url(#clipPath2)" stroke="none">difficulty: integer &lt; 5</text>
-      <text x="108.5" xml:space="preserve" y="100.2449" clip-path="url(#clipPath2)" stroke="none">contributor_id: integer [FK: Contributor.id]</text>
-      <text x="108.5" xml:space="preserve" y="114.2137" clip-path="url(#clipPath2)" stroke="none">contributor -&gt; Contributor</text>
+      <text x="108.5" xml:space="preserve" y="100.2449" clip-path="url(#clipPath2)" stroke="none">contributor_id: integer [FK: User.id]</text>
+      <text x="108.5" xml:space="preserve" y="114.2137" clip-path="url(#clipPath2)" stroke="none">contributor -&gt; User</text>
     </g>
     <g text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,410.7667,452.2188)" image-rendering="optimizeQuality">
       <image x="0" y="0" clip-path="url(#clipPath16)" width="248" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPgAAACGCAYAAADw+Ue6AAAELElEQVR4Xu3ZXW8V&#10;VRTH4Y1QigIFRBAsaAEVBN9ARUUjRRDfvv/3cf2znaQx3nhOpxfLZyVPwg0z3Pxm&#10;7X0YwxhjjDHGGGOMMcYYY4wxxzenyhtHnAZWc7S1tBerTB6cF54pO+Vs2S3ngNWk&#10;sUhv6W6J/thCXzZ2ws6L3ioXy6VyuVwBVpPG0lqaOz9m9EvoxxJ54s4D3yx75Wq5&#10;UfbL7fI+sJo0dqvcLNfGDD6hZ6Mn8q0mX4hs7sSdByfsg/JxeVg+K58Dq0ljj8qD&#10;cm/MxZolm8izeLfa4tneOZbvjRl3XpAXfl2+Kz8Aq/u+PC1flvtjbvW3x1y8G2/x&#10;ZXvnzp0vxsGYcSfs5+VleVV+AVaTxtLa4ZixPxnzBJ2Fm3v5zthwi+cv5S9fGPNh&#10;eWg2d+J+XX4vfwCrS2u/lp/H3OZZtLmf59qcE/ZGged4not8juf7Y94Dsr3zNckL&#10;/wROTELPYv2pPC53xjxZ51f1tPqfZ7l/5yuRM3++Gs/GPDbkZf/8BwDrSXPZ4ofl&#10;qzF/D3tnzHv41oHnOJBf9HIHEDicvKOB56r84RA4tCFwaEzg0JjAoTGBQ2MCh8YE&#10;Do0JHBoTODQmcGhM4NCYwKExgUNjAofGBA6NCRwaEzg0JnBoTODQmMChMYFDYwKH&#10;xgQOjQkcGhM4NCZwaEzg0JjAoTGBQ2MCh8YEDo0JHBoTODQmcGhM4NCYwKExgUNj&#10;AofGBA6NCRwaEzg0JnBoTODQmMChMYFDYwKHxgQOjQkcGhM4NCZwaEzg0JjAoTGB&#10;Q2MCh8YEDo0JHBoTODQmcGhM4NCYwKExgUNjAofGBA6NCRwaEzg0JnBoTODQmMCh&#10;MYFDYwKHxgQOjQkcGhM4NCZwaEzg0JjAoTGBQ2MCh8YEDo0JHBoTODQmcGhM4NCY&#10;wKExgUNjAofGBA6NCRwaEzg0JnBoTODQmMChMYFDYwKHxgQOjQkcGhM4NCZwaEzg&#10;0JjAoTGBQ2MCh8ZWC/xSuVU+Lc/KqyFwOGlp7nV5Xp6Ue+Xq2DLws2WvvFc+Kd+W&#10;F2N+SfJC4GT8NuZy/bF8UQ7KlXJubBj4qbJTzpfrYx4JHo/5gpdjfk0SOrCutJa4&#10;s72flodjnqpzus4STqsbzekxvxD5Utwec4vn/J+7eF52OOZGB9ZxOGZrWaw5Qee3&#10;sBzPs3SzfM+MLQLP6s8Wv1CulQ/KgzGPCAn9mzG/KMB60lpOz4/GjPvmmNt7d2x4&#10;PF8mX4Zs8Tzo4pi/2u2XO+Wjcv9viX75M7C9o02ltbtj/m/Wu2P+z1Z+XNtqey+z&#10;RJ6zfo4E+XLk17vrY77sBrCaNJbWslxzVc5pOtfmxL3V9j46iTwPy0N3x/x6JPbI&#10;C4H1pLM0l7BzZc7C3Xpz/9ssoecFkeCB9aW3tLdK2MYYY4wxxhhjjDHGGGPM/2/+&#10;AqCb9OGQaxO8AAAAAElFTkSuQmCC" height="134" preserveAspectRatio="none"/>

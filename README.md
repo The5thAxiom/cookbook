@@ -20,6 +20,10 @@ Making a simple app using React and Flask.
 
 -   Run the command `npm run cookbook`
 
+# Database
+
+![](database-schema/databse-schema.svg)
+
 # Notes
 
 -   Initially, this project will have a plain html front-end (using

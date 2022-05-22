@@ -14,7 +14,7 @@ class Ingredient(db.Model):
         lazy=True
     )
 
-class Contributor(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False, unique = True)
     bio = db.Column(db.Text, nullable=True, unique=False)
@@ -41,7 +41,7 @@ class Recipe(db.Model):
     unit = db.Column(db.String, nullable = False)
     contributor_id = db.Column(
         db.Integer,
-        db.ForeignKey("contributor.id"),
+        db.ForeignKey("user.id"),
         nullable = False
     )
     steps = db.relationship(
@@ -97,7 +97,7 @@ class Skill(db.Model):
     difficulty = db.Column(db.String, nullable = False)
     contributor_id = db.Column(
         db.Integer,
-        db.ForeignKey("contributor.id"),
+        db.ForeignKey("user.id"),
         nullable=False
     )
     steps = db.relationship(

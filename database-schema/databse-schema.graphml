@@ -29,8 +29,8 @@ difficulty: integer &lt; 5
 vegetarian: boolean
 quantitiy: float
 unit: string
-contributor_id: integer [FK: Contributor.id]
-contirbutor -&gt; Contributor
+contributor_id: integer [FK: User.id]
+contirbutor -&gt; User
 steps -&gt; Recipe_Step
 tags -&gt; Tag
 ingredients -&gt; Recipe_Ingredient<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:ModelParameter><y:ErdAttributesNodeLabelModelParameter/></y:ModelParameter></y:NodeLabel>
@@ -46,7 +46,7 @@ ingredients -&gt; Recipe_Ingredient<y:LabelModel><y:ErdAttributesNodeLabelModel/
           <y:Geometry height="123.35000000000002" width="119.4666666666667" x="-44.9666666666665" y="1.2624999999999886"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.501953125" x="23.48235677083335" xml:space="preserve" y="4.0">Contributor</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.501953125" x="23.48235677083335" xml:space="preserve" y="4.0">User</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="73.84375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="110.166015625" x="2.0" xml:space="preserve" y="29.96875">id: integer [PK]
 name: string
 bio: text
@@ -107,8 +107,8 @@ unit: string<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:Mode
 name: string
 description: text
 difficulty: integer &lt; 5
-contributor_id: integer [FK: Contributor.id]
-contributor -&gt; Contributor<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:ModelParameter><y:ErdAttributesNodeLabelModelParameter/></y:ModelParameter></y:NodeLabel>
+contributor_id: integer [FK: User.id]
+contributor -&gt; User<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:ModelParameter><y:ErdAttributesNodeLabelModelParameter/></y:ModelParameter></y:NodeLabel>
           <y:StyleProperties>
             <y:Property class="java.lang.Boolean" name="y.view.ShadowNodePainter.SHADOW_PAINTING" value="true"/>
           </y:StyleProperties>

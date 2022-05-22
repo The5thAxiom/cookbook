@@ -4,11 +4,11 @@ from backend.models import *
 
 def addFullRecipe(newRecipeFull):
     # adding the contributor (if it doesn't exist already)
-    contributor = Contributor.query.filter_by(
+    contributor = User.query.filter_by(
         name=newRecipeFull["contributor_name"]
     ).first()
     if contributor is None:
-        contributor = Contributor(**{
+        contributor = User(**{
             "name": newRecipeFull["contributor_name"]
         })
         db.session.add(contributor)
