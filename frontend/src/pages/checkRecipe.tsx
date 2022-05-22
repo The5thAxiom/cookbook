@@ -33,7 +33,7 @@ export default function CheckRecipe() {
                         <b>{`takes ${recipe.prep_time} minutes`}</b> {' | '}
                         <b>{`makes ${recipe.quantity} ${recipe.unit}`}</b>{' '}
                         {' | '}
-                        <b>{`difficulty: ${'⭐'.repeat(recipe.difficulty)}`}</b>
+                        <b>{`difficulty: ${'★'.repeat(recipe.difficulty)}`}</b>
                         <br />
                         <br />
                         <em>{recipe.description}</em>
