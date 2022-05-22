@@ -25,5 +25,3 @@ db.create_all()
 
 from backend.controllers import *
 from backend.endpoints import *
-
-print(getFullRecipe(getRecipeById(1)))

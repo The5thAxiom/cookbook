@@ -82,42 +82,30 @@ def getRecipeMeta(recipeById: Recipe):
 
 
 def getRecipeIngredients(recipe: Recipe):
-    recipeIngredients = []
-    for recipe_ingredient in Recipe_Ingredient.query.filter_by(recipe_id=recipe.id):
-        ingredient = Ingredient.query.filter_by(
-            id=recipe_ingredient.ingredient_id).first()
-        recipeIngredients.append({
-            "english_name": ingredient.english_name,
-            "hindi_name_latin": ingredient.hindi_name_latin,
-            "hindi_name_devnagari": ingredient.hindi_name_devnagari,
+    return [
+        {
+            "english_name": recipe_ingredient.ingredient.english_name,
+            "hindi_name_latin": recipe_ingredient.ingredient.hindi_name_latin,
+            "hindi_name_devnagari": recipe_ingredient.ingredient.hindi_name_devnagari,
             "quantity": recipe_ingredient.quantity,
             "unit": recipe_ingredient.unit
-        })
-    return recipeIngredients
+        } for recipe_ingredient in recipe.ingredients
+    ]
 
 
 def getRecipeTag(recipe: Recipe):
-    return [
-        tag.name for tag in
-        Tag.query
-        .filter_by(recipe_id=recipe.id)
-    ]
+    return [tag.name for tag in recipe.tags]
 
 
 def getRecipeSteps(recipe: Recipe):
-    return [
-        step.instruction for step in
-        Recipe_Step.query
-        .filter_by(recipe_id=recipe.id)
-        .order_by(Recipe_Step.serial_number)
-    ]
+    steps = recipe.steps.sort(key=lambda step: step.serial_number)
+    return [step.instruction for step in recipe.steps]
 
 
 def getContributor(recipe: Recipe):
-    contributor = Contributor.query.get(recipe.contributor_id)
     return {
-        "contributor_name": contributor.name,
-        "contributor_bio": contributor.name
+        "contributor_name": recipe.contributor.name,
+        "contributor_bio": recipe.contributor.bio
     }
 
 
@@ -132,8 +120,8 @@ def getFullRecipe(recipeById: Recipe):
         "vegetarian": recipeById.vegetarian,
         "quantity": recipeById.quantity,
         "unit": recipeById.unit,
-        "contributor_name": c["contributor_name"],
-        "contributor_bio": c["contributor_bio"],
+        "contributor_name": recipeById.contributor.name,
+        "contributor_bio": recipeById.contributor.bio,
         "recipe_tags": getRecipeTag(recipeById),
         "recipe_ingredients": getRecipeIngredients(recipeById),
         "recipe_steps": getRecipeSteps(recipeById)

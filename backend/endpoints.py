@@ -10,7 +10,6 @@ from backend import app
 def recipes():
     if request.method == 'POST':
         newRecipeFull = request.get_json(force=True)
-        print(newRecipeFull)
         if Recipe.query.filter_by(name=newRecipeFull["name"]).first() is not None:
             return Response(status=202)
         else:
