@@ -150,6 +150,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+popos_venv/
+win10_venv/
 
 # Spyder project settings
 .spyderproject

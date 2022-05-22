@@ -1,21 +1,24 @@
 from flask import jsonify, request, abort, Response
 
 from backend import app
-from backend import models
+from backend.models import Recipe
 from backend.controllers import *
 from backend import app
 
-@app.route('/api/recipes', methods = ['GET', 'POST'])
+
+@app.route('/api/recipes', methods=['GET', 'POST'])
 def recipes():
     if request.method == 'POST':
-        newRecipeFull = request.get_json(force = True)
-        if models.Recipe.query.filter_by(name = newRecipeFull["name"]).first() is None:
+        newRecipeFull = request.get_json(force=True)
+        print(newRecipeFull)
+        if Recipe.query.filter_by(name=newRecipeFull["name"]).first() is not None:
             return Response(status=202)
         else:
             addFullRecipe(newRecipeFull)
             return Response(status=201)
     elif request.method == 'GET':
         return jsonify({"data": "coming soon"})
+
 
 @app.route('/api/recipes/<int:num>')
 def recipes_n(num):
@@ -24,6 +27,7 @@ def recipes_n(num):
         abort(404)
     else:
         return jsonify(getRecipeMeta(r))
+
 
 @app.route('/api/recipes/<int:num>/tags')
 def recipes_n_tags(num):
@@ -36,6 +40,7 @@ def recipes_n_tags(num):
             "recipe_tags": getRecipeTags(r)
         })
 
+
 @app.route('/api/recipes/<int:num>/ingredients')
 def recipes_n_ingredients(num):
     r = getRecipeById(num)
@@ -46,6 +51,7 @@ def recipes_n_ingredients(num):
             "name": r.name,
             "recipe_ingredients": getRecipeIngredients(r)
         })
+
 
 @app.route('/api/recipes/<int:num>/steps')
 def recipes_n_steps(num):
@@ -58,6 +64,7 @@ def recipes_n_steps(num):
             "recipe_steps": getRecipeSteps(r)
         })
 
+
 @app.route('/api/recipes/<int:num>/full')
 def recipes_n_full(num):
     r = getRecipeById(num)
@@ -66,15 +73,17 @@ def recipes_n_full(num):
     else:
         return jsonify(getFullRecipe(r))
 
+
 @app.route('/api/recipes/count')
 def recipes_count():
     return jsonify({"count": len(Recipe.query.all())})
 
+
 @app.route('/api/recipes/all')
 def recipes_all():
     return jsonify({"recipes":
-        [getRecipeMeta(recipe) for recipe in Recipe.query.all()]
-    })
+                    [getRecipeMeta(recipe) for recipe in Recipe.query.all()]
+                    })
 
 # @app.route('/api/recipes/all/tags')
 # def recipes_all_tags():

@@ -1,9 +1,12 @@
 from backend import db
 from backend.models import *
 
+
 def addFullRecipe(newRecipeFull):
     # adding the contributor (if it doesn't exist already)
-    contributor = Contributor.query.filter_by(name = newRecipeFull["contributor_name"]).first()
+    contributor = Contributor.query.filter_by(
+        name=newRecipeFull["contributor_name"]
+    ).first()
     if contributor is None:
         contributor = Contributor(**{
             "name": newRecipeFull["contributor_name"]
@@ -25,7 +28,7 @@ def addFullRecipe(newRecipeFull):
     db.session.commit()
 
     for step in newRecipeFull["recipe_steps"]:
-        db.session.add(Recipe_Steps(**{
+        db.session.add(Recipe_Step(**{
             "recipe_id": newRecipe.id,
             "serial_number": step["serial_number"],
             "instruction": step["instruction"]
@@ -33,7 +36,7 @@ def addFullRecipe(newRecipeFull):
     db.session.commit()
 
     for tag in newRecipeFull["recipe_tags"]:
-        db.session.add(Tags(**{
+        db.session.add(Tag(**{
             "recipe_id": newRecipe.id,
             "name": tag["name"]
         }))
@@ -41,7 +44,8 @@ def addFullRecipe(newRecipeFull):
 
     # add all the ingredients (if they don't exist already)
     for ingredient in newRecipeFull["recipe_ingredients"]:
-        newIngredient = Ingredient.query.filter_by(english_name = ingredient["english_name"]).first()
+        newIngredient = Ingredient.query.filter_by(
+            english_name=ingredient["english_name"]).first()
         if newIngredient is None:
             newIngredient = Ingredient(**{
                 "english_name": ingredient["english_name"],
@@ -51,28 +55,37 @@ def addFullRecipe(newRecipeFull):
             db.session.add(newIngredient)
             db.session.commit()
 
-        db.session.add(Recipe_Ingredients(**{
-                "recipe_id": newRecipe.id,
-                "ingredient_id": newIngredient.id,
-                "quantity": ingredient["quantity"],
-                "unit": ingredient["unit"]
+        db.session.add(Recipe_Ingredient(**{
+            "recipe_id": newRecipe.id,
+            "ingredient_id": newIngredient.id,
+            "quantity": ingredient["quantity"],
+            "unit": ingredient["unit"]
         }))
     db.session.commit()
 
-def getRecipeById(id: int):
+
+def getRecipeById(id: int) -> Recipe:
     return Recipe.query.get(id)
 
-def getRecipeMeta(recipe: Recipe):
-    recipe = recipe.__dict__
-    if '_sa_instance_state' in recipe:
-        recipe.pop('_sa_instance_state')
-    recipe.pop('contributor_id')
-    return recipe
+
+def getRecipeMeta(recipeById: Recipe):
+    return {
+        "id": recipeById.id,
+        "name": recipeById.name,
+        "prep_time": recipeById.prep_time,
+        "description": recipeById.description,
+        "difficulty": recipeById.difficulty,
+        "vegetarian": recipeById.vegetarian,
+        "quantity": recipeById.quantity,
+        "unit": recipeById.unit
+    }
+
 
 def getRecipeIngredients(recipe: Recipe):
     recipeIngredients = []
-    for recipe_ingredient in Recipe_Ingredients.query.filter_by(recipe_id=recipe.id):
-        ingredient = Ingredient.query.filter_by(id = recipe_ingredient.ingredient_id).first()
+    for recipe_ingredient in Recipe_Ingredient.query.filter_by(recipe_id=recipe.id):
+        ingredient = Ingredient.query.filter_by(
+            id=recipe_ingredient.ingredient_id).first()
         recipeIngredients.append({
             "english_name": ingredient.english_name,
             "hindi_name_latin": ingredient.hindi_name_latin,
@@ -82,20 +95,23 @@ def getRecipeIngredients(recipe: Recipe):
         })
     return recipeIngredients
 
-def getRecipeTags(recipe: Recipe):
+
+def getRecipeTag(recipe: Recipe):
     return [
-        tag.name for tag in 
-            Tags.query
-                .filter_by(recipe_id = recipe.id)
+        tag.name for tag in
+        Tag.query
+        .filter_by(recipe_id=recipe.id)
     ]
+
 
 def getRecipeSteps(recipe: Recipe):
     return [
-        step.instruction for step in 
-            Recipe_Steps.query
-                .filter_by(recipe_id = recipe.id)
-                .order_by(Recipe_Steps.serial_number)
+        step.instruction for step in
+        Recipe_Step.query
+        .filter_by(recipe_id=recipe.id)
+        .order_by(Recipe_Step.serial_number)
     ]
+
 
 def getContributor(recipe: Recipe):
     contributor = Contributor.query.get(recipe.contributor_id)
@@ -103,6 +119,7 @@ def getContributor(recipe: Recipe):
         "contributor_name": contributor.name,
         "contributor_bio": contributor.name
     }
+
 
 def getFullRecipe(recipeById: Recipe):
     c = getContributor(recipeById)
@@ -117,7 +134,7 @@ def getFullRecipe(recipeById: Recipe):
         "unit": recipeById.unit,
         "contributor_name": c["contributor_name"],
         "contributor_bio": c["contributor_bio"],
-        "recipe_tags": getRecipeTags(recipeById),
+        "recipe_tags": getRecipeTag(recipeById),
         "recipe_ingredients": getRecipeIngredients(recipeById),
         "recipe_steps": getRecipeSteps(recipeById)
     }

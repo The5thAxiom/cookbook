@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
@@ -25,3 +25,5 @@ db.create_all()
 
 from backend.controllers import *
 from backend.endpoints import *
+
+print(getFullRecipe(getRecipeById(1)))
