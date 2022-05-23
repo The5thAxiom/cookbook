@@ -2,24 +2,13 @@ from backend import db
 from backend.models import *
 
 
-def addFullRecipe(newRecipeFull):
-    # adding the contributor (if it doesn't exist already)
-    contributor = User.query.filter_by(
-        name=newRecipeFull["contributor_name"]
-    ).first()
-    if contributor is None:
-        contributor = User(**{
-            "name": newRecipeFull["contributor_name"]
-        })
-        db.session.add(contributor)
-        db.session.commit()
-
+def addFullRecipe(newRecipeFull: str):
     newRecipe = Recipe(**{
         "name": newRecipeFull["name"],
         "prep_time": newRecipeFull["prep_time"],
         "description": newRecipeFull["description"],
         "difficulty": newRecipeFull["difficulty"],
-        "contributor_id": contributor.id,
+        "contributor_id": newRecipeFull["contributor_id"],
         "vegetarian": newRecipeFull["vegetarian"],
         "quantity": newRecipeFull["quantity"],
         "unit": newRecipeFull["unit"]
@@ -61,6 +50,11 @@ def addFullRecipe(newRecipeFull):
             "quantity": ingredient["quantity"],
             "unit": ingredient["unit"]
         }))
+    db.session.commit()
+
+
+def addNewUser(newUser: dict):
+    db.session.add(User(**newUser))
     db.session.commit()
 
 
