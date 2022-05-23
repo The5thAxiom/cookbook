@@ -28,9 +28,9 @@ def users():
         return jsonify([user.to_dict() for user in User.query.all()])
 
 
-@app.route('/api/users/<int:num>')
-def users_n(num):
-    user = User.query.get(num)
+@app.route('/api/users/<username>')
+def users_str(username):
+    user = User.query.filter(User.username == username).first()
     if user is None:
         abort(404)
     else:

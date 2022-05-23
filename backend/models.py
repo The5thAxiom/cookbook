@@ -39,7 +39,6 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "username": self.username,
-            "password": self.password,
             "bio": self.bio
         }
 
