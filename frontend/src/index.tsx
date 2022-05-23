@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-import About from './pages/about';
+import User from './pages/user';
 import BrowseRecipes from './pages/browseRecipes';
 import BrowseSkills from './pages/browseSkills';
 import CheckRecipe from './pages/checkRecipe';
@@ -12,6 +12,8 @@ import App from './App';
 
 import './index.css';
 import WhatCanIMake from './pages/whatCanIMake';
+import Profile from './pages/profile';
+import Login from './pages/login';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -28,15 +30,19 @@ root.render(
                 <Route index element={<Home />} />
                 <Route path='home' element={<Home />} />
                 <Route path='recipes' element={<Outlet />}>
-                    <Route path='browse' element={<BrowseRecipes />} />
+                    <Route index element={<BrowseRecipes />} />
                     <Route path=':id' element={<CheckRecipe />} />
                 </Route>
                 <Route path='skills' element={<Outlet />}>
-                    <Route path='browse' element={<BrowseSkills />} />
+                    <Route index element={<BrowseSkills />} />
                     <Route path=':id' element={<CheckSkill />} />
                 </Route>
                 <Route path='what-can-i-make' element={<WhatCanIMake />} />
-                <Route path='about' element={<About />} />
+                <Route path='user' element={<Outlet />}>
+                    <Route index element={<Profile />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="profile/:username" element={<User />} />
+                </Route>
             </Route>
         </Routes>
     </HashRouter>

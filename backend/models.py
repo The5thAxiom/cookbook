@@ -3,20 +3,25 @@ from backend import db
 # adding images still needs to be workshopped
 
 # The database
+
+
 class Ingredient(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    english_name = db.Column(db.String, unique = True, nullable = False)
-    hindi_name_latin = db.Column(db.String, nullable = False, unique = True)
-    hindi_name_devnagari = db.Column(db.Text, unique = True)
+    id = db.Column(db.Integer, primary_key=True)
+    english_name = db.Column(db.String, unique=True, nullable=False)
+    hindi_name_latin = db.Column(db.String, nullable=False, unique=True)
+    hindi_name_devnagari = db.Column(db.Text, unique=True)
     recipes = db.relationship(
         'Recipe_Ingredient',
         backref=db.backref('ingredient', uselist=False),
         lazy=True
     )
 
+
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable = False, unique = True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=False)
+    username = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False, unique=False)
     bio = db.Column(db.Text, nullable=True, unique=False)
     recipes = db.relationship(
         'Recipe',
@@ -29,24 +34,33 @@ class User(db.Model):
         lazy=True
     )
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "username": self.username,
+            "bio": self.bio
+        }
+
+
 class Recipe(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable = False, unique = True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     #header_image = db.Column(db.Blob(), nullable = False)
-    prep_time = db.Column(db.Integer, nullable = False)
-    description = db.Column(db.Text, nullable = False)
-    difficulty = db.Column(db.Integer, nullable = False)
-    vegetarian = db.Column(db.Boolean, nullable = False)
-    quantity = db.Column(db.Float, nullable = False)
-    unit = db.Column(db.String, nullable = False)
+    prep_time = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    difficulty = db.Column(db.Integer, nullable=False)
+    vegetarian = db.Column(db.Boolean, nullable=False)
+    quantity = db.Column(db.Float, nullable=False)
+    unit = db.Column(db.String, nullable=False)
     contributor_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),
-        nullable = False
+        nullable=False
     )
     steps = db.relationship(
         'Recipe_Step',
-        backref = db.backref('recipe', uselist=False),
+        backref=db.backref('recipe', uselist=False),
         lazy=True
     )
     tags = db.relationship(
@@ -56,45 +70,48 @@ class Recipe(db.Model):
     )
     ingredients = db.relationship(
         'Recipe_Ingredient',
-        backref = db.backref('recipe', uselist=False),
+        backref=db.backref('recipe', uselist=False),
         lazy=False
     )
 
     def __repr__(self):
         return f"<Recipe {self.id}: {self.name}>"
 
+
 class Recipe_Step(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(
         db.Integer,
         db.ForeignKey("recipe.id"),
-        nullable = False
+        nullable=False
     )
     # recipe (backref)
-    serial_number = db.Column(db.Integer, nullable = False)
-    instruction = db.Column(db.Text, nullable = False)
+    serial_number = db.Column(db.Integer, nullable=False)
+    instruction = db.Column(db.Text, nullable=False)
+
 
 class Recipe_Ingredient(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(
         db.Integer,
         db.ForeignKey("recipe.id"),
-        nullable = False
+        nullable=False
     )
     ingredient_id = db.Column(
         db.Integer,
         db.ForeignKey("ingredient.id"),
         nullable=False
     )
-    quantity = db.Column(db.Float, nullable = False)
-    unit = db.Column(db.String, nullable = False)
+    quantity = db.Column(db.Float, nullable=False)
+    unit = db.Column(db.String, nullable=False)
+
 
 class Skill(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable = False, unique = True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     #header_image = db.Column(db.LargeBinary, nullable = False)
-    description = db.Column(db.Text, nullable = False)
-    difficulty = db.Column(db.String, nullable = False)
+    description = db.Column(db.Text, nullable=False)
+    difficulty = db.Column(db.String, nullable=False)
     contributor_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),
@@ -102,30 +119,32 @@ class Skill(db.Model):
     )
     steps = db.relationship(
         'Skill_Step',
-        backref = db.backref('skill', uselist=False),
+        backref=db.backref('skill', uselist=False),
         lazy=True
     )
 
+
 class Skill_Step(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(
         db.Integer,
         db.ForeignKey("skill.id"),
-        nullable = False
+        nullable=False
     )
-    serial_number = db.Column(db.Integer, nullable = False)
-    instruction = db.Column(db.Text, nullable = False)
+    serial_number = db.Column(db.Integer, nullable=False)
+    instruction = db.Column(db.Text, nullable=False)
+
 
 class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(
         db.Integer,
         db.ForeignKey("recipe.id"),
-        nullable = True
+        nullable=True
     )
     skill_id = db.Column(
         db.Integer,
         db.ForeignKey("skill.id"),
         nullable=True
     )
-    name = db.Column(db.String, nullable = False)
+    name = db.Column(db.String, nullable=False)

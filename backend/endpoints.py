@@ -19,6 +19,24 @@ def recipes():
         return jsonify({"data": "coming soon"})
 
 
+@app.route('/api/users', methods=['GET', 'POST'])
+def users():
+    if request.method == 'POST':
+        addNewUser(request.get_json(force=True))
+        return Response(status=201)
+    else:
+        return jsonify([user.to_dict() for user in User.query.all()])
+
+
+@app.route('/api/users/<username>')
+def users_str(username):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        return jsonify(user.to_dict())
+
+
 @app.route('/api/recipes/<int:num>')
 def recipes_n(num):
     r = getRecipeById(num)
@@ -80,42 +98,40 @@ def recipes_count():
 
 @app.route('/api/recipes/all')
 def recipes_all():
-    return jsonify({"recipes":
-                    [getRecipeMeta(recipe) for recipe in Recipe.query.all()]
-                    })
+    return jsonify({
+        "recipes": [
+            getRecipeMeta(recipe)
+            for recipe in Recipe.query.all()
+        ]
+    })
 
-# @app.route('/api/recipes/all/tags')
-# def recipes_all_tags():
-#     return jsonify({"recipes":
-#         list(map(getRecipeTags, Recipe.query.all()))
-#     })
-
-# @app.route('/api/recipes/all/ingredients')
-# def recipes_all_ingredients():
-#     return jsonify({"recipes":
-#         list(map(getRecipeIngredients, Recipe.query.all()))
-#     })
-
-# @app.route('/api/recipes/all/steps')
-# def recipes_all_steps():
-#     return jsonify({"recipes":
-#         list(map(getRecipeSteps, Recipe.query.all()))
-#     })
-
-# @app.route('/api/recipes/all/full')
-# def recipes_all_full():
-#     return jsonify({"recipes":
-#         list(map(getRecipeMeta, Recipe.query.all()))
-#     })
-
-# @app.route('/api/skills/all')
-# def api_allSkills():
-#     return jsonify(getAllSkills())
-
-# @app.route('/api/skills/<int:num>')
-# def api_skill(num):
-#     recipe = getSkillDictionary(getSkillById(num))
-#     if recipe is None:
-#         abort(404)
-#     else:
-#         return jsonify(recipe)
+    # @app.route('/api/recipes/all/tags')
+    # def recipes_all_tags():
+    #     return jsonify({"recipes":
+    #         list(map(getRecipeTags, Recipe.query.all()))
+    #     })
+    # @app.route('/api/recipes/all/ingredients')
+    # def recipes_all_ingredients():
+    #     return jsonify({"recipes":
+    #         list(map(getRecipeIngredients, Recipe.query.all()))
+    #     })
+    # @app.route('/api/recipes/all/steps')
+    # def recipes_all_steps():
+    #     return jsonify({"recipes":
+    #         list(map(getRecipeSteps, Recipe.query.all()))
+    #     })
+    # @app.route('/api/recipes/all/full')
+    # def recipes_all_full():
+    #     return jsonify({"recipes":
+    #         list(map(getRecipeMeta, Recipe.query.all()))
+    #     })
+    # @app.route('/api/skills/all')
+    # def api_allSkills():
+    #     return jsonify(getAllSkills())
+    # @app.route('/api/skills/<int:num>')
+    # def api_skill(num):
+    #     recipe = getSkillDictionary(getSkillById(num))
+    #     if recipe is None:
+    #         abort(404)
+    #     else:
+    #         return jsonify(recipe)

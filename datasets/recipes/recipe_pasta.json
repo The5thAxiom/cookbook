@@ -6,7 +6,7 @@
     "vegetarian": true,
     "quantity": 1,
     "unit": "plate",
-    "contributor_name": "Samy",
+    "contributor_id": 1,
     "recipe_tags": [{
         "name": "pasta"
     }, {
