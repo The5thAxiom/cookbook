@@ -54,3 +54,10 @@ export type arrowData = {
 export type tagData = {
     tag: string;
 };
+
+export type userData = {
+    id: number;
+    name: string;
+    username: string;
+    bio: string;
+}
