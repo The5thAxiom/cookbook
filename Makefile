@@ -9,9 +9,9 @@ flask-newdb:
 	flask run
 
 post:
-	cd datasets/users && ./post_users.sh
-	cd datasets/user_logins && ./post_logins.sh
-	cd datasets/recipes && ./post_recipes.sh
+	cd test_datasets/users && ./post_users.sh
+	cd test_datasets/user_logins && ./post_logins.sh
+	cd test_datasets/recipes && ./post_recipes.sh
 
 react:
 	cd frontend && npm start

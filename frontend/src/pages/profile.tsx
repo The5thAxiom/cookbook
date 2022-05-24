@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom';
 import LoadingAnimation from '../components/loadingAnimation';
 import { userData } from '../values/types';
 
-export default function Profile({accessToken}: {accessToken: string}) {
+export default function Profile({accessToken, setAccessToken, removeAccessToken}: {
+    accessToken: string;
+    setAccessToken?: any;
+    removeAccessToken?: any;
+}) {
 
     const [user, setUser] = useState<userData>(null as any);
 
@@ -13,9 +17,17 @@ export default function Profile({accessToken}: {accessToken: string}) {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
-        }).then(res => res.json()).then(data => setUser(data));
-    })
-    
+        }).then(res => {
+            if (res.ok) return res.json();
+            else {
+                removeAccessToken();
+                throw new Error;
+            }
+        }).then(data => {
+            data.access_token && setAccessToken(data.access_token)
+            setUser(data)
+        }).catch(e => {});
+    }, [accessToken, setAccessToken, removeAccessToken])
 
     if (user)
     return (
@@ -23,13 +35,17 @@ export default function Profile({accessToken}: {accessToken: string}) {
             <h1>@{user.username}</h1>
             <b>{user.name}</b>
             <p>{user.bio}</p>
-            <ol>
+            <ul>
                 <li><NavLink to='/recipes/new'>add recipe</NavLink></li>
-                <li><NavLink to='/skills/new'>add skill</NavLink></li>
                 <li><NavLink to='/recipes'>see your recipes</NavLink></li>
+                <li><NavLink to='/skills/new'>add skill</NavLink></li>
                 <li><NavLink to='/skills'>see your skills</NavLink></li>
-            </ol>
+            </ul>
         </main>
     );
-    else return <main><LoadingAnimation/></main>
+    else return (
+        <main>
+            <LoadingAnimation/>
+        </main>
+    )
 }

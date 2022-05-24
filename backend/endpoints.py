@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import json
 
 from flask import jsonify, request, abort, Response
 from flask_jwt_extended import\
@@ -34,8 +35,7 @@ def user_login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     user = User.query.filter(User.username == username).first()
-    if user is not None and password == user.password:
-        print(user.to_dict())
+    if user is not None and encrypt_password(password) == user.password:
         access_token = create_access_token(identity=username)
         return jsonify({"access_token": access_token})
     else:

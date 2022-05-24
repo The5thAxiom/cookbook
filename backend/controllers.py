@@ -1,6 +1,9 @@
 from backend import db
 from backend.models import *
+import bcrypt
 
+def encrypt_password(password: str) -> str:
+    return password
 
 def addFullRecipe(newRecipeFull: str):
     newRecipe = Recipe(**{
@@ -54,6 +57,7 @@ def addFullRecipe(newRecipeFull: str):
 
 
 def addNewUser(newUser: dict):
+    newUser['password'] = encrypt_password(newUser['password'])
     db.session.add(User(**newUser))
     db.session.commit()
 
@@ -87,7 +91,7 @@ def getRecipeIngredients(recipe: Recipe):
     ]
 
 
-def getRecipeTag(recipe: Recipe):
+def getRecipeTags(recipe: Recipe):
     return [tag.name for tag in recipe.tags]
 
 
@@ -104,7 +108,6 @@ def getContributor(recipe: Recipe):
 
 
 def getFullRecipe(recipeById: Recipe):
-    c = getContributor(recipeById)
     return {
         "id": recipeById.id,
         "name": recipeById.name,
@@ -116,7 +119,7 @@ def getFullRecipe(recipeById: Recipe):
         "unit": recipeById.unit,
         "contributor_name": recipeById.contributor.name,
         "contributor_bio": recipeById.contributor.bio,
-        "recipe_tags": getRecipeTag(recipeById),
+        "recipe_tags": getRecipeTags(recipeById),
         "recipe_ingredients": getRecipeIngredients(recipeById),
         "recipe_steps": getRecipeSteps(recipeById)
     }
