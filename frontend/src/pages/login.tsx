@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Login(
     {accessToken, setAccessToken}: {
@@ -27,7 +28,7 @@ export default function Login(
     return (
         <main>
             <b>{accessToken && accessToken}</b>
-            <h1>Login Form here</h1>
+            <h1>Login</h1>
             <form>
                 <label htmlFor="username"><b>Username</b></label>
                 {"  "}
@@ -51,10 +52,12 @@ export default function Login(
                 />
                 <br/>
                 <br/>
-                <button
-                    onClick={submitForm}
-                >Login</button>
+                <button onClick={submitForm}>
+                    Login
+                </button>
             </form>
+            <br/>
+            Don't have an account? <NavLink to="/user/new">Signup</NavLink> here today!
         </main>
     )
 }

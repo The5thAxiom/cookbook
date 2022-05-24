@@ -22,6 +22,7 @@ def users():
     if request.method == 'POST':
         newUser = request.get_json(force=True)
         user = User.query.filter(User.username == newUser['username']).first()
+        print(newUser)
         if user is None:
             addNewUser(newUser)
             return Response(status=201)

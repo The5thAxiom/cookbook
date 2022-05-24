@@ -18,6 +18,7 @@ import './index.css';
 import WhatCanIMake from './pages/whatCanIMake';
 import Profile from './pages/profile';
 import Login from './pages/login';
+import Signup from './pages/signup';
 import useAccessToken from './useAccessToken';
 
 export default function App() {
@@ -56,13 +57,19 @@ export default function App() {
                                 />
                             } 
                         />
-                        : <Route
-                            index
-                            element={<Login 
-                                accessToken={accessToken}
-                                setAccessToken={setAccessToken}
-                            />}
-                        />
+                        : <>
+                            <Route
+                                index
+                                element={<Login 
+                                    accessToken={accessToken}
+                                    setAccessToken={setAccessToken}
+                                />}
+                            />
+                            <Route
+                                path='new'
+                                element={<Signup />}
+                            />
+                        </>
                     }
                     
                     <Route path="profile/:username" element={<User />} />
