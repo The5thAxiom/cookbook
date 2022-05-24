@@ -71,7 +71,8 @@ def getRecipeMeta(recipeById: Recipe):
         "difficulty": recipeById.difficulty,
         "vegetarian": recipeById.vegetarian,
         "quantity": recipeById.quantity,
-        "unit": recipeById.unit
+        "unit": recipeById.unit,
+        "contributor_username": recipeById.contributor.username
     }
 
 
@@ -99,6 +100,7 @@ def getRecipeSteps(recipe: Recipe):
 def getContributor(recipe: Recipe):
     return {
         "contributor_name": recipe.contributor.name,
+        "contributor_username": recipeById.contributor.username,
         "contributor_bio": recipe.contributor.bio
     }
 
@@ -114,6 +116,7 @@ def getFullRecipe(recipeById: Recipe):
         "quantity": recipeById.quantity,
         "unit": recipeById.unit,
         "contributor_name": recipeById.contributor.name,
+        "contributor_username": recipeById.contributor.username,
         "contributor_bio": recipeById.contributor.bio,
         "recipe_tags": getRecipeTags(recipeById),
         "recipe_ingredients": getRecipeIngredients(recipeById),

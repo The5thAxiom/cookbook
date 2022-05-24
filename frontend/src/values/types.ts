@@ -19,6 +19,7 @@ export type recipeMeta = {
     quantity: number;
     unit: string;
     vegetarian: boolean;
+    contributor_username: string;
 };
 
 export type recipeIngredient = {
@@ -40,6 +41,7 @@ export type recipeFull = {
     vegetarian: boolean;
     contributor_bio: string;
     contributor_name: string;
+    contributor_username: string;
     recipe_ingredients: recipeIngredient[];
     recipe_steps: string[];
     recipe_tags: string[];

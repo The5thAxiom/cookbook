@@ -71,7 +71,6 @@ export default function App() {
                             />
                         </>
                     }
-                    
                     <Route path="profile/:username" element={<User />} />
                 </Route>
             </Route>
