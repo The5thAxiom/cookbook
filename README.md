@@ -16,6 +16,10 @@ Making a simple app using React and Flask.
 ## Other
 - [ ] Make proper readme page (highlight the stuff used, what it does, etc)
 - [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
+
+# credits
+- authorization added by following [this](https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7) page
+
 # How to run
 
 -   Run the command `npm run cookbook`

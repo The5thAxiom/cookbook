@@ -4,6 +4,7 @@ import { navBarLinks } from '../values/navBarLinks';
 import { navBarLink } from '../values/types';
 import './layout.css';
 import '../index.css';
+import LogoutIcon from '../components/icons/logoutIcon';
 
 export default function NavBar({accessToken, removeAccessToken}: {
         accessToken: string,
@@ -17,10 +18,9 @@ export default function NavBar({accessToken, removeAccessToken}: {
             }
         }).then(res => {
             removeAccessToken();
-            console.log(accessToken);
         });
-        
-    }
+    };
+
     return (
         <nav id='nav-bar'>
             {/* <NavLink className='navbar-link' to={'/'}>
@@ -37,7 +37,13 @@ export default function NavBar({accessToken, removeAccessToken}: {
                 />
             ))}
             {accessToken !== "" && 
-                <button onClick={logout} >Logout</button>
+                <NavLink
+                    className='navbar-link'
+                    onClick={logout}
+                    to='/user'
+                >
+                    <LogoutIcon/>
+                </NavLink>
             }
         </nav>
     );
