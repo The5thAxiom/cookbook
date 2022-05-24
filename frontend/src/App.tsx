@@ -10,12 +10,15 @@ import BrowseSkills from './pages/browseSkills';
 import CheckRecipe from './pages/checkRecipe';
 import CheckSkill from './pages/checkSkill';
 import Home from './pages/home';
+import NewRecipe from './pages/newRecipe';
+import NewSkill from './pages/newSkill';
 
 
 import './index.css';
 import WhatCanIMake from './pages/whatCanIMake';
 import Profile from './pages/profile';
 import Login from './pages/login';
+import Signup from './pages/signup';
 import useAccessToken from './useAccessToken';
 
 export default function App() {
@@ -33,12 +36,12 @@ export default function App() {
                 <Route path='recipes' element={<Outlet />}>
                     <Route index element={<BrowseRecipes />} />
                     <Route path=':id' element={<CheckRecipe />} />
-                    <Route path='new' element={<main>New recipe form here</main>} />
+                    <Route path='new' element={<NewRecipe/>} />
                 </Route>
                 <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />
                     <Route path=':id' element={<CheckSkill />} />
-                    <Route path='new' element={<main>New skill form here</main>} />
+                    <Route path='new' element={<NewSkill />} />
                 </Route>
                 <Route path='what-can-i-make' element={<WhatCanIMake />} />
                 <Route path='user' element={<Outlet />}>
@@ -47,16 +50,26 @@ export default function App() {
                         ? <Route
                             index
                             element={
-                                <Profile accessToken={accessToken}/>
+                                <Profile
+                                    accessToken={accessToken}
+                                    setAccessToken={setAccessToken}
+                                    removeAccessToken={removeAccessToken}
+                                />
                             } 
                         />
-                        : <Route
-                            index
-                            element={<Login 
-                                accessToken={accessToken}
-                                setAccessToken={setAccessToken}
+                        : <>
+                            <Route
+                                index
+                                element={<Login 
+                                    accessToken={accessToken}
+                                    setAccessToken={setAccessToken}
                                 />}
                             />
+                            <Route
+                                path='new'
+                                element={<Signup />}
+                            />
+                        </>
                     }
                     
                     <Route path="profile/:username" element={<User />} />

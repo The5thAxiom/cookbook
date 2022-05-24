@@ -1,8 +1,10 @@
 from datetime import timedelta
+import os
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 from flask_jwt_extended import\
     create_access_token,\
     get_jwt,\
@@ -12,10 +14,14 @@ from flask_jwt_extended import\
     JWTManager
 
 # creating the flask app
-app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
+app = Flask(
+    __name__,
+    static_folder='../frontend/build',
+    static_url_path='/'
+)
 CORS(app)
 
-app.config["JWT_SECRET_KEY"] = "dummy_key_here"
+app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
 jwt = JWTManager(app)
 
@@ -24,6 +30,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # we don't need real time u
 
 db = SQLAlchemy(app)
 
+bcrypt = Bcrypt(app)
 
 # this will initialize the tables
 from backend.models import *
