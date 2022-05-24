@@ -1,6 +1,3 @@
-popos_venv_activate:
-	source popos_venv/bin/activate
-
 flask:
 	flask run
 

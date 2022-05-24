@@ -21,7 +21,7 @@ export default function Profile({accessToken, setAccessToken, removeAccessToken}
             if (res.ok) return res.json();
             else {
                 removeAccessToken();
-                throw new Error;
+                throw new Error();
             }
         }).then(data => {
             data.access_token && setAccessToken(data.access_token)

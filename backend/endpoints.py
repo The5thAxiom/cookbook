@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta, timezone
 import json
 
+
 from flask import jsonify, request, abort, Response
+from flask_bcrypt import Bcrypt
 from flask_jwt_extended import\
     create_access_token,\
     get_jwt,\
@@ -10,10 +12,9 @@ from flask_jwt_extended import\
     jwt_required,\
     JWTManager
 
-from backend import app
+from backend import app, bcrypt
 from backend.models import Recipe
 from backend.controllers import *
-from backend import app
 
 
 @app.route('/api/users', methods=['GET', 'POST'])
@@ -33,9 +34,9 @@ def users():
 @app.route('/api/users/login', methods=["POST"])
 def user_login():
     username = request.json.get("username", None)
-    password = request.json.get("password", None)
+    password = request.json.get("password", None).encode('utf-8')
     user = User.query.filter(User.username == username).first()
-    if user is not None and encrypt_password(password) == user.password:
+    if user is not None and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=username)
         return jsonify({"access_token": access_token})
     else:

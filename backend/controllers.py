@@ -1,9 +1,5 @@
-from backend import db
+from backend import db, bcrypt
 from backend.models import *
-import bcrypt
-
-def encrypt_password(password: str) -> str:
-    return password
 
 def addFullRecipe(newRecipeFull: str):
     newRecipe = Recipe(**{
@@ -57,7 +53,7 @@ def addFullRecipe(newRecipeFull: str):
 
 
 def addNewUser(newUser: dict):
-    newUser['password'] = encrypt_password(newUser['password'])
+    newUser['password'] = bcrypt.generate_password_hash(newUser['password'].encode('utf-8'))
     db.session.add(User(**newUser))
     db.session.commit()
 
