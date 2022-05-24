@@ -5,7 +5,22 @@ import { navBarLink } from '../values/types';
 import './layout.css';
 import '../index.css';
 
-export default function NavBar() {
+export default function NavBar({accessToken, removeAccessToken}: {
+        accessToken: string,
+        removeAccessToken: any
+    }) {
+    const logout = () => {
+        fetch('/api/users/logout', {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(res => {
+            removeAccessToken();
+            console.log(accessToken);
+        });
+        
+    }
     return (
         <nav id='nav-bar'>
             {/* <NavLink className='navbar-link' to={'/'}>
@@ -21,6 +36,9 @@ export default function NavBar() {
                     to={link.to}
                 />
             ))}
+            {accessToken !== "" && 
+                <button onClick={logout} >Logout</button>
+            }
         </nav>
     );
 }

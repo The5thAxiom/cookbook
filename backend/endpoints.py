@@ -34,15 +34,23 @@ def user_login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     user = User.query.filter(User.username == username).first()
-    if password == user.password:
+    if user is not None and password == user.password:
+        print(user.to_dict())
         access_token = create_access_token(identity=username)
         return jsonify({"access_token": access_token})
     else:
         abort(401)
 
-@app.route('/api/users/logout', methods=["POST"])
+
+@app.route('/api/users/profile')
+@jwt_required()
+def user_profile():
+    username = get_jwt_identity()
+    return jsonify(User.query.filter(User.username == username).first().to_dict())
+
+@app.route('/api/users/logout')
 def user_logout():
-    response = Response(status=204)
+    response = Response(status=202)
     unset_jwt_cookies(response)
     return response
 

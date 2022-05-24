@@ -61,3 +61,8 @@ export type userData = {
     username: string;
     bio: string;
 }
+
+
+export type accessTokenData = {
+    access_token: string;
+}
