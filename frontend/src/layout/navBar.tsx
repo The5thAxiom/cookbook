@@ -4,8 +4,23 @@ import { navBarLinks } from '../values/navBarLinks';
 import { navBarLink } from '../values/types';
 import './layout.css';
 import '../index.css';
+import LogoutIcon from '../components/icons/logoutIcon';
 
-export default function NavBar() {
+export default function NavBar({accessToken, removeAccessToken}: {
+        accessToken: string,
+        removeAccessToken: any
+    }) {
+    const logout = () => {
+        fetch('/api/users/logout', {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(res => {
+            removeAccessToken();
+        });
+    };
+
     return (
         <nav id='nav-bar'>
             {/* <NavLink className='navbar-link' to={'/'}>
@@ -21,6 +36,15 @@ export default function NavBar() {
                     to={link.to}
                 />
             ))}
+            {accessToken !== "" && 
+                <NavLink
+                    className='navbar-link'
+                    onClick={logout}
+                    to='/user'
+                >
+                    <LogoutIcon/>
+                </NavLink>
+            }
         </nav>
     );
 }

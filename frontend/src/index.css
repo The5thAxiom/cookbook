@@ -2,6 +2,8 @@
     --navbar-height: 50px;
 }
 
+body {overflow: scroll;}
+
 body,
 div#root {
     width: 100%;
