@@ -17,7 +17,6 @@ export default function Login(
             });
             if (await res.ok) {
                 let a = await res.json();
-                console.log(a.access_token);
                 setAccessToken(a.access_token);
             } else {
                 window.alert("wrong login attempt")

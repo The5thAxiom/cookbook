@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import LoadingAnimation from '../components/loadingAnimation';
-import { accessTokenData, userData } from '../values/types';
+import { userData } from '../values/types';
 
 export default function Profile({accessToken}: {accessToken: string}) {
 
@@ -14,7 +14,7 @@ export default function Profile({accessToken}: {accessToken: string}) {
                 Authorization: `Bearer ${accessToken}`
             }
         }).then(res => res.json()).then(data => setUser(data));
-    }, [])
+    })
     
 
     if (user)

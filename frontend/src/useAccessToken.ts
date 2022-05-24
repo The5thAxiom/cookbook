@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { accessTokenData } from "./values/types";
 
 export default function useAccessToken() {
 
