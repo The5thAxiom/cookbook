@@ -10,6 +10,7 @@ flask-newdb:
 
 post:
 	cd datasets/users && ./post_users.sh
+	cd datasets/user_logins && ./post_logins.sh
 	cd datasets/recipes && ./post_recipes.sh
 
 react:
