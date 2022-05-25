@@ -8,7 +8,7 @@ export default function BrowseRecipes() {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
     useEffect(() => {
-        const user = searchParams.get('user');
+        const user = searchParams.get('only-user');
         setRecipes(null as any);
         if (user !== null)
             fetch(`/api/users/${user}/recipes`)

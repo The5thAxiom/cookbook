@@ -48,7 +48,7 @@ export default function Profile({
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink end to={`/recipes?user=${user.username}`}>
+                        <NavLink end to={`/recipes?only-user=${user.username}`}>
                             see your recipes
                         </NavLink>
                     </li>
@@ -64,3 +64,4 @@ export default function Profile({
             </main>
         );
 }
+
