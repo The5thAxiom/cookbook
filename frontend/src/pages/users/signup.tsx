@@ -42,56 +42,56 @@ export default function Signup() {
             <main>
                 <h1>Welcome to Samy's Cookbook!</h1>
                 <form className='cookbook-form'>
-                    <label htmlFor='name'>
-                        <b>Name</b>
-                    </label>
-                    {'  '}
-                    <input
-                        type='text'
-                        placeholder='Enter your name'
-                        name='name'
-                        onChange={e => {
-                            setName(e.target.value);
-                        }}
-                        required
-                    />
-                    <br />
-                    <br />
-                    <label htmlFor='username'>
-                        <b>Username</b>
-                    </label>
-                    {'  '}
-                    <input
-                        type='text'
-                        placeholder='Enter your username'
-                        name='username'
-                        onChange={e => {
-                            setUsername(e.target.value);
-                        }}
-                        required
-                    />
-                    <br />
-                    <br />
-                    <label htmlFor='password'>
-                        <b>Password</b>
-                    </label>
-                    {'  '}
-                    <input
-                        type='password'
-                        placeholder='Enter your password'
-                        name='password'
-                        onChange={e => {
-                            setPassword(e.target.value);
-                        }}
-                        required
-                    />
-                    <br />
-                    <br />
+                    <div>
+                        <label htmlFor='name'>
+                            <b>Name</b>
+                        </label>
+                        <input
+                            className='cookbook-form-labelled'
+                            type='text'
+                            placeholder='Enter your name'
+                            name='name'
+                            onChange={e => {
+                                setName(e.target.value);
+                            }}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor='username'>
+                            <b>Username</b>
+                        </label>
+                        <input
+                            className='cookbook-form-labelled'
+                            type='text'
+                            placeholder='Enter your username'
+                            name='username'
+                            onChange={e => {
+                                setUsername(e.target.value);
+                            }}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor='password'>
+                            <b>Password</b>
+                        </label>
+                        <input
+                            className='cookbook-form-labelled'
+                            type='password'
+                            placeholder='Enter your password'
+                            name='password'
+                            onChange={e => {
+                                setPassword(e.target.value);
+                            }}
+                            required
+                        />
+                    </div>
                     <label htmlFor='bio'>
                         <b>Bio</b>
                     </label>
-                    <br />
                     <textarea
+                        className='cookbook-form-labelled'
                         name='bio'
                         rows={3}
                         cols={25}
@@ -100,15 +100,6 @@ export default function Signup() {
                             setBio(e.target.value);
                         }}
                     />
-                    {/* <input
-                        type=''
-                        placeholder="Enter your password"
-                        name="password"
-                        // onChange={e => {setPassword(e.target.value)}}
-                        required
-                    /> */}
-                    <br />
-                    <br />
                     <button onClick={submitForm}>Signup</button>
                 </form>
             </main>
