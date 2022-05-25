@@ -35,6 +35,9 @@ h6 {
 
 h1 {
     font-size: xxx-large;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 h2 {
     font-size: xx-large;
