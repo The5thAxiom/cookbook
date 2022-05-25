@@ -62,9 +62,21 @@ export type userData = {
     name: string;
     username: string;
     bio: string;
-}
+};
 
+export type userSignupData = {
+    name: string;
+    password: string;
+    username: string;
+    bio: string;
+};
+
+export type userLoginData = {
+    username: string;
+    password: string;
+};
 
 export type accessTokenData = {
     access_token: string;
-}
+};
+

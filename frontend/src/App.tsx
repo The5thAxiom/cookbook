@@ -1,81 +1,92 @@
 import React from 'react';
-
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
+
+import './index.css';
 
 import Footer from './layout/footer';
 import NavBar from './layout/navBar';
-import User from './pages/user';
-// import BrowseSkills from './pages/browsseSkills';
-import CheckRecipe from './pages/checkRecipe';
-// import CheckSkill from './pages/checkSkill';
+
 import Home from './pages/home';
-import NewRecipe from './pages/newRecipe';
+
+import CheckRecipe from './pages/recipes/checkRecipe';
+import NewRecipe from './pages/recipes/newRecipe';
+import BrowseRecipes from './pages/recipes/browseRecipes';
+
+// import BrowseSkills from './pages/browsseSkills';
+// import CheckSkill from './pages/checkSkill';
 // import NewSkill from './pages/newSkill';
 
+import User from './pages/users/user';
+import Profile from './pages/users/profile';
+import Login from './pages/users/login';
+import Signup from './pages/users/signup';
 
-import './index.css';
-import BrowseRecipes from './pages/browseRecipes';
-import Profile from './pages/profile';
-import Login from './pages/login';
-import Signup from './pages/signup';
 import useAccessToken from './useAccessToken';
 
 export default function App() {
-    const {accessToken, setAccessToken, removeAccessToken} = useAccessToken();
+    const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
     return (
         <HashRouter basename=''>
-        <Routes>
-            <Route path='/' element={<>
-                <NavBar accessToken={accessToken} removeAccessToken={removeAccessToken} />
-                <Outlet />
-                <Footer />
-            </>}>
-                <Route index element={<Home />} />
-                <Route path='home' element={<Home />} />
-                <Route path='recipes' element={<Outlet />}>
-                    <Route index element={<BrowseRecipes />} />
-                    <Route path=':id' element={<CheckRecipe />} />
-                    <Route path='filter' element={<BrowseRecipes />} />
-                    <Route path='new' element={<NewRecipe/>} />
-                </Route>
-                {/* <Route path='skills' element={<Outlet />}>
+            <Routes>
+                <Route
+                    path='/'
+                    element={
+                        <>
+                            <NavBar
+                                accessToken={accessToken}
+                                removeAccessToken={removeAccessToken}
+                            />
+                            <Outlet />
+                            <Footer />
+                        </>
+                    }
+                >
+                    <Route index element={<Home />} />
+                    <Route path='home' element={<Home />} />
+                    <Route path='recipes' element={<Outlet />}>
+                        <Route index element={<BrowseRecipes />} />
+                        <Route path=':id' element={<CheckRecipe />} />
+                        <Route path='filter' element={<BrowseRecipes />} />
+                        <Route path='new' element={<NewRecipe />} />
+                    </Route>
+                    {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />
                     <Route path=':id' element={<CheckSkill />} />
                     <Route path='filter' element={<FilterSkills />} />
                     <Route path='new' element={<NewSkill />} />
                 </Route> */}
-                <Route path='user' element={<Outlet />}>
-                    {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
-                    {accessToken !== ""
-                        ? <Route
-                            index
-                            element={
-                                <Profile
-                                    accessToken={accessToken}
-                                    setAccessToken={setAccessToken}
-                                    removeAccessToken={removeAccessToken}
-                                />
-                            } 
-                        />
-                        : <>
+                    <Route path='user' element={<Outlet />}>
+                        {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
+                        {accessToken !== '' ? (
                             <Route
                                 index
-                                element={<Login 
-                                    accessToken={accessToken}
-                                    setAccessToken={setAccessToken}
-                                />}
+                                element={
+                                    <Profile
+                                        accessToken={accessToken}
+                                        setAccessToken={setAccessToken}
+                                        removeAccessToken={removeAccessToken}
+                                    />
+                                }
                             />
-                            <Route
-                                path='new'
-                                element={<Signup />}
-                            />
-                        </>
-                    }
-                    <Route path="profile/:username" element={<User />} />
+                        ) : (
+                            <>
+                                <Route
+                                    index
+                                    element={
+                                        <Login
+                                            accessToken={accessToken}
+                                            setAccessToken={setAccessToken}
+                                        />
+                                    }
+                                />
+                                <Route path='new' element={<Signup />} />
+                            </>
+                        )}
+                        <Route path='profile/:username' element={<User />} />
+                    </Route>
                 </Route>
-            </Route>
-        </Routes>
-    </HashRouter>
-        
+            </Routes>
+        </HashRouter>
     );
 }
+

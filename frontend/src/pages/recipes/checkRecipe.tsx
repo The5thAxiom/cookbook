@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import LoadingAnimation from '../components/loadingAnimation';
-import NextPreviousArrows from '../components/nextPreviousArrows';
-import RecipeTag from '../components/recipeTag';
-import { recipeFull, recipeIngredient } from '../values/types';
-import './pages.css';
+import LoadingAnimation from '../../components/loadingAnimation';
+import NextPreviousArrows from '../../components/nextPreviousArrows';
+import RecipeTag from '../../components/recipeTag';
+import { recipeFull, recipeIngredient } from '../../values/types';
+import './../pages.css';
 
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
@@ -28,11 +28,13 @@ export default function CheckRecipe() {
                     <h1>{recipe.name}</h1>
                     <section id='about'>
                         <h2>About</h2>
-                        Contributed by <NavLink
-                                to={`/user/profile/${recipe.contributor_username}`}
-                            >
-                                @{recipe.contributor_username}
-                            </NavLink> <br />
+                        Contributed by{' '}
+                        <NavLink
+                            to={`/user/profile/${recipe.contributor_username}`}
+                        >
+                            @{recipe.contributor_username}
+                        </NavLink>{' '}
+                        <br />
                         <b>{recipe.vegetarian ? 'veg' : 'non-veg'}</b> {' | '}
                         <b>{`takes ${recipe.prep_time} minutes`}</b> {' | '}
                         <b>{`makes ${recipe.quantity} ${recipe.unit}`}</b>{' '}
@@ -82,12 +84,15 @@ export default function CheckRecipe() {
                         top={true}
                     />
                     <section id='contributor'>
-                        <h2>Recipe by <NavLink
+                        <h2>
+                            Recipe by{' '}
+                            <NavLink
                                 to={`/user/profile/${recipe.contributor_username}`}
                             >
                                 @{recipe.contributor_username}
-                            </NavLink></h2>
-                        <b>Name: </b> {recipe.contributor_name} <br/>
+                            </NavLink>
+                        </h2>
+                        <b>Name: </b> {recipe.contributor_name} <br />
                         <b>About: </b> {recipe.contributor_bio}
                     </section>
                     <section id='tags'>
@@ -109,3 +114,4 @@ export default function CheckRecipe() {
         );
     else return <LoadingAnimation />;
 }
+
