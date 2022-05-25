@@ -6,12 +6,8 @@ import './recipeCards.css';
 export default function RecipeCards({ recipes }: { recipes: recipeMeta[] }) {
     return (
         <div className='recipe-cards'>
-            {recipes.map((r: recipeMeta, index: number) => (
-                <RecipeCard
-                    key={index}
-                    recipe={r}
-                    isLast={index !== recipes.length - 1}
-                />
+            {recipes.map((r: recipeMeta) => (
+                <RecipeCard key={r.id} recipe={r} />
             ))}
         </div>
     );

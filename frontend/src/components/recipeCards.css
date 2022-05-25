@@ -1,27 +1,36 @@
 .recipe-cards {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 10px;
 }
 
 .recipe-card {
     background-color: var(--secondary-bg);
     border-radius: 10px;
-    display: flex;
+    display: grid;
     flex-direction: column;
     row-gap: 10px;
     padding: 10px;
 }
 
-.recipe-card > .info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 10px;
+.recipe-card:hover {
+    filter: brightness(99%);
+    transform: scale(1.01);
 }
 
-.recipe-card > .name {
+.recipe-card-stats {
+    display: flex;
+    flex-direction: row;
+}
+
+.recipe-card-stats > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+.recipe-card-name {
     font-size: x-large;
 }

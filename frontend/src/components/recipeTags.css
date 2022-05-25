@@ -1,5 +1,4 @@
 .recipe-tags {
-    margin-top: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -11,10 +10,10 @@
     padding: 5px;
     border-radius: 10px;
     cursor: pointer;
-    /* color: var(--orange-main); */
 }
 
 .recipe-tag:hover {
     background-color: var(--orange-main);
     color: var(--orange-light);
+    transform: scale(1.1);
 }
