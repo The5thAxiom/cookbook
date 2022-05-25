@@ -81,6 +81,43 @@ def users_str(username):
     else:
         return jsonify(user.to_dict())
 
+@app.route('/api/users/<username>/recipes')
+def user_str_recipes(username):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        return jsonify({
+            "recipes": [
+                getRecipeMeta(recipe)
+                for recipe
+                in Recipe.query.filter(
+                    Recipe.contributor.has(
+                        User.username == user.username
+                    )
+                )
+            ]
+        })
+
+
+@app.route('/api/users/<username>/recipes/full')
+def user_str_recipes_full(username):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        return jsonify({
+            "recipes": [
+                getRecipeFull(recipe)
+                for recipe
+                in Recipe.query.filter(
+                    Recipe.contributor.has(
+                        User.username == user.username
+                    )
+                )
+            ]
+        })
+
 
 @app.route('/api/recipes', methods=['POST'])
 @jwt_required()
@@ -144,7 +181,7 @@ def recipes_n_full(num):
     if r is None:
         abort(404)
     else:
-        return jsonify(getFullRecipe(r))
+        return jsonify(getRecipeFull(r))
 
 
 @app.route('/api/recipes/count')

@@ -36,10 +36,10 @@ export default function Profile({accessToken, setAccessToken, removeAccessToken}
             <b>{user.name}</b>
             <p>{user.bio}</p>
             <ul>
-                <li><NavLink to='/recipes/new'>add recipe</NavLink></li>
-                <li><NavLink to='/recipes'>see your recipes</NavLink></li>
-                {/* <li><NavLink to='/skills/new'>add skill</NavLink></li>
-                <li><NavLink to='/skills'>see your skills</NavLink></li> */}
+                <li><NavLink end to='/recipes/new'>add recipe</NavLink></li>
+                <li><NavLink end to={`/recipes?user=${user.username}`}>see your recipes</NavLink></li>
+                {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
+                <li><NavLink end to='/skills'>see your skills</NavLink></li> */}
             </ul>
         </main>
     );

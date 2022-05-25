@@ -57,7 +57,7 @@ export default function Login(
                 </button>
             </form>
             <br/>
-            Don't have an account? <NavLink to="/user/new">Signup</NavLink> here today!
+            Don't have an account? <NavLink end to="/user/new">Signup</NavLink> here today!
         </main>
     )
 }

@@ -105,7 +105,7 @@ def getContributor(recipe: Recipe):
     }
 
 
-def getFullRecipe(recipeById: Recipe):
+def getRecipeFull(recipeById: Recipe):
     return {
         "id": recipeById.id,
         "name": recipeById.name,

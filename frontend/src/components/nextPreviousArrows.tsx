@@ -20,7 +20,7 @@ export default function NextPreviousArrows(props: arrowData) {
                     <BackwardArrowIcon className='arrow-icon' />
                 </NavLink>
             )}
-            {/* <NavLink to='/recipes/browse'>back</NavLink> */}
+            {/* <NavLink end to='/recipes/browse'>back</NavLink> */}
             {!props.isLast && (
                 <NavLink
                     className='arrow right-arrow'

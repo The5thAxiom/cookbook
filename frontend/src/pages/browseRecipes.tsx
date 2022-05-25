@@ -1,22 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useSearchParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../components/loadingAnimation';
 import { recipeMeta } from '../values/types';
 
 export default function BrowseRecipes() {
-    const [recipes, setRecipes] = useState<{ recipes: recipeMeta[] }>(
+    const [searchParams] = useSearchParams();
+    const [recipes, setRecipes] = useState<recipeMeta[]>(
         null as any
     );
+
     useEffect(() => {
-        fetch('/api/recipes/all')
-            .then(res => res.json())
-            .then(data => setRecipes(data));
-    }, []);
-    if (recipes)
+        const user = searchParams.get('user');
+        setRecipes(null as any);
+        if (user !== null)
+            fetch(`/api/users/${user}/recipes`)
+                .then(res => res.ok ? res.json() : {recipes: []})
+                .then(data =>  setRecipes(data.recipes))
+                .catch(e => console.log());
+        else
+            fetch('/api/recipes/all')
+                .then(res => res.json())
+                .then(data => setRecipes(data.recipes))
+                .catch(e => setRecipes([]));
+    }, [searchParams]);
+
+    if (recipes === null)
+        return (
+            <main>
+                <LoadingAnimation />
+            </main>
+        );
+    else if (recipes.length === 0)
         return (
             <main>
                 <h1>Recipes</h1>
-                {recipes.recipes.map((r: recipeMeta, index: number) => (
+                <b>No recipes found :(</b>
+            </main>
+        )
+    else
+        return (
+            <main>
+                <h1>Recipes</h1>
+                {recipes.map((r: recipeMeta, index: number) => (
                     <section key={index} id={`${r.id}`}>
                         <h3>
                             <NavLink
@@ -37,15 +62,9 @@ export default function BrowseRecipes() {
                         <br />
                         <br />
                         <em>{r.description}</em>
-                        {index !== recipes.recipes.length - 1 && <hr />}
+                        {index !== recipes.length - 1 && <hr />}
                     </section>
                 ))}
-            </main>
-        );
-    else
-        return (
-            <main>
-                <LoadingAnimation />
             </main>
         );
 }

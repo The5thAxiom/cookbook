@@ -5,17 +5,16 @@ import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Footer from './layout/footer';
 import NavBar from './layout/navBar';
 import User from './pages/user';
-import BrowseRecipes from './pages/browseRecipes';
-import BrowseSkills from './pages/browseSkills';
+// import BrowseSkills from './pages/browsseSkills';
 import CheckRecipe from './pages/checkRecipe';
-import CheckSkill from './pages/checkSkill';
+// import CheckSkill from './pages/checkSkill';
 import Home from './pages/home';
 import NewRecipe from './pages/newRecipe';
-import NewSkill from './pages/newSkill';
+// import NewSkill from './pages/newSkill';
 
 
 import './index.css';
-import WhatCanIMake from './pages/whatCanIMake';
+import BrowseRecipes from './pages/browseRecipes';
 import Profile from './pages/profile';
 import Login from './pages/login';
 import Signup from './pages/signup';
@@ -36,14 +35,15 @@ export default function App() {
                 <Route path='recipes' element={<Outlet />}>
                     <Route index element={<BrowseRecipes />} />
                     <Route path=':id' element={<CheckRecipe />} />
+                    <Route path='filter' element={<BrowseRecipes />} />
                     <Route path='new' element={<NewRecipe/>} />
                 </Route>
-                <Route path='skills' element={<Outlet />}>
+                {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />
                     <Route path=':id' element={<CheckSkill />} />
+                    <Route path='filter' element={<FilterSkills />} />
                     <Route path='new' element={<NewSkill />} />
-                </Route>
-                <Route path='what-can-i-make' element={<WhatCanIMake />} />
+                </Route> */}
                 <Route path='user' element={<Outlet />}>
                     {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
                     {accessToken !== ""

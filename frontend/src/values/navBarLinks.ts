@@ -8,6 +8,6 @@ export const navBarLinks: navBarLink[] = [
     { to: '/', icon: HomeIcon },
     { to: '/recipes', icon: BrowseIcon },
     // {to: "/skills", name: "broswe skills"},
-    { to: '/what-can-i-make', icon: WhatCanIMakeIcon },
+    // { to: '/recipes/filter', icon: WhatCanIMakeIcon },
     { to: '/user', icon: AboutIcon },
 ];

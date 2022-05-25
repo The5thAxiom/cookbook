@@ -28,6 +28,7 @@ export default function NavBar({accessToken, removeAccessToken}: {
             </NavLink> */}
             {navBarLinks.map((link: navBarLink, index) => (
                 <NavLink
+                    end
                     className={({ isActive }) =>
                         'navbar-link' + (isActive ? ' navbar-link-active' : '')
                     }
@@ -38,6 +39,7 @@ export default function NavBar({accessToken, removeAccessToken}: {
             ))}
             {accessToken !== "" && 
                 <NavLink
+                    end
                     className='navbar-link'
                     onClick={logout}
                     to='/user'

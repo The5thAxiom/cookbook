@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../components/loadingAnimation';
 import '../index.css';
 import { userData } from '../values/types';
@@ -21,6 +21,7 @@ export default function User() {
             <h1>@{user.username}</h1>
             <b>{user.name}</b>
             <p>{user.bio}</p>
+            <p>Checkout their recipes <NavLink end to={`/recipes?user=${user.username}`}>here</NavLink></p>
         </main>
     );
     else return <main><LoadingAnimation/></main>
