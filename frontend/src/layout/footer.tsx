@@ -25,7 +25,7 @@ export default function Footer() {
                 Icons8
             </a>{' '}
             <br />
-            Other icons by{' '}
+            Other icons and fonts by{' '}
             <a
                 target='_blank'
                 rel='noreferrer'
@@ -36,3 +36,4 @@ export default function Footer() {
         </footer>
     );
 }
+
