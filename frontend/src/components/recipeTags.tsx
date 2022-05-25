@@ -1,5 +1,4 @@
 import React from 'react';
-import { tagData } from '../values/types';
 import './recipeTags.css';
 
 export default function RecipeTags({ tags }: { tags: string[] }) {

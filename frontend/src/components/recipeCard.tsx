@@ -10,7 +10,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
         fetch(`/api/recipes/${recipe.id}/tags`)
             .then(res => (res.ok ? res.json() : null))
             .then(data => setTags(data.tags));
-    }, []);
+    }, [recipe.id]);
 
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
