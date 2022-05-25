@@ -80,11 +80,6 @@ nav#nav-bar {
     text-shadow: none;
 }
 
-/* .navbar-link-active {
-    display: none;
-    background-color: red;
-} */
-
 .navbar-icon {
     fill: var(--orange-main);
 }
@@ -93,11 +88,3 @@ a.navbar-link-active .navbar-icon {
     fill: var(--green-main);
 }
 
-/* @media only screen and (max-width: 900px) {
-    nav#nav-bar {
-        flex-direction: column;
-    }
-    .navbar-link {
-        width: auto;
-    }
-} */
