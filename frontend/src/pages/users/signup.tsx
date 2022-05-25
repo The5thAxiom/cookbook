@@ -100,7 +100,12 @@ export default function Signup() {
                             setBio(e.target.value);
                         }}
                     />
-                    <button onClick={submitForm}>Signup</button>
+                    <button
+                        className='cookbook-form-button'
+                        onClick={submitForm}
+                    >
+                        Signup
+                    </button>
                 </form>
             </main>
         );
