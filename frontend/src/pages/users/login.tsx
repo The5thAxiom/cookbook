@@ -32,45 +32,57 @@ export default function Login({
         <main>
             <b>{accessToken && accessToken}</b>
             <h1>Login</h1>
-            <form>
-                <label htmlFor='username'>
-                    <b>Username</b>
-                </label>
-                {'  '}
-                <input
-                    type='text'
-                    placeholder='Enter your username'
-                    name='username'
-                    onChange={e => {
-                        setUserData({ ...userData, username: e.target.value });
-                    }}
-                    required
-                />
-                <br />
-                <br />
-                <label htmlFor='password'>
-                    <b>Password</b>
-                </label>
-                {'  '}
-                <input
-                    type='password'
-                    placeholder='Enter your password'
-                    name='password'
-                    onChange={e => {
-                        setUserData({ ...userData, password: e.target.value });
-                    }}
-                    required
-                />
-                <br />
-                <br />
-                <button onClick={submitForm}>Login</button>
+            <form className='cookbook-form'>
+                <div>
+                    <label className='cookbook-form-label' htmlFor='username'>
+                        <b>Username</b>
+                    </label>
+                    {'  '}
+                    <input
+                        className='cookbook-form-labelled'
+                        type='text'
+                        placeholder='Enter your username'
+                        name='username'
+                        onChange={e => {
+                            setUserData({
+                                ...userData,
+                                username: e.target.value
+                            });
+                        }}
+                        required
+                    />
+                </div>
+                <div>
+                    <label className='cookbook-form-label' htmlFor='password'>
+                        <b>Password</b>
+                    </label>
+                    {'  '}
+                    <input
+                        className='cookbook-form-labelled'
+                        type='password'
+                        placeholder='Enter your password'
+                        name='password'
+                        onChange={e => {
+                            setUserData({
+                                ...userData,
+                                password: e.target.value
+                            });
+                        }}
+                        required
+                    />
+                </div>
+                <div>
+                    <button
+                        className='cookbook-form-button'
+                        onClick={submitForm}
+                    >
+                        Login
+                    </button>
+                    <NavLink end to='/user/new'>
+                        I'm a new user
+                    </NavLink>
+                </div>
             </form>
-            <br />
-            Don't have an account?{' '}
-            <NavLink end to='/user/new'>
-                Signup
-            </NavLink>{' '}
-            here today!
         </main>
     );
 }

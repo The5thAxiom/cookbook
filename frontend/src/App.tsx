@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import './index.css';
+import './forms.css';
 
 import Footer from './layout/footer';
 import NavBar from './layout/navBar';
