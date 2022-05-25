@@ -28,9 +28,10 @@ def users():
             return Response(status=201)
         else:
             return Response(status=201)
-        
+
     else:
         return jsonify([user.to_dict() for user in User.query.all()])
+
 
 @app.route('/api/users/login', methods=["POST"])
 def user_login():
@@ -50,11 +51,13 @@ def user_profile():
     username = get_jwt_identity()
     return jsonify(User.query.filter(User.username == username).first().to_dict())
 
+
 @app.route('/api/users/logout')
 def user_logout():
     response = Response(status=202)
     unset_jwt_cookies(response)
     return response
+
 
 @app.after_request
 def refresh_expiring_jwts(response):
@@ -66,12 +69,13 @@ def refresh_expiring_jwts(response):
             access_token = create_access_token(identity=get_jwt_identity())
             data = response.get_json()
             if type(data) is dict:
-                data["access_token"] = access_token 
+                data["access_token"] = access_token
                 response.data = json.dumps(data)
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original respone
         return response
+
 
 @app.route('/api/users/<username>')
 def users_str(username):
@@ -80,6 +84,7 @@ def users_str(username):
         abort(404)
     else:
         return jsonify(user.to_dict())
+
 
 @app.route('/api/users/<username>/recipes')
 def user_str_recipes(username):
@@ -146,8 +151,7 @@ def recipes_n_tags(num):
         abort(404)
     else:
         return jsonify({
-            "name": r.name,
-            "recipe_tags": getRecipeTags(r)
+            "tags": getRecipeTags(r)
         })
 
 

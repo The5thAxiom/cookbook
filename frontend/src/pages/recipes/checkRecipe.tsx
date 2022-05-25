@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
-import RecipeTag from '../../components/recipeTag';
+import RecipeTags from '../../components/recipeTags';
 import { recipeFull, recipeIngredient } from '../../values/types';
 import './../pages.css';
 
@@ -97,12 +97,9 @@ export default function CheckRecipe() {
                     </section>
                     <section id='tags'>
                         <h2>Tags</h2>
-                        {recipe.recipe_tags &&
-                            recipe.recipe_tags.map(
-                                (tag: string, index: number) => (
-                                    <RecipeTag key={index} tag={tag} />
-                                )
-                            )}
+                        {recipe.recipe_tags && (
+                            <RecipeTags tags={recipe.recipe_tags} />
+                        )}
                     </section>
                     <NextPreviousArrows
                         id={Number(params.id)}
