@@ -3,7 +3,13 @@ import { recipeMeta } from '../values/types';
 import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
 
-export default function RecipeCard(recipe: recipeMeta) {
+export default function RecipeCard({
+    recipe,
+    isLast
+}: {
+    recipe: recipeMeta;
+    isLast: boolean;
+}) {
     const [tags, setTags] = useState<string[]>(null as any);
 
     useEffect(() => {
@@ -13,21 +19,22 @@ export default function RecipeCard(recipe: recipeMeta) {
     }, []);
 
     return (
-        <>
-            <h3>
+        <div className='recipe-card' id={`${recipe.id}`}>
+            <div className='name'>
                 <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink> by{' '}
                 <NavLink to={`/user/profile/${recipe.contributor_username}`}>
                     @{recipe.contributor_username}
                 </NavLink>
-            </h3>
-            <b>{recipe.vegetarian ? 'veg' : 'non-veg'}</b> {' | '}
-            <b>{`takes ${recipe.prep_time} minutes`}</b> {' | '}
-            <b>{`makes ${recipe.quantity} ${recipe.unit}`}</b> {' | '}
-            <b>{`difficulty: ${'⭐'.repeat(recipe.difficulty)}`}</b>
-            <br />
-            <br />
-            <em>{recipe.description}</em>
+            </div>
+            <div className='info'>
+                <b>{recipe.vegetarian ? 'veg' : 'non-veg'}</b>
+                <b>{`takes ${recipe.prep_time} minutes`}</b>
+                <b>{`makes ${recipe.quantity} ${recipe.unit}`}</b>
+                <b>{`difficulty: ${'⭐'.repeat(recipe.difficulty)}`}</b>
+            </div>
+            <div className='description'>{recipe.description}</div>
             {tags && <RecipeTags tags={tags} />}
-        </>
+            {/* {isLast && <hr />} */}
+        </div>
     );
 }

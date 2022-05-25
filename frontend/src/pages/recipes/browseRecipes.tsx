@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
-import RecipeCard from '../../components/recipeCard';
+import RecipeCards from '../../components/recipeCards';
 import { recipeMeta } from '../../values/types';
 
 export default function BrowseRecipes() {
@@ -40,12 +40,7 @@ export default function BrowseRecipes() {
         return (
             <main>
                 <h1>Recipes</h1>
-                {recipes.map((r: recipeMeta, index: number) => (
-                    <section key={index} id={`${r.id}`}>
-                        <RecipeCard {...r} />
-                        {index !== recipes.length - 1 && <hr />}
-                    </section>
-                ))}
+                {<RecipeCards recipes={recipes} />}
             </main>
         );
 }
