@@ -1,7 +1,7 @@
 {
-    "name": "Pasta Aglio e Olio",
+    "name": "Tomato Pasta",
     "prep_time": 30,
-    "description": "A classic pasta that can never go wrong.",
+    "description": "A simple pasta which isn't traditional but still delicious.",
     "difficulty": 2,
     "vegetarian": true,
     "quantity": 1,
@@ -17,6 +17,7 @@
         {
             "name": "garlic"
         },
+        { "name": "tomatoes" },
         {
             "name": "spaghetti"
         }
@@ -48,7 +49,7 @@
             "hindi_name_latin": "Paani",
             "hindi_name_devnagari": "पानी",
             "quantity": 1,
-            "unit": "litre"
+            "unit": "litre(s)"
         },
         {
             "english_name": "Salt",
@@ -70,6 +71,13 @@
             "hindi_name_devnagari": "मसाले",
             "quantity": 2,
             "unit": "teaspoon(s)"
+        },
+        {
+            "english_name": "Tomatoes",
+            "hindi_name_latin": "Tamatar",
+            "hindi_name_devnagari": "टमाटर",
+            "quantity": 2,
+            "unit": "unit(s)"
         }
     ],
     "recipe_steps": [

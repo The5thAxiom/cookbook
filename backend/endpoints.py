@@ -202,6 +202,14 @@ def recipes_all():
         ]
     })
 
+
+@app.route('/api/recipes/bytag/<tag>')
+def recipes_bytag(tag):
+    recipe_ids = [t.recipe_id for t in Tag.query.filter(Tag.name == tag)]
+    return jsonify({"recipes": [
+        getRecipeMeta(getRecipeById(r)) for r in recipe_ids
+    ]})
+
     # @app.route('/api/recipes/all/tags')
     # def recipes_all_tags():
     #     return jsonify({"recipes":
