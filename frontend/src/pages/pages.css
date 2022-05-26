@@ -8,6 +8,10 @@ aside#side-bar {
 
 /*  */
 
+section#about {
+    text-align: center;
+}
+
 main {
     flex: auto;
     padding: 10px;

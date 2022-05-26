@@ -34,3 +34,7 @@
 .recipe-card-name {
     font-size: x-large;
 }
+
+.recipe-card-description {
+    text-align: center;
+}

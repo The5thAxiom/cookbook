@@ -16,7 +16,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
         <div className='recipe-card' id={`${recipe.id}`}>
             <div className='recipe-card-name'>
                 <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink> by{' '}
-                <NavLink to={`/user/profile/${recipe.contributor_username}`}>
+                <NavLink to={`/user/@${recipe.contributor_username}`}>
                     @{recipe.contributor_username}
                 </NavLink>
             </div>
@@ -26,7 +26,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                 <div>
                     {recipe.quantity} {recipe.unit}
                 </div>
-                <div>{'⭐'.repeat(recipe.difficulty)}</div>
+                <div>{'★'.repeat(recipe.difficulty)}</div>
             </div>
             <div className='recipe-card-description'>{recipe.description}</div>
             {tags && <RecipeTags tags={tags} />}

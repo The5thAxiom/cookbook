@@ -26,13 +26,11 @@ export default function CheckRecipe() {
             <main id='content'>
                 <article id='recipe'>
                     <h1 id='recipe-name'>{recipe.name}</h1>
-                    <div id='recipe-byline' className='centered-using-flex'>
+                    <div id='recipe-byline'>
                         by{' '}
-                        <NavLink
-                            to={`/user/profile/${recipe.contributor_username}`}
-                        >
+                        <NavLink to={`/user/@${recipe.contributor_username}`}>
                             @{recipe.contributor_username}
-                        </NavLink>{' '}
+                        </NavLink>
                     </div>
                     <NextPreviousArrows
                         id={Number(params.id)}

@@ -31,17 +31,8 @@ h4,
 h5,
 h6 {
     color: var(--orange-main);
-    display: flex;
-    justify-content: center;
-    width: 100%;
     overflow: hidden;
-}
-
-.centered-using-flex {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    overflow: hidden;
+    text-align: center;
 }
 
 #recipe-name {
@@ -50,6 +41,7 @@ h6 {
 
 #recipe-byline {
     font-size: larger;
+    text-align: center;
 }
 
 h1 {

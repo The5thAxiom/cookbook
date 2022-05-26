@@ -83,7 +83,7 @@ export default function App() {
                                 <Route path='new' element={<Signup />} />
                             </>
                         )}
-                        <Route path='profile/:username' element={<User />} />
+                        <Route path='@:username' element={<User />} />
                     </Route>
                 </Route>
             </Routes>
