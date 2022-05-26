@@ -46,11 +46,12 @@ export default function CheckRecipe() {
                         <b>{`difficulty: ${'★'.repeat(recipe.difficulty)}`}</b>
                         <br />
                         <br />
+                        <em>{recipe.description}</em>
+                        <br />
+                        <br />
                         {recipe.recipe_tags && (
                             <RecipeTags tags={recipe.recipe_tags} />
                         )}
-                        <br />
-                        <em>{recipe.description}</em>
                     </section>
                     <hr />
                     <section id='ingredients'>
