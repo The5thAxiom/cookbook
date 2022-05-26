@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { recipeMeta } from '../values/types';
 import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
+import LoadingAnimation from './loadingAnimation';
 
 export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
@@ -29,7 +30,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                 <div>{'★'.repeat(recipe.difficulty)}</div>
             </div>
             <div className='recipe-card-description'>{recipe.description}</div>
-            {tags && <RecipeTags tags={tags} />}
+            {tags ? <RecipeTags tags={tags} /> : <LoadingAnimation />}
         </div>
     );
 }

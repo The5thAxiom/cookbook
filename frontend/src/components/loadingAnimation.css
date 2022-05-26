@@ -1,12 +1,21 @@
 .loading-animation {
-    --size: 50px;
     background: var(--primary-pg);
     fill: var(--orange-main);
     width: var(--size);
     height: var(--size);
-    animation: spin 2s linear infinite;
-    margin: calc(var(--size) * 2) 0 calc(var(--size) * 2) 0;
-    margin-left: calc(50vw - calc(var(--size) / 2));
+    animation: spin 1s linear infinite;
+}
+
+.loading-animation-container {
+    --size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+}
+
+main > .loading-animation-container {
+    margin-top: calc(var(--size) * 3);
 }
 
 @keyframes spin {
@@ -17,3 +26,4 @@
         transform: rotate(360deg);
     }
 }
+
