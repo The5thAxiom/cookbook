@@ -8,13 +8,6 @@ aside#side-bar {
 
 /*  */
 
-article#recipe {
-    margin-top: var(--navbar-height);
-    padding: 10px;
-    background: var(--primary-bg);
-    width: 100%;
-}
-
 main {
     flex: auto;
     padding: 10px;

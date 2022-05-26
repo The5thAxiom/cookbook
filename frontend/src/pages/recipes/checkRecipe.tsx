@@ -23,17 +23,23 @@ export default function CheckRecipe() {
 
     if (recipe)
         return (
-            <main id='content' className='contains-article-aside'>
+            <main id='content'>
                 <article id='recipe'>
-                    <h1>{recipe.name}</h1>
-                    <section id='about'>
-                        <h2>About</h2>
-                        Contributed by{' '}
+                    <h1 id='recipe-name'>{recipe.name}</h1>
+                    <div id='recipe-byline' className='centered-using-flex'>
+                        by{' '}
                         <NavLink
                             to={`/user/profile/${recipe.contributor_username}`}
                         >
                             @{recipe.contributor_username}
                         </NavLink>{' '}
+                    </div>
+                    <NextPreviousArrows
+                        id={Number(params.id)}
+                        isLast={isLast}
+                        top={true}
+                    />
+                    <section id='about'>
                         <br />
                         <b>{recipe.vegetarian ? 'veg' : 'non-veg'}</b> {' | '}
                         <b>{`takes ${recipe.prep_time} minutes`}</b> {' | '}
@@ -41,6 +47,10 @@ export default function CheckRecipe() {
                         {' | '}
                         <b>{`difficulty: ${'★'.repeat(recipe.difficulty)}`}</b>
                         <br />
+                        <br />
+                        {recipe.recipe_tags && (
+                            <RecipeTags tags={recipe.recipe_tags} />
+                        )}
                         <br />
                         <em>{recipe.description}</em>
                     </section>
@@ -76,37 +86,12 @@ export default function CheckRecipe() {
                             )}
                         </ol>
                     </section>
-                </article>
-                <aside id='side-bar'>
-                    <NextPreviousArrows
-                        id={Number(params.id)}
-                        isLast={isLast}
-                        top={true}
-                    />
-                    <section id='contributor'>
-                        <h2>
-                            Recipe by{' '}
-                            <NavLink
-                                to={`/user/profile/${recipe.contributor_username}`}
-                            >
-                                @{recipe.contributor_username}
-                            </NavLink>
-                        </h2>
-                        <b>Name: </b> {recipe.contributor_name} <br />
-                        <b>About: </b> {recipe.contributor_bio}
-                    </section>
-                    <section id='tags'>
-                        <h2>Tags</h2>
-                        {recipe.recipe_tags && (
-                            <RecipeTags tags={recipe.recipe_tags} />
-                        )}
-                    </section>
                     <NextPreviousArrows
                         id={Number(params.id)}
                         isLast={isLast}
                         top={false}
                     />
-                </aside>
+                </article>
             </main>
         );
     else return <LoadingAnimation />;
