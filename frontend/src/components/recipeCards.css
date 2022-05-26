@@ -32,7 +32,12 @@
 }
 
 .recipe-card-name {
-    font-size: x-large;
+    font-size: xxx-large;
+    text-align: center;
+}
+
+.recipe-card-byline {
+    font-size: larger;
     text-align: center;
 }
 

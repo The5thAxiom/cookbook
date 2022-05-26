@@ -16,7 +16,10 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
             <div className='recipe-card-name'>
-                <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink> by{' '}
+                <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink>
+            </div>
+            <div className='recipe-card-byline'>
+                by{' '}
                 <NavLink to={`/user/@${recipe.contributor_username}`}>
                     @{recipe.contributor_username}
                 </NavLink>
