@@ -14,8 +14,9 @@
     cursor: pointer;
 }
 
-.recipe-tag:hover {
+.recipe-tag:hover,
+.recipe-tag:visited:hover {
     background-color: var(--orange-main);
-    color: var(--orange-light);
+    color: var(--yellow-main);
     transform: scale(1.1);
 }
