@@ -88,3 +88,18 @@ a.navbar-link-active .navbar-icon {
     fill: var(--green-main);
 }
 
+section#recipe-about {
+    text-align: center;
+}
+
+main {
+    flex: auto;
+    padding: 10px;
+    background: var(--primary-bg);
+    margin-top: var(--navbar-height);
+}
+
+main.below-header {
+    margin-top: 0;
+}
+
