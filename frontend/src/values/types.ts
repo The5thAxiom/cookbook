@@ -51,6 +51,8 @@ export type arrowData = {
     isLast: boolean;
     id: number;
     top: boolean;
+    nextName?: string;
+    prevName?: string;
 };
 
 export type tagData = {

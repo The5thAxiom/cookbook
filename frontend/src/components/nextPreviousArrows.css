@@ -2,6 +2,7 @@ nav.next-previous-arrows {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     font-size: xx-large;
     width: 100%;
 }
@@ -25,7 +26,7 @@ nav.next-previous-arrows {
 
 .arrow {
     text-decoration: none;
-    display: block;
+    display: flex;
 }
 
 .arrow-icon {
@@ -36,4 +37,8 @@ nav.next-previous-arrows {
 
 .arrow-icon:hover {
     fill: var(--orange-main);
+}
+
+.arrow-page-name {
+    font-size: large;
 }
