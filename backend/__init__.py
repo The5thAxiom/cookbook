@@ -27,7 +27,7 @@ jwt = JWTManager(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql+mysqlconnector://{
-    os.environ.get('MSYQL_USERNAME')
+    os.environ.get('MYSQL_USERNAME')
 }:{
     os.environ.get('MYSQL_PASSWORD')
 }@{
