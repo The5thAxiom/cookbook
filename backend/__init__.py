@@ -25,7 +25,16 @@ app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
 jwt = JWTManager(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql+mysqlconnector://{
+    os.environ.get('MSYQL_USERNAME')
+}:{
+    os.environ.get('MYSQL_PASSWORD')
+}@{
+    os.environ.get('MYSQL_SERVER')
+}/{
+    os.environ.get('MYSQL_DB')
+}"""
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # we don't need real time updates as this is a REST based api
 
 db = SQLAlchemy(app)

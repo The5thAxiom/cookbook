@@ -7,9 +7,9 @@ from backend import db
 
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    english_name = db.Column(db.String, unique=True, nullable=False)
-    hindi_name_latin = db.Column(db.String, nullable=False, unique=True)
-    hindi_name_devnagari = db.Column(db.Text, unique=True)
+    english_name = db.Column(db.String(128), unique=True, nullable=False)
+    hindi_name_latin = db.Column(db.String(128), nullable=False, unique=True)
+    hindi_name_devnagari = db.Column(db.String(256), unique=True)
     recipes = db.relationship(
         'Recipe_Ingredient',
         backref=db.backref('ingredient', uselist=False),
@@ -19,9 +19,9 @@ class Ingredient(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=False)
-    username = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False, unique=False)
+    name = db.Column(db.String(128), nullable=False, unique=False)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False, unique=False)
     bio = db.Column(db.Text, nullable=True, unique=False)
     recipes = db.relationship(
         'Recipe',
@@ -45,14 +45,14 @@ class User(db.Model):
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String(128), nullable=False, unique=True)
     #header_image = db.Column(db.Blob(), nullable = False)
     prep_time = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     difficulty = db.Column(db.Integer, nullable=False)
     vegetarian = db.Column(db.Boolean, nullable=False)
     quantity = db.Column(db.Float, nullable=False)
-    unit = db.Column(db.String, nullable=False)
+    unit = db.Column(db.String(64), nullable=False)
     contributor_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),
@@ -103,15 +103,15 @@ class Recipe_Ingredient(db.Model):
         nullable=False
     )
     quantity = db.Column(db.Float, nullable=False)
-    unit = db.Column(db.String, nullable=False)
+    unit = db.Column(db.String(64), nullable=False)
 
 
 class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String(128), nullable=False, unique=True)
     #header_image = db.Column(db.LargeBinary, nullable = False)
     description = db.Column(db.Text, nullable=False)
-    difficulty = db.Column(db.String, nullable=False)
+    difficulty = db.Column(db.Integer, nullable=False)
     contributor_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),
@@ -147,4 +147,4 @@ class Tag(db.Model):
         db.ForeignKey("skill.id"),
         nullable=True
     )
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(64), nullable=False)
