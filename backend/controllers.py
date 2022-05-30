@@ -1,13 +1,13 @@
 from backend import db, bcrypt
 from backend.models import *
 
-def addFullRecipe(newRecipeFull: str):
+def addFullRecipe(newRecipeFull: str, contributor_id: int):
     newRecipe = Recipe(**{
         "name": newRecipeFull["name"],
         "prep_time": newRecipeFull["prep_time"],
         "description": newRecipeFull["description"],
         "difficulty": newRecipeFull["difficulty"],
-        "contributor_id": newRecipeFull["contributor_id"],
+        "contributor_id": contributor_id,
         "vegetarian": newRecipeFull["vegetarian"],
         "quantity": newRecipeFull["quantity"],
         "unit": newRecipeFull["unit"]

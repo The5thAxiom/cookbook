@@ -128,10 +128,14 @@ def user_str_recipes_full(username):
 @jwt_required()
 def recipes():
     newRecipeFull = request.get_json(force=True)
-    if Recipe.query.filter_by(name=newRecipeFull["name"]).first() is not None:
-        return Response(status=202)
+    username = get_jwt_identity()
+    user = User.query.filter(User.username == username).first()
+    print(newRecipeFull)
+    print(username)
+    if user is None:
+        return Response(status=400)
     else:
-        addFullRecipe(newRecipeFull)
+        addFullRecipe(newRecipeFull, user.id)
         return Response(status=201)
 
 

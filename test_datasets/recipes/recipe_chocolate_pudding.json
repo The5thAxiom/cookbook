@@ -6,7 +6,6 @@
     "vegetarian": true,
     "quantity": 6,
     "unit": "cup(s)",
-    "contributor_id": 1,
     "recipe_tags": [
         {
             "name": "dessert"

@@ -1,7 +1,7 @@
 {
-    "name": "Lemon Tea",
+    "name": "Green Tea",
     "prep_time": 5,
-    "description": "A refreshing tea infused with mint and lemon. Perfect for a chilly evening.",
+    "description": "A light, healthy tea  ",
     "difficulty": 1,
     "vegetarian": true,
     "quantity": 1,
@@ -11,7 +11,7 @@
     }, {
         "name": "tea"
     }, {
-        "name": "minty-fresh"
+        "name": "healthy"
     }],
     "recipe_ingredients": [{
         "english_name": "Water",
@@ -26,24 +26,18 @@
         "quantity": 2,
         "unit": "teaspoon(s)"
     }, {
-        "english_name": "Mint Leaves",
-        "hindi_name_latin": "Pudine ki pattiyan",
-        "hindi_name_devnagari": "पुदीने की पत्तियां",
-        "quantity": 10,
-        "unit": "leaves"
-    }, {
-        "english_name": "Lemons",
-        "hindi_name_latin": "Nimbu",
-        "hindi_name_devnagari": "नींबू",
+        "english_name": "Tea Leaves",
+        "hindi_name_latin": "Chay patti",
+        "hindi_name_devnagari": "चाय पत्ती",
         "quantity": 1,
-        "unit": "lemon(s)"
+        "unit": "teaspoon(s)"
     }],
     "recipe_steps": [{
         "serial_number": 1,
         "instruction": "Put the water on the stove."
     }, {
         "serial_number": 2,
-        "instruction": "Add sugar and about 3/4ths of the mint-leaves."
+        "instruction": "Add sugar and mix."
     }, {
         "serial_number": 3,
         "instruction": "Turn-off the stove when the water boils."
@@ -52,12 +46,6 @@
         "instruction": "Add tea leaves to the water and let it sit for some 2-3 minutes."
     }, {
         "serial_number": 5,
-        "instruction": "In your kettle/jug, put the remaining mint-leaves and sqeeze lemons into it."
-    }, {
-        "serial_number": 6,
-        "instruction": "Strain your tea into the kettle/jug."
-    }, {
-        "serial_number": 7,
-        "instruction": "Mix the tea, add a lemon-slice and a couple mint-leaves for garninshing and enjoy!"
+        "instruction": "Let the tea cool to your desired temperature and enjoy!"
     }]
 }
