@@ -1,4 +1,4 @@
-form.cookbook-form {
+form.cb-form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,32 +7,32 @@ form.cookbook-form {
     padding: 10px;
 }
 
-form.cookbook-form > * {
+form.cb-form > * {
     display: flex;
     flex-direction: row;
     column-gap: 10px;
 }
 
-.cookbook-form-labelled {
+.cb-form-labelled {
     background-color: var(--secondary-bg);
     border: none;
     border-radius: 5px;
     padding: 2px 5px;
 }
 
-.cookbook-form-button {
+.cb-form-button {
     background-color: var(--secondary-bg);
     border: outset var(--secondary-bg);
     border-radius: 5px;
     padding: 2px 5px;
 }
 
-.cookbook-form-button:hover {
+.cb-form-button:hover {
     cursor: pointer;
     filter: brightness(90%);
     border-color: var(--yellow-main);
 }
 
-.cookbook-form-button:active {
+.cb-form-button:active {
     border-style: inset;
 }

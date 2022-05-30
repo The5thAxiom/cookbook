@@ -32,14 +32,14 @@ export default function Login({
         <main>
             <b>{accessToken && accessToken}</b>
             <h1>Login</h1>
-            <form className='cookbook-form'>
+            <form className='cb-form'>
                 <div>
-                    <label className='cookbook-form-label' htmlFor='username'>
+                    <label className='cb-form-label' htmlFor='username'>
                         <b>Username</b>
                     </label>
                     {'  '}
                     <input
-                        className='cookbook-form-labelled'
+                        className='cb-form-labelled'
                         type='text'
                         placeholder='Enter your username'
                         name='username'
@@ -53,12 +53,12 @@ export default function Login({
                     />
                 </div>
                 <div>
-                    <label className='cookbook-form-label' htmlFor='password'>
+                    <label className='cb-form-label' htmlFor='password'>
                         <b>Password</b>
                     </label>
                     {'  '}
                     <input
-                        className='cookbook-form-labelled'
+                        className='cb-form-labelled'
                         type='password'
                         placeholder='Enter your password'
                         name='password'
@@ -72,10 +72,7 @@ export default function Login({
                     />
                 </div>
                 <div>
-                    <button
-                        className='cookbook-form-button'
-                        onClick={submitForm}
-                    >
+                    <button className='cb-form-button' onClick={submitForm}>
                         Login
                     </button>
                     <NavLink end to='/user/new'>

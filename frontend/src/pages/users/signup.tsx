@@ -41,13 +41,13 @@ export default function Signup() {
         return (
             <main>
                 <h1>Welcome to Samy's Cookbook!</h1>
-                <form className='cookbook-form'>
+                <form className='cb-form'>
                     <div>
                         <label htmlFor='name'>
                             <b>Name</b>
                         </label>
                         <input
-                            className='cookbook-form-labelled'
+                            className='cb-form-labelled'
                             type='text'
                             placeholder='Enter your name'
                             name='name'
@@ -62,7 +62,7 @@ export default function Signup() {
                             <b>Username</b>
                         </label>
                         <input
-                            className='cookbook-form-labelled'
+                            className='cb-form-labelled'
                             type='text'
                             placeholder='Enter your username'
                             name='username'
@@ -77,7 +77,7 @@ export default function Signup() {
                             <b>Password</b>
                         </label>
                         <input
-                            className='cookbook-form-labelled'
+                            className='cb-form-labelled'
                             type='password'
                             placeholder='Enter your password'
                             name='password'
@@ -91,7 +91,7 @@ export default function Signup() {
                         <b>Bio</b>
                     </label>
                     <textarea
-                        className='cookbook-form-labelled'
+                        className='cb-form-labelled'
                         name='bio'
                         rows={3}
                         cols={25}
@@ -100,10 +100,7 @@ export default function Signup() {
                             setBio(e.target.value);
                         }}
                     />
-                    <button
-                        className='cookbook-form-button'
-                        onClick={submitForm}
-                    >
+                    <button className='cb-form-button' onClick={submitForm}>
                         Signup
                     </button>
                 </form>
