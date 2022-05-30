@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 export default function Signup() {
     const [username, setUsername] = useState<string>(null as any);
@@ -42,12 +42,9 @@ export default function Signup() {
             <main>
                 <h1>Welcome to Samy's Cookbook!</h1>
                 <form className='cb-form'>
-                    <div>
-                        <label htmlFor='name'>
-                            <b>Name</b>
-                        </label>
+                    <div className='cb-form-field'>
+                        <label htmlFor='name'>Name</label>
                         <input
-                            className='cb-form-labelled'
                             type='text'
                             placeholder='Enter your name'
                             name='name'
@@ -57,12 +54,9 @@ export default function Signup() {
                             required
                         />
                     </div>
-                    <div>
-                        <label htmlFor='username'>
-                            <b>Username</b>
-                        </label>
+                    <div className='cb-form-field'>
+                        <label htmlFor='username'>Username</label>
                         <input
-                            className='cb-form-labelled'
                             type='text'
                             placeholder='Enter your username'
                             name='username'
@@ -72,12 +66,9 @@ export default function Signup() {
                             required
                         />
                     </div>
-                    <div>
-                        <label htmlFor='password'>
-                            <b>Password</b>
-                        </label>
+                    <div className='cb-form-field'>
+                        <label htmlFor='password'>Password</label>
                         <input
-                            className='cb-form-labelled'
                             type='password'
                             placeholder='Enter your password'
                             name='password'
@@ -87,22 +78,24 @@ export default function Signup() {
                             required
                         />
                     </div>
-                    <label htmlFor='bio'>
-                        <b>Bio</b>
-                    </label>
-                    <textarea
-                        className='cb-form-labelled'
-                        name='bio'
-                        rows={3}
-                        cols={25}
-                        placeholder='Write a little bit about yourself!'
-                        onChange={e => {
-                            setBio(e.target.value);
-                        }}
-                    />
-                    <button className='cb-form-button' onClick={submitForm}>
-                        Signup
-                    </button>
+                    <div className='cb-form-field'>
+                        <label htmlFor='bio'>Bio</label>
+                        <textarea
+                            name='bio'
+                            placeholder='Write a little bit about yourself!'
+                            onChange={e => {
+                                setBio(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className='cb-form-end'>
+                        <button className='cb-form-button' onClick={submitForm}>
+                            Signup
+                        </button>
+                        <NavLink end to='/user'>
+                            I already have an account
+                        </NavLink>
+                    </div>
                 </form>
             </main>
         );

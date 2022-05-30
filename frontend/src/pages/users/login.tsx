@@ -33,13 +33,9 @@ export default function Login({
             <b>{accessToken && accessToken}</b>
             <h1>Login</h1>
             <form className='cb-form'>
-                <div>
-                    <label className='cb-form-label' htmlFor='username'>
-                        <b>Username</b>
-                    </label>
-                    {'  '}
+                <div className='cb-form-field'>
+                    <label htmlFor='username'>Username</label>
                     <input
-                        className='cb-form-labelled'
                         type='text'
                         placeholder='Enter your username'
                         name='username'
@@ -52,13 +48,9 @@ export default function Login({
                         required
                     />
                 </div>
-                <div>
-                    <label className='cb-form-label' htmlFor='password'>
-                        <b>Password</b>
-                    </label>
-                    {'  '}
+                <div className='cb-form-field'>
+                    <label htmlFor='password'>Password</label>
                     <input
-                        className='cb-form-labelled'
                         type='password'
                         placeholder='Enter your password'
                         name='password'
@@ -71,7 +63,7 @@ export default function Login({
                         required
                     />
                 </div>
-                <div>
+                <div className='cb-form-end'>
                     <button className='cb-form-button' onClick={submitForm}>
                         Login
                     </button>

@@ -1,4 +1,10 @@
-form.cb-form {
+.cb-forms {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.cb-form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,32 +13,41 @@ form.cb-form {
     padding: 10px;
 }
 
-form.cb-form > * {
+.cb-form-field,
+.cb-form-end {
     display: flex;
     flex-direction: row;
     column-gap: 10px;
 }
 
-.cb-form-labelled {
+.cb-form-field > input,
+.cb-form-field > textarea {
     background-color: var(--secondary-bg);
     border: none;
     border-radius: 5px;
     padding: 2px 5px;
 }
 
-.cb-form-button {
+/* .cb-form-field {
+    height: 2rem;
+} */
+
+.cb-form-button,
+.cb-form button {
     background-color: var(--secondary-bg);
     border: outset var(--secondary-bg);
     border-radius: 5px;
     padding: 2px 5px;
 }
 
-.cb-form-button:hover {
+.cb-form-button:hover,
+.cb-form button:hover {
     cursor: pointer;
     filter: brightness(90%);
     border-color: var(--yellow-main);
 }
 
-.cb-form-button:active {
+.cb-form-button:active,
+.cb-form button:active {
     border-style: inset;
 }
