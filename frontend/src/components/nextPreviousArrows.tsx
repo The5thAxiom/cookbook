@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { arrowData, recipeMeta } from '../values/types';
+import { recipeMeta } from '../values/types';
 import BackwardArrowIcon from './icons/backwardArrowIcon';
 import ForwardArrowIcon from './icons/forwardArrowIcon';
 import LoadingAnimation from './loadingAnimation';

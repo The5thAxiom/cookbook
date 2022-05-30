@@ -22,7 +22,7 @@ export default function User() {
                 <p>{user.bio}</p>
                 <p>
                     Checkout their recipes{' '}
-                    <NavLink end to={`/recipes?user=${user.username}`}>
+                    <NavLink end to={`/recipes?only-user=${user.username}`}>
                         here
                     </NavLink>
                 </p>

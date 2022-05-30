@@ -31,7 +31,7 @@ export default function CheckRecipe() {
                 .then(res => res.json())
                 .then(data => setNextRecipe(data));
         }
-    }, [params.id]);
+    }, [params.id, isLast]);
 
     if (recipe)
         return (
