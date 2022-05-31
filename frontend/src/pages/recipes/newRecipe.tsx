@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import LoadingAnimation from '../../components/loadingAnimation';
 import { ingredient } from '../../values/types';
 
 export default function NewRecipe() {
@@ -81,7 +80,7 @@ export default function NewRecipe() {
                     <legend>Ingredients</legend>
                     <div className='cb-form-field'>
                         <label>existing:</label>
-                        <select>
+                        {/* <select>
                             {existingIngredients && (
                                 <>
                                     <option value=''>
@@ -98,7 +97,7 @@ export default function NewRecipe() {
                                     ))}
                                 </>
                             )}
-                        </select>
+                        </select> */}
                     </div>
                     <div className='cb-form-end'>
                         <button>Add ingredient</button>

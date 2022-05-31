@@ -1,0 +1,43 @@
+header {
+    margin-top: var(--navbar-height);
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+}
+
+.header-text {
+    font-size: 12vw;
+    color: var(--orange-main);
+}
+
+header {
+    text-align: center;
+    padding: 10px;
+    background: var(--green-main);
+    color: var(--primary-bg);
+    flex: none;
+}
+
+header a,
+header a:visited {
+    color: var(--green-light);
+}
+
+header a:hover,
+header a:visited:hover {
+    color: var(--yellow-main);
+    text-shadow: 1px 1px 1px var(--yellow-main);
+}
+
+header a:active,
+header a:visited:active {
+    color: var(--green-light);
+}
+
+header .header-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.header-logo:hover {
+    transform: scale(1.2);
+}

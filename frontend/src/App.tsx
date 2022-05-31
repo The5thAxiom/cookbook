@@ -1,7 +1,8 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-import './index.css';
+import './values/colors.css';
+import './App.css';
 import './forms.css';
 
 import Footer from './layout/footer';

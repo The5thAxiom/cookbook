@@ -1,20 +1,18 @@
 import React from 'react';
-import './layout.css';
 
 import icon from '../assets/food-bar-image.png';
 import { NavLink } from 'react-router-dom';
 
+import './header.css';
+
 export default function Header() {
     return (
         <header>
-            <NavLink
-                style={{ display: 'inline' }}
-                to='/'
-                className='header-logo-link'
-            >
+            <NavLink to='/' className='header-logo-link'>
                 <img alt='' className='header-logo' src={icon} />
             </NavLink>
-            <h1>Cookbook</h1>
+            <div className='header-text'>Cookbook</div>
         </header>
     );
 }
+

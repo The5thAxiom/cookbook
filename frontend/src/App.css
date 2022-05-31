@@ -1,0 +1,173 @@
+/*** imports ***/
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+/*** end imports ***/
+
+/*** basic ***/
+
+:root {
+    --navbar-height: 50px;
+}
+
+/* html {
+    overflow-y: overlay;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 320px;
+    outline: red solid;
+}
+
+/*** end basic ***/
+
+/*** text and links ***/
+
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--orange-main);
+    text-align: center;
+}
+
+a,
+a:visited {
+    color: var(--green-main);
+    text-decoration: none;
+}
+
+a:hover,
+a:visited:hover {
+    color: var(--orange-main);
+    text-shadow: 1px 1px 1px var(--orange-main);
+}
+
+a:active,
+a:visited:active {
+    color: var(--yellow-main);
+}
+
+/*** end text and links ***/
+
+/*** layout ***/
+
+div#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: auto;
+}
+
+footer {
+    flex: none;
+}
+
+nav#nav-bar {
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    min-width: 320px;
+    height: var(--navbar-height);
+}
+
+.navbar-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: var(--green-light);
+}
+
+.navbar-link:hover {
+    filter: brightness(90%);
+    color: var(--yellow-main);
+    text-shadow: none;
+}
+
+.navbar-icon {
+    fill: var(--orange-main);
+}
+
+a.navbar-link-active .navbar-icon {
+    fill: var(--orange-main);
+}
+
+main {
+    /* min-height: calc(100vh - var(--navbar-height) - 20px); */
+    padding: 10px;
+    background: var(--primary-bg);
+    margin-top: var(--navbar-height);
+    flex: auto;
+}
+
+main.below-header {
+    margin-top: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: var(--green-main);
+    color: var(--primary-bg);
+    flex: none;
+}
+
+footer a,
+footer a:visited {
+    color: var(--green-light);
+}
+
+footer a:hover,
+footer a:visited:hover {
+    color: var(--yellow-main);
+    text-shadow: 1px 1px 1px var(--yellow-main);
+}
+
+footer a:active,
+footer a:visited:active {
+    color: var(--green-light);
+}
+
+footer {
+    bottom: 0;
+}
+
+/*** end layout ***/
+
+/*** scrollbar ***/
+
+/* ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--orange-main);
+    outline: red;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    filter: brightness(50%);
+} */
+
+/*** end scrollbar ***/
