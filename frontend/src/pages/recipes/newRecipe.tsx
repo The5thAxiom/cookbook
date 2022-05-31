@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { ingredient } from '../../values/types';
 
 export default function NewRecipe() {
-    const [existingIngredients, setExistingIngredients] = useState<
-        ingredient[]
-    >(null as any);
+    // const [existingIngredients, setExistingIngredients] = useState<
+    //     ingredient[]
+    // >(null as any);
 
-    useEffect(() => {
-        fetch('/api/ingredients/all')
-            .then(res => (res.ok ? res.json() : null))
-            .then(data => setExistingIngredients(data.ingredients));
-    }, []);
+    // useEffect(() => {
+    //     fetch('/api/ingredients/all')
+    //         .then(res => (res.ok ? res.json() : null))
+    //         .then(data => setExistingIngredients(data.ingredients));
+    // }, []);
 
     return (
         <main>
