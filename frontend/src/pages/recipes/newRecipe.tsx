@@ -15,7 +15,7 @@ export default function NewRecipe() {
     return (
         <main>
             <h1>Add New Recipe</h1>
-            <form className='cb-forms'>
+            {/* <form className='cb-forms'>
                 <fieldset className='cb-form'>
                     <legend>Basic Information</legend>
                     <div className='cb-form-field'>
@@ -80,7 +80,7 @@ export default function NewRecipe() {
                     <legend>Ingredients</legend>
                     <div className='cb-form-field'>
                         <label>existing:</label>
-                        {/* <select>
+                        <select>
                             {existingIngredients && (
                                 <>
                                     <option value=''>
@@ -97,7 +97,7 @@ export default function NewRecipe() {
                                     ))}
                                 </>
                             )}
-                        </select> */}
+                        </select>
                     </div>
                     <div className='cb-form-end'>
                         <button>Add ingredient</button>
@@ -120,7 +120,7 @@ export default function NewRecipe() {
                 <div className='cb-form-end'>
                     <button className='cb-form-button'>Submit Recipe</button>
                 </div>
-            </form>
+            </form> */}
         </main>
     );
 }
