@@ -14,6 +14,8 @@ export default function CheckRecipe() {
 
     useEffect(() => {
         setRecipe(null as any);
+        setNextRecipe(null as any);
+        setPrevRecipe(null as any);
         const currentId = Number(params.id);
         fetch(`/api/recipes/${currentId}/full`)
             .then(r => r.json())
