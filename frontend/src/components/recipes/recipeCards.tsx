@@ -1,14 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { recipeMeta } from '../../values/types';
+import BackwardArrowIcon from '../icons/backwardArrowIcon';
+import ForwardArrowIcon from '../icons/forwardArrowIcon';
+import LoadingAnimation from '../loadingAnimation';
 import RecipeCard from './recipeCard';
 import './recipeCards.css';
 
-export default function RecipeCards({ recipes }: { recipes: recipeMeta[] }) {
-    return (
-        <div className='recipe-cards'>
-            {recipes.map((r: recipeMeta) => (
-                <RecipeCard key={r.id} recipe={r} />
-            ))}
-        </div>
-    );
+export default function RecipeCards({
+    recipes,
+    carousel,
+    columns
+}: {
+    recipes: recipeMeta[];
+    carousel?: boolean;
+    columns?: number;
+}) {
+    const [step, setStep] = useState<number>(0);
+
+    if (recipes === null) return <LoadingAnimation />;
+    else if (recipes.length === 0)
+        return <div className='util-centered'>No recipes found :(</div>;
+    else if (carousel && columns) {
+        const carouselNext = () => {
+            setStep(step + columns);
+        };
+        const carouselPrev = () => {
+            setStep(step - columns);
+        };
+        return (
+            <div className='recipe-cards-carousel-container'>
+                {step !== 0 && (
+                    <div className='arrow prev' onClick={carouselPrev}>
+                        <BackwardArrowIcon />
+                    </div>
+                )}
+                <div
+                    className='recipe-cards-carousel'
+                    style={{
+                        gridTemplateColumns: '1fr '.repeat(columns)
+                    }}
+                >
+                    {recipes.slice(step, step + columns).map(r => (
+                        <RecipeCard key={r.id} recipe={r} />
+                    ))}
+                </div>
+                {step + columns <= recipes.length && (
+                    <div className='arrow next' onClick={carouselNext}>
+                        <ForwardArrowIcon />
+                    </div>
+                )}
+            </div>
+        );
+    } else
+        return (
+            <div className='recipe-cards'>
+                {recipes.map(r => (
+                    <RecipeCard key={r.id} recipe={r} />
+                ))}
+            </div>
+        );
 }
+

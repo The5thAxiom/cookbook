@@ -30,7 +30,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                 <div>
                     {recipe.quantity} {recipe.unit}
                 </div>
-                <div>{'★'.repeat(recipe.difficulty)}</div>
+                <div>difficulty:{'★'.repeat(recipe.difficulty)}</div>
             </div>
             <div className='recipe-card-description'>{recipe.description}</div>
             {tags ? <RecipeTags tags={tags} /> : <LoadingAnimation />}

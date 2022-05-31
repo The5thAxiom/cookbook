@@ -1,0 +1,19 @@
+.profile-action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+.profile-action-buttons > * {
+    background-color: var(--orange-light);
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profile-action-buttons > *:hover,
+.profile-action-buttons > *:visited:hover {
+    background-color: var(--orange-main);
+    color: var(--yellow-main);
+    transform: scale(1.1);
+}
