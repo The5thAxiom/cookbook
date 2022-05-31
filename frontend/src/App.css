@@ -122,6 +122,10 @@ h6 {
     text-align: center;
 }
 
+h1 {
+    font-size: 3rem;
+}
+
 a,
 a:visited {
     color: var(--green-main);

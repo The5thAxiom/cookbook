@@ -38,16 +38,16 @@ export default function CheckRecipe() {
     if (recipe)
         return (
             <main>
-                <section>
-                    <h1 id='recipe-name'>{recipe.name}</h1>
-                    <div id='recipe-byline'>
+                <section className='util-centered'>
+                    <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
+                    <div>
                         by{' '}
                         <NavLink to={`/user/@${recipe.contributor_username}`}>
                             @{recipe.contributor_username}
                         </NavLink>
                     </div>
                 </section>
-                <section id='recipe-about'>
+                <section id='about' className='util-centered'>
                     <br />
                     <b>{recipe.vegetarian ? 'veg' : 'non-veg'}</b> {' | '}
                     <b>{`takes ${recipe.prep_time} minutes`}</b> {' | '}
@@ -63,7 +63,7 @@ export default function CheckRecipe() {
                     )}
                 </section>
                 <hr />
-                <section id='recipe-ingredients'>
+                <section id='ingredients'>
                     <h2>Ingredients</h2>
                     <ol>
                         {recipe.recipe_ingredients.map(
