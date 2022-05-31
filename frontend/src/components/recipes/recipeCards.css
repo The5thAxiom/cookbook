@@ -1,8 +1,8 @@
 .recipe-cards {
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fit, minmax(10%, 1fr)); */
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* display: flex;
+    flex-direction: column; */
     gap: 10px;
 }
 
@@ -45,4 +45,7 @@
 
 .recipe-card-description {
     text-align: center;
+}
+
+.recipe-cards-carousel {
 }

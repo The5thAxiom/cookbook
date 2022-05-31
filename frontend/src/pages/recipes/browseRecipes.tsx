@@ -26,26 +26,11 @@ export default function BrowseRecipes() {
                 .then(data => setRecipes(data.recipes))
                 .catch(e => setRecipes([]));
     }, [searchParams]);
-
-    if (recipes === null)
-        return (
-            <main>
-                <LoadingAnimation />
-            </main>
-        );
-    else if (recipes.length === 0)
-        return (
-            <main>
-                <h1>Recipes</h1>
-                <b>No recipes found :(</b>
-            </main>
-        );
-    else
-        return (
-            <main>
-                <h1>Recipes</h1>
-                {<RecipeCards recipes={recipes} />}
-            </main>
-        );
+    return (
+        <main>
+            <h1>Recipes</h1>
+            {<RecipeCards recipes={recipes} />}
+        </main>
+    );
 }
 
