@@ -4,6 +4,8 @@ import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCards from '../../components/recipes/recipeCards';
 import { recipeMeta, userData } from '../../values/types';
 
+import './profile.css';
+
 export default function Profile({
     accessToken,
     setAccessToken,
@@ -49,25 +51,21 @@ export default function Profile({
         return (
             <main>
                 <h1>@{user.username}</h1>
-                <section id='info'>
+                <section id='info' className='util-centered'>
                     <h2>Your Info</h2>
                     <b>{user.name}</b>
                     <p>{user.bio}</p>
                 </section>
                 <section id='recipes'>
                     <h2>Your Recipes</h2>
-                    <div className='profile-action-buttons'></div>
-                    <div>
+                    <div className='profile-action-buttons'>
                         <NavLink end to='/recipes/new'>
-                            add recipe
+                            Add new recipe
                         </NavLink>
-                    </div>
-                    <div>
                         <NavLink end to={`/recipes?only-user=${user.username}`}>
-                            see your recipes
+                            All recipes
                         </NavLink>
                     </div>
-
                     <RecipeCards recipes={recipes} carousel columns={2} />
                 </section>
                 <section id='skills'>
