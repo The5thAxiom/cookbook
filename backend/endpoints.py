@@ -220,6 +220,17 @@ def recipes_bytag(tag):
         ]
     ]})
 
+
+@app.route('/api/ingredients/all')
+def ingredients_all():
+    return jsonify(
+        {
+            "ingredients": [
+                i.to_dict() for i in Ingredient.query.all()
+            ]
+        }
+    )
+
     # @app.route('/api/recipes/all/tags')
     # def recipes_all_tags():
     #     return jsonify({"recipes":

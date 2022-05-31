@@ -30,6 +30,12 @@ export type recipeIngredient = {
     unit: string;
 };
 
+export type ingredient = {
+    english_name: string;
+    hindi_name_devnagari: string;
+    hindi_name_latin: string;
+}
+
 export type recipeFull = {
     id: number;
     description: string;

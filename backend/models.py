@@ -16,6 +16,13 @@ class Ingredient(db.Model):
         lazy=True
     )
 
+    def to_dict(self):
+        return {
+            "english_name": self.english_name,
+            "hindi_name_latin": self.hindi_name_latin,
+            "hindi_name_devnagari": self.hindi_name_devnagari
+        }
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
