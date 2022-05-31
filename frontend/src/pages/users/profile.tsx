@@ -56,22 +56,19 @@ export default function Profile({
                 </section>
                 <section id='recipes'>
                     <h2>Your Recipes</h2>
-                    <ul>
-                        <li>
-                            <NavLink end to='/recipes/new'>
-                                add recipe
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                end
-                                to={`/recipes?only-user=${user.username}`}
-                            >
-                                see your recipes
-                            </NavLink>
-                        </li>
-                    </ul>
-                    <RecipeCards recipes={recipes} rows={3} />
+                    <div className='profile-action-buttons'></div>
+                    <div>
+                        <NavLink end to='/recipes/new'>
+                            add recipe
+                        </NavLink>
+                    </div>
+                    <div>
+                        <NavLink end to={`/recipes?only-user=${user.username}`}>
+                            see your recipes
+                        </NavLink>
+                    </div>
+
+                    <RecipeCards recipes={recipes} carousel columns={2} />
                 </section>
                 <section id='skills'>
                     {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
