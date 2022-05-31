@@ -6,8 +6,8 @@ import './App.css';
 import './forms.css';
 import './utility.css';
 
-import Footer from './layout/footer';
-import NavBar from './layout/navBar';
+import Footer from './components/footer';
+import NavBar from './components/navBar';
 
 import Home from './pages/home';
 

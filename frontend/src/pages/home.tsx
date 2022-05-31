@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Header from '../layout/header';
+import Header from '../components/header';
 
 export default function Home() {
     return (

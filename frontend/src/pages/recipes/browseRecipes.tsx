@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
-import RecipeCards from '../../components/recipeCards';
+import RecipeCards from '../../components/recipes/recipeCards';
 import { recipeMeta } from '../../values/types';
 
 export default function BrowseRecipes() {

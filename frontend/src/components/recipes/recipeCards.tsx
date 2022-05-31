@@ -1,5 +1,5 @@
 import React from 'react';
-import { recipeMeta } from '../values/types';
+import { recipeMeta } from '../../values/types';
 import RecipeCard from './recipeCard';
 import './recipeCards.css';
 
