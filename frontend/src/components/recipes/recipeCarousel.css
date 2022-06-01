@@ -31,8 +31,28 @@
 .recipe-cards-carousel-container > .arrow.next {
     margin-left: 10px;
 }
-.recipe-cards-carousel {
+
+/* .recipe-cards-carousel {
     display: grid;
     gap: 10px;
     width: 100%;
+} */
+
+.recipe-cards-carousel {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.recipe-cards-carousel > * {
+    width: 100%;
+}
+
+@media only screen and (max-width: 700px) {
+    .recipe-cards-carousel {
+        flex-direction: column;
+    }
+    .recipe-cards-carousel > * {
+        width: auto;
+    }
 }

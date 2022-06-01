@@ -36,9 +36,9 @@ export default function RecipeCarousel({
                 )}
                 <div
                     className='recipe-cards-carousel'
-                    style={{
-                        gridTemplateColumns: '1fr '.repeat(columns)
-                    }}
+                    // style={{
+                    //     gridTemplateColumns: '1fr '.repeat(columns)
+                    // }}
                 >
                     {recipes.slice(step, step + columns).map(r => (
                         <RecipeCard key={r.id} recipe={r} />
