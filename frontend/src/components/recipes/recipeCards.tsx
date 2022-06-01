@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { recipeMeta } from '../../values/types';
 import LoadingAnimation from '../loadingAnimation';
 import RecipeCard from './recipeCard';
 import './recipeCards.css';
 
 export default function RecipeCards({ recipes }: { recipes: recipeMeta[] }) {
-    const [step, setStep] = useState<number>(0);
-
     if (recipes === null) return <LoadingAnimation />;
     else if (recipes.length === 0)
         return <div className='util-centered'>No recipes found :(</div>;
