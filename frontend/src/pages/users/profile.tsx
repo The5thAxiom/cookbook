@@ -35,7 +35,8 @@ export default function Profile({
             .then(data => {
                 data.access_token && setAccessToken(data.access_token);
                 setUser(data);
-            });
+            })
+            .catch(e => {});
     }, [accessToken, setAccessToken, removeAccessToken]);
 
     useEffect(() => {
