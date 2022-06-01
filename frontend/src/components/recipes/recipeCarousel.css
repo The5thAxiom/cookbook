@@ -1,0 +1,34 @@
+.recipe-cards-carousel-container {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-cards-carousel-container > .arrow {
+    cursor: pointer;
+    background-color: var(--orange-light);
+    border-radius: 100%;
+    padding: 5px;
+}
+.recipe-cards-carousel-container > .arrow > svg {
+    fill: var(--green-main);
+}
+
+.recipe-cards-carousel-container > .arrow:hover {
+    background-color: var(--orange-main);
+    transform: scale(1.15);
+}
+.recipe-cards-carousel-container > .arrow:hover > svg {
+    fill: var(--yellow-main);
+}
+
+.recipe-cards-carousel-container > .arrow.prev {
+    margin-right: 10px;
+}
+
+.recipe-cards-carousel-container > .arrow.next {
+    margin-left: 10px;
+}
+.recipe-cards-carousel {
+    display: grid;
+    gap: 10px;
+}
