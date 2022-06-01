@@ -1,13 +1,16 @@
 .recipe-cards-carousel-container {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 .recipe-cards-carousel-container > .arrow {
     cursor: pointer;
     background-color: var(--orange-light);
-    border-radius: 100%;
+    border-radius: 10px;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .recipe-cards-carousel-container > .arrow > svg {
     fill: var(--green-main);
@@ -15,7 +18,7 @@
 
 .recipe-cards-carousel-container > .arrow:hover {
     background-color: var(--orange-main);
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 .recipe-cards-carousel-container > .arrow:hover > svg {
     fill: var(--yellow-main);
@@ -31,4 +34,5 @@
 .recipe-cards-carousel {
     display: grid;
     gap: 10px;
+    width: 100%;
 }
