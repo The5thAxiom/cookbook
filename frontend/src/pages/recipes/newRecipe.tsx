@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ingredient } from '../../values/types';
+import React /* , { useEffect, useState } */ from 'react';
+// import { ingredient } from '../../values/types';
 
 export default function NewRecipe() {
     // const [existingIngredients, setExistingIngredients] = useState<

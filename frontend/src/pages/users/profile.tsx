@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
-import RecipeCards from '../../components/recipes/recipeCards';
+import RecipeCarousel from '../../components/recipes/recipeCarousel';
 import { recipeMeta, userData } from '../../values/types';
 
 import './profile.css';
@@ -35,7 +35,8 @@ export default function Profile({
             .then(data => {
                 data.access_token && setAccessToken(data.access_token);
                 setUser(data);
-            });
+            })
+            .catch(e => {});
     }, [accessToken, setAccessToken, removeAccessToken]);
 
     useEffect(() => {
@@ -66,7 +67,7 @@ export default function Profile({
                             All recipes
                         </NavLink>
                     </div>
-                    <RecipeCards recipes={recipes} carousel columns={2} />
+                    <RecipeCarousel recipes={recipes} carousel columns={2} />
                 </section>
                 <section id='skills'>
                     {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
