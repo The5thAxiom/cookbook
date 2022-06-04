@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { ingredient } from '../../values/types';
-import Modal from '../../components/modal';
+import React, { useState } from 'react';
+import { recipeIngredient } from '../../values/types';
+import './newRecipe.css';
 
 export default function NewRecipe() {
     // const [existingIngredients, setExistingIngredients] = useState<
@@ -19,9 +19,17 @@ export default function NewRecipe() {
     // const [ingredients, setIngredients] = useState<ingredient[]>([]);
     const [steps, setSteps] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
+    const [ingredients, setIngredients] = useState<recipeIngredient[]>([]);
 
     const [tempStep, setTempStep] = useState<string>('');
     const [tempTag, setTempTag] = useState<string>('');
+    const [tempIngredient, setTempIngredient] = useState<recipeIngredient>({
+        english_name: '',
+        hindi_name_devnagari: '',
+        hindi_name_latin: '',
+        quantity: 0,
+        unit: ''
+    });
 
     const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -115,7 +123,134 @@ export default function NewRecipe() {
                             )}
                         </select>
                     </div> */}
+                    <div className='cb-form-field'>
+                        {ingredients.length > 0 && (
+                            <ol>
+                                {ingredients.map((ing, i) => (
+                                    <li key={i}>
+                                        {ing.quantity} {ing.unit} of{' '}
+                                        {ing.english_name} (
+                                        {ing.hindi_name_latin} |{' '}
+                                        {ing.hindi_name_devnagari})
+                                    </li>
+                                ))}
+                            </ol>
+                        )}
+                    </div>
                     <div className='cb-form-end'>
+                        <dialog open={ingredientsModalOpen}>
+                            <fieldset className='cb-form'>
+                                <legend>Ingredient</legend>
+                                <div className='cb-form-field'>
+                                    <label>Ingredient (english name)</label>
+                                    <input
+                                        onChange={e => {
+                                            e.target.value &&
+                                                setTempIngredient({
+                                                    ...tempIngredient,
+                                                    english_name: e.target.value
+                                                });
+                                        }}
+                                        value={tempIngredient.english_name}
+                                    />
+                                </div>
+                                <div className='cb-form-field'>
+                                    <label>
+                                        Ingredient (hindi name in latin)
+                                    </label>
+                                    <input
+                                        onChange={e => {
+                                            e.target.value &&
+                                                setTempIngredient({
+                                                    ...tempIngredient,
+                                                    hindi_name_latin:
+                                                        e.target.value
+                                                });
+                                        }}
+                                        value={tempIngredient.hindi_name_latin}
+                                    />
+                                </div>
+                                <div className='cb-form-field'>
+                                    <label>
+                                        Ingredient (hindi name in devnagari)
+                                    </label>
+                                    <input
+                                        onChange={e => {
+                                            e.target.value &&
+                                                setTempIngredient({
+                                                    ...tempIngredient,
+                                                    hindi_name_devnagari:
+                                                        e.target.value
+                                                });
+                                        }}
+                                        value={
+                                            tempIngredient.hindi_name_devnagari
+                                        }
+                                    />
+                                </div>
+                            </fieldset>
+                            <fieldset className='cb-forms'>
+                                <legend>Quantity</legend>
+                                <div className='cb-form-field'>
+                                    <label>Quantity</label>
+                                    <input
+                                        type='number'
+                                        onChange={e => {
+                                            e.target.value &&
+                                                setTempIngredient({
+                                                    ...tempIngredient,
+                                                    quantity: parseInt(
+                                                        e.target.value
+                                                    )
+                                                });
+                                        }}
+                                        value={tempIngredient.quantity}
+                                    />
+                                </div>
+                                <div className='cb-form-field'>
+                                    <label>Unit</label>
+                                    <input
+                                        onChange={e => {
+                                            e.target.value &&
+                                                setTempIngredient({
+                                                    ...tempIngredient,
+                                                    unit: e.target.value
+                                                });
+                                        }}
+                                        value={tempIngredient.unit}
+                                    />
+                                </div>
+                            </fieldset>
+                            <div className='cb-form-end'>
+                                <button
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        setIgredientsModalOpen(false);
+                                        let allSet =
+                                            tempIngredient.english_name &&
+                                            tempIngredient.hindi_name_devnagari &&
+                                            tempIngredient.hindi_name_latin &&
+                                            tempIngredient.quantity &&
+                                            tempIngredient.unit;
+                                        allSet &&
+                                            setIngredients([
+                                                ...ingredients,
+                                                tempIngredient
+                                            ]);
+
+                                        setTempIngredient({
+                                            english_name: '',
+                                            hindi_name_devnagari: '',
+                                            hindi_name_latin: '',
+                                            quantity: 0,
+                                            unit: ''
+                                        });
+                                    }}
+                                >
+                                    Add ingredient
+                                </button>
+                            </div>
+                        </dialog>
                         <button
                             onClick={e => {
                                 e.preventDefault();
@@ -125,12 +260,6 @@ export default function NewRecipe() {
                             Add ingredient
                         </button>
                     </div>
-                    <Modal
-                        open={ingredientsModalOpen}
-                        onClose={() => setIgredientsModalOpen(false)}
-                    >
-                        add ingredient
-                    </Modal>
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Steps</legend>
@@ -219,7 +348,8 @@ export default function NewRecipe() {
                         <button
                             onClick={e => {
                                 e.preventDefault();
-                                if (tempTag) setTags([...tags, tempTag]);
+                                if (tempTag && !tags.includes(tempTag))
+                                    setTags([...tags, tempTag.toLowerCase()]);
                                 setTempTag('');
                             }}
                         >

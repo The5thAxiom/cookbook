@@ -1,4 +1,4 @@
-dialog.modal {
+dialog {
     z-index: 1;
     background-color: var(--primary-bg);
     border-color: var(--orange-main);
