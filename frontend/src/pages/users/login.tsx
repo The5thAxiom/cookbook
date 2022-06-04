@@ -30,7 +30,6 @@ export default function Login({
     };
     return (
         <main>
-            <b>{accessToken && accessToken}</b>
             <h1>Login</h1>
             <form className='cb-form'>
                 <div className='cb-form-field'>
