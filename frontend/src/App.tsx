@@ -50,7 +50,10 @@ export default function App() {
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
                         <Route path='filter' element={<BrowseRecipes />} />
-                        <Route path='new' element={<NewRecipe />} />
+                        <Route
+                            path='new'
+                            element={<NewRecipe accessToken={accessToken} />}
+                        />
                     </Route>
                     {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />

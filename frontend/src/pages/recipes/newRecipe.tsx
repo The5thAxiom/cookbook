@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { recipeIngredient } from '../../values/types';
+import { recipeIngredient, recipeMeta } from '../../values/types';
 import './newRecipe.css';
 
-export default function NewRecipe() {
+export default function NewRecipe({ accessToken }: { accessToken: string }) {
     // const [existingIngredients, setExistingIngredients] = useState<
     //     ingredient[]
     // >(null as any);
@@ -13,10 +13,21 @@ export default function NewRecipe() {
     //         .then(data => setExistingIngredients(data.ingredients));
     // }, []);
 
+    const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
+        id: 0,
+        description: '',
+        name: '',
+        prep_time: 0,
+        difficulty: 0,
+        quantity: 0,
+        unit: '',
+        vegetarian: false,
+        contributor_username: ''
+    });
+
     const [ingredientsModalOpen, setIgredientsModalOpen] =
         useState<boolean>(false);
 
-    // const [ingredients, setIngredients] = useState<ingredient[]>([]);
     const [steps, setSteps] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<recipeIngredient[]>([]);
@@ -33,7 +44,34 @@ export default function NewRecipe() {
 
     const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        console.log('submit');
+        let recipe = {
+            description: recipeMeta.description,
+            name: recipeMeta.name,
+            prep_time: recipeMeta.prep_time,
+            difficulty: recipeMeta.difficulty,
+            quantity: recipeMeta.quantity,
+            unit: recipeMeta.unit,
+            vegetarian: recipeMeta.vegetarian,
+            contributor_username: recipeMeta.contributor_username,
+            recipe_tags: tags.map(t => {
+                return {
+                    name: t
+                };
+            }),
+            recipe_ingredients: ingredients,
+            recipe_steps: steps.map((s, i) => {
+                return { serial_number: i + 1, instruction: s };
+            })
+        };
+        console.log(recipe);
+        fetch('/api/recipes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(recipe)
+        });
     };
 
     return (
@@ -44,7 +82,18 @@ export default function NewRecipe() {
                     <legend>Basic Information</legend>
                     <div className='cb-form-field'>
                         <label htmlFor='name'>Recipe name</label>
-                        <input type='text' name='name' required />
+                        <input
+                            type='text'
+                            name='name'
+                            required
+                            onChange={e => {
+                                e.target.value &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        name: e.target.value
+                                    });
+                            }}
+                        />
                     </div>
                     <div className='cb-form-field'>
                         <label htmlFor='prep_time'>
@@ -55,17 +104,41 @@ export default function NewRecipe() {
                             min='0'
                             name='prep_time'
                             required
+                            onChange={e => {
+                                e.target.value &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        prep_time: parseInt(e.target.value)
+                                    });
+                            }}
                         />
                     </div>
                     <div className='cb-form-field'>
                         <label htmlFor='description'>Description</label>
-                        <textarea name='description' required />
+                        <textarea
+                            name='description'
+                            required
+                            onChange={e => {
+                                e.target.value &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        description: e.target.value
+                                    });
+                            }}
+                        />
                     </div>
                     <div className='cb-form-field checkbox'>
                         <input
                             type='checkbox'
                             value='vegetarian'
                             name='vegetarian'
+                            onChange={e => {
+                                e.target.checked &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        vegetarian: e.target.checked
+                                    });
+                            }}
                         />
                         <label htmlFor='vegetarian'>
                             This recipe is vegetarian
@@ -77,8 +150,14 @@ export default function NewRecipe() {
                             type='number'
                             name='quantity'
                             min='0'
-                            step='0.25'
                             required
+                            onChange={e => {
+                                e.target.value &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        quantity: parseInt(e.target.value)
+                                    });
+                            }}
                         />
                     </div>
                     <div className='cb-form-field'>
@@ -86,7 +165,7 @@ export default function NewRecipe() {
                         <input type='text' name='unit' required />
                     </div>
                     <div className='cb-form-field'>
-                        <label htmlFor='name'>
+                        <label htmlFor='difficulty'>
                             How difficult is this recipe (from 1 to 5)
                         </label>
                         <input
@@ -94,8 +173,15 @@ export default function NewRecipe() {
                             min='1'
                             max='5'
                             step='1'
-                            name='name'
+                            name='difficulty'
                             required
+                            onChange={e => {
+                                e.target.value &&
+                                    setRecipeMeta({
+                                        ...recipeMeta,
+                                        difficulty: parseInt(e.target.value)
+                                    });
+                            }}
                         />
                     </div>
                     <div className='cb-form-end'></div>
