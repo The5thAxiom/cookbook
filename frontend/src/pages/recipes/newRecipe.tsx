@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { recipeIngredient, recipeMeta } from '../../values/types';
 import './newRecipe.css';
 
@@ -42,6 +43,8 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         unit: ''
     });
 
+    const [submitted, setSubmitted] = useState<boolean>(false);
+
     const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         let recipe = {
@@ -64,17 +67,19 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
             })
         };
         console.log(recipe);
-        fetch('/api/recipes', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-            },
-            body: JSON.stringify(recipe)
-        });
+        // fetch('/api/recipes', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${accessToken}`
+        //     },
+        //     body: JSON.stringify(recipe)
+        // }).then(res => {if (res.ok) setSubmitted(true);});
     };
 
-    return (
+    return submitted ? (
+        <Navigate to='/user' />
+    ) : (
         <main>
             <h1>Add New Recipe</h1>
             <form className='cb-forms'>
@@ -87,11 +92,10 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                             name='name'
                             required
                             onChange={e => {
-                                e.target.value &&
-                                    setRecipeMeta({
-                                        ...recipeMeta,
-                                        name: e.target.value
-                                    });
+                                setRecipeMeta({
+                                    ...recipeMeta,
+                                    name: e.target.value ? e.target.value : ''
+                                });
                             }}
                         />
                     </div>
@@ -105,11 +109,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                             name='prep_time'
                             required
                             onChange={e => {
-                                e.target.value &&
-                                    setRecipeMeta({
-                                        ...recipeMeta,
-                                        prep_time: parseInt(e.target.value)
-                                    });
+                                setRecipeMeta({
+                                    ...recipeMeta,
+                                    prep_time: parseInt(
+                                        e.target.value ? e.target.value : '0'
+                                    )
+                                });
                             }}
                         />
                     </div>
@@ -119,11 +124,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                             name='description'
                             required
                             onChange={e => {
-                                e.target.value &&
-                                    setRecipeMeta({
-                                        ...recipeMeta,
-                                        description: e.target.value
-                                    });
+                                setRecipeMeta({
+                                    ...recipeMeta,
+                                    description: e.target.value
+                                        ? e.target.value
+                                        : ''
+                                });
                             }}
                         />
                     </div>
@@ -133,11 +139,10 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                             value='vegetarian'
                             name='vegetarian'
                             onChange={e => {
-                                e.target.checked &&
-                                    setRecipeMeta({
-                                        ...recipeMeta,
-                                        vegetarian: e.target.checked
-                                    });
+                                setRecipeMeta({
+                                    ...recipeMeta,
+                                    vegetarian: e.target.checked
+                                });
                             }}
                         />
                         <label htmlFor='vegetarian'>
@@ -176,11 +181,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                             name='difficulty'
                             required
                             onChange={e => {
-                                e.target.value &&
-                                    setRecipeMeta({
-                                        ...recipeMeta,
-                                        difficulty: parseInt(e.target.value)
-                                    });
+                                setRecipeMeta({
+                                    ...recipeMeta,
+                                    difficulty: parseInt(
+                                        e.target.value ? e.target.value : ''
+                                    )
+                                });
                             }}
                         />
                     </div>
@@ -212,12 +218,24 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                     <div className='cb-form-field'>
                         {ingredients.length > 0 && (
                             <ol>
-                                {ingredients.map((ing, i) => (
-                                    <li key={i}>
+                                {ingredients.map((ing, index) => (
+                                    <li key={index}>
                                         {ing.quantity} {ing.unit} of{' '}
                                         {ing.english_name} (
                                         {ing.hindi_name_latin} |{' '}
-                                        {ing.hindi_name_devnagari})
+                                        {ing.hindi_name_devnagari}){' '}
+                                        <button
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setIngredients(
+                                                    ingredients.filter(
+                                                        (s, i) => i !== index
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            X
+                                        </button>
                                     </li>
                                 ))}
                             </ol>
@@ -231,11 +249,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                     <label>Ingredient (english name)</label>
                                     <input
                                         onChange={e => {
-                                            e.target.value &&
-                                                setTempIngredient({
-                                                    ...tempIngredient,
-                                                    english_name: e.target.value
-                                                });
+                                            setTempIngredient({
+                                                ...tempIngredient,
+                                                english_name: e.target.value
+                                                    ? e.target.value
+                                                    : ''
+                                            });
                                         }}
                                         value={tempIngredient.english_name}
                                     />
@@ -246,12 +265,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                     </label>
                                     <input
                                         onChange={e => {
-                                            e.target.value &&
-                                                setTempIngredient({
-                                                    ...tempIngredient,
-                                                    hindi_name_latin:
-                                                        e.target.value
-                                                });
+                                            setTempIngredient({
+                                                ...tempIngredient,
+                                                hindi_name_latin: e.target.value
+                                                    ? e.target.value
+                                                    : ''
+                                            });
                                         }}
                                         value={tempIngredient.hindi_name_latin}
                                     />
@@ -262,12 +281,13 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                     </label>
                                     <input
                                         onChange={e => {
-                                            e.target.value &&
-                                                setTempIngredient({
-                                                    ...tempIngredient,
-                                                    hindi_name_devnagari:
-                                                        e.target.value
-                                                });
+                                            setTempIngredient({
+                                                ...tempIngredient,
+                                                hindi_name_devnagari: e.target
+                                                    .value
+                                                    ? e.target.value
+                                                    : ''
+                                            });
                                         }}
                                         value={
                                             tempIngredient.hindi_name_devnagari
@@ -282,48 +302,73 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                     <input
                                         type='number'
                                         onChange={e => {
-                                            e.target.value &&
-                                                setTempIngredient({
-                                                    ...tempIngredient,
-                                                    quantity: parseInt(
-                                                        e.target.value
-                                                    )
-                                                });
+                                            setTempIngredient({
+                                                ...tempIngredient,
+                                                quantity: e.target.value
+                                                    ? parseInt(e.target.value)
+                                                    : 0
+                                            });
                                         }}
-                                        value={tempIngredient.quantity}
+                                        value={
+                                            tempIngredient.quantity === 0
+                                                ? ''
+                                                : tempIngredient.quantity
+                                        }
                                     />
                                 </div>
                                 <div className='cb-form-field'>
                                     <label>Unit</label>
                                     <input
                                         onChange={e => {
-                                            e.target.value &&
-                                                setTempIngredient({
-                                                    ...tempIngredient,
-                                                    unit: e.target.value
-                                                });
+                                            setTempIngredient({
+                                                ...tempIngredient,
+                                                unit: e.target.value
+                                                    ? e.target.value
+                                                    : ''
+                                            });
                                         }}
                                         value={tempIngredient.unit}
                                     />
                                 </div>
                             </fieldset>
                             <div className='cb-form-end'>
+                                {tempIngredient.english_name &&
+                                    tempIngredient.hindi_name_devnagari &&
+                                    tempIngredient.hindi_name_latin &&
+                                    tempIngredient.quantity > 0 &&
+                                    tempIngredient.unit && (
+                                        <button
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setIgredientsModalOpen(false);
+                                                let allSet =
+                                                    tempIngredient.english_name &&
+                                                    tempIngredient.hindi_name_devnagari &&
+                                                    tempIngredient.hindi_name_latin &&
+                                                    tempIngredient.quantity &&
+                                                    tempIngredient.unit;
+                                                allSet &&
+                                                    setIngredients([
+                                                        ...ingredients,
+                                                        tempIngredient
+                                                    ]);
+
+                                                setTempIngredient({
+                                                    english_name: '',
+                                                    hindi_name_devnagari: '',
+                                                    hindi_name_latin: '',
+                                                    quantity: 0,
+                                                    unit: ''
+                                                });
+                                            }}
+                                        >
+                                            Add ingredient
+                                        </button>
+                                    )}
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
                                         setIgredientsModalOpen(false);
-                                        let allSet =
-                                            tempIngredient.english_name &&
-                                            tempIngredient.hindi_name_devnagari &&
-                                            tempIngredient.hindi_name_latin &&
-                                            tempIngredient.quantity &&
-                                            tempIngredient.unit;
-                                        allSet &&
-                                            setIngredients([
-                                                ...ingredients,
-                                                tempIngredient
-                                            ]);
-
                                         setTempIngredient({
                                             english_name: '',
                                             hindi_name_devnagari: '',
@@ -333,7 +378,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                         });
                                     }}
                                 >
-                                    Add ingredient
+                                    Close
                                 </button>
                             </div>
                         </dialog>
