@@ -1,5 +1,6 @@
-import React /* , { useEffect, useState } */ from 'react';
-// import { ingredient } from '../../values/types';
+import React, { useEffect, useState } from 'react';
+import { ingredient } from '../../values/types';
+import Modal from '../../components/modal';
 
 export default function NewRecipe() {
     // const [existingIngredients, setExistingIngredients] = useState<
@@ -12,10 +13,17 @@ export default function NewRecipe() {
     //         .then(data => setExistingIngredients(data.ingredients));
     // }, []);
 
+    const [ingredientsModalOpen, setIgredientsModalOpen] =
+        useState<boolean>(false);
+    const [stepsModalOpen, setStepsModalOpen] = useState<boolean>(false);
+    const [tagsModalOpen, setTagsModalOpen] = useState<boolean>(false);
+
+    const [ingredients, setIngredients] = useState<ingredient[]>([]);
+
     return (
         <main>
             <h1>Add New Recipe</h1>
-            {/* <form className='cb-forms'>
+            <form className='cb-forms'>
                 <fieldset className='cb-form'>
                     <legend>Basic Information</legend>
                     <div className='cb-form-field'>
@@ -78,7 +86,7 @@ export default function NewRecipe() {
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Ingredients</legend>
-                    <div className='cb-form-field'>
+                    {/* <div className='cb-form-field'>
                         <label>existing:</label>
                         <select>
                             {existingIngredients && (
@@ -98,29 +106,68 @@ export default function NewRecipe() {
                                 </>
                             )}
                         </select>
-                    </div>
+                    </div> */}
                     <div className='cb-form-end'>
-                        <button>Add ingredient</button>
+                        <button
+                            onClick={e => {
+                                e.preventDefault();
+                                setIgredientsModalOpen(true);
+                            }}
+                        >
+                            Add ingredient
+                        </button>
                     </div>
+                    <Modal
+                        open={ingredientsModalOpen}
+                        onClose={() => setIgredientsModalOpen(false)}
+                    >
+                        new ingredient
+                    </Modal>
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Steps</legend>
                     <div className='cb-form-field'></div>
                     <div className='cb-form-end'>
-                        <button>Add step</button>
+                        <button
+                            onClick={e => {
+                                e.preventDefault();
+                                setStepsModalOpen(true);
+                            }}
+                        >
+                            Add step
+                        </button>
                     </div>
+                    <Modal
+                        open={stepsModalOpen}
+                        onClose={() => setStepsModalOpen(false)}
+                    >
+                        new step
+                    </Modal>
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Tags</legend>
                     <div className='cb-form-field'></div>
                     <div className='cb-form-end'>
-                        <button>Add tag</button>
+                        <button
+                            onClick={e => {
+                                e.preventDefault();
+                                setTagsModalOpen(true);
+                            }}
+                        >
+                            Add tags
+                        </button>
                     </div>
+                    <Modal
+                        open={tagsModalOpen}
+                        onClose={() => setTagsModalOpen(false)}
+                    >
+                        new tag
+                    </Modal>
                 </fieldset>
                 <div className='cb-form-end'>
                     <button className='cb-form-button'>Submit Recipe</button>
                 </div>
-            </form> */}
+            </form>
         </main>
     );
 }
