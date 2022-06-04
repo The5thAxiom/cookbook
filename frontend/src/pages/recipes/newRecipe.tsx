@@ -15,14 +15,13 @@ export default function NewRecipe() {
 
     const [ingredientsModalOpen, setIgredientsModalOpen] =
         useState<boolean>(false);
-    const [stepsModalOpen, setStepsModalOpen] = useState<boolean>(false);
-    const [tagsModalOpen, setTagsModalOpen] = useState<boolean>(false);
 
     // const [ingredients, setIngredients] = useState<ingredient[]>([]);
     const [steps, setSteps] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([]);
 
     const [tempStep, setTempStep] = useState<string>('');
+    const [tempTag, setTempTag] = useState<string>('');
 
     const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -161,9 +160,9 @@ export default function NewRecipe() {
                     <div className='cb-form-field'>
                         <textarea
                             onChange={e =>
-                                e.target.value
-                                    ? setTempStep(e.target.value)
-                                    : setTempStep('')
+                                setTempStep(
+                                    e.target.value ? e.target.value : ''
+                                )
                             }
                             value={tempStep}
                         />
@@ -172,7 +171,6 @@ export default function NewRecipe() {
                                 e.preventDefault();
                                 if (tempStep) setSteps([...steps, tempStep]);
                                 setTempStep('');
-                                setStepsModalOpen(false);
                             }}
                         >
                             add
@@ -181,23 +179,53 @@ export default function NewRecipe() {
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Tags</legend>
-                    <div className='cb-form-field'></div>
-                    <div className='cb-form-end'>
+                    {tags.length > 0 && (
+                        <div className='recipe-tags'>
+                            {tags.map((tag, index) => (
+                                <div
+                                    key={index}
+                                    className='nrf-tag'
+                                    style={{
+                                        backgroundColor: 'var(--orange-light)',
+                                        padding: '5px',
+                                        borderRadius: '10px'
+                                    }}
+                                >
+                                    {tag}{' '}
+                                    <span
+                                        className='nrf-tag-x'
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() =>
+                                            setTags(
+                                                tags.filter(
+                                                    (t, i) => i !== index
+                                                )
+                                            )
+                                        }
+                                    >
+                                        X
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <div className='cb-form-field'>
+                        <input
+                            onChange={e =>
+                                setTempTag(e.target.value ? e.target.value : '')
+                            }
+                            value={tempTag}
+                        />
                         <button
                             onClick={e => {
                                 e.preventDefault();
-                                setTagsModalOpen(true);
+                                if (tempTag) setTags([...tags, tempTag]);
+                                setTempTag('');
                             }}
                         >
-                            Add tag
+                            add
                         </button>
                     </div>
-                    <Modal
-                        open={tagsModalOpen}
-                        onClose={() => setTagsModalOpen(false)}
-                    >
-                        Add tag
-                    </Modal>
                 </fieldset>
                 <div className='cb-form-end'>
                     <button onClick={submitForm} className='cb-form-button'>
