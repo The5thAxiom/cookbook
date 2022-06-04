@@ -67,14 +67,16 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
             })
         };
         console.log(recipe);
-        // fetch('/api/recipes', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${accessToken}`
-        //     },
-        //     body: JSON.stringify(recipe)
-        // }).then(res => {if (res.ok) setSubmitted(true);});
+        fetch('/api/recipes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(recipe)
+        }).then(res => {
+            if (res.ok) setSubmitted(true);
+        });
     };
 
     return submitted ? (
