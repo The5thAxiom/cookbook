@@ -8,13 +8,13 @@ export default function Modal({
     buttonText
 }: React.PropsWithChildren<{
     open: boolean;
-    onClose: () => void;
+    onClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
     buttonText?: JSX.Element;
 }>) {
     return (
-        <dialog open={open}>
-            <div>{children}</div>
-            <button onClick={onClose}>
+        <dialog className='modal' open={open}>
+            <div className='modal-contents'>{children}</div>
+            <button className='modal-contents cb-form-end' onClick={onClose}>
                 {buttonText ? buttonText : 'Close'}
             </button>
         </dialog>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { ingredient } from '../../values/types';
 import Modal from '../../components/modal';
 
@@ -18,7 +18,16 @@ export default function NewRecipe() {
     const [stepsModalOpen, setStepsModalOpen] = useState<boolean>(false);
     const [tagsModalOpen, setTagsModalOpen] = useState<boolean>(false);
 
-    const [ingredients, setIngredients] = useState<ingredient[]>([]);
+    // const [ingredients, setIngredients] = useState<ingredient[]>([]);
+    const [steps, setSteps] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
+
+    const [tempStep, setTempStep] = useState<string>('');
+
+    const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log('submit');
+    };
 
     return (
         <main>
@@ -121,28 +130,54 @@ export default function NewRecipe() {
                         open={ingredientsModalOpen}
                         onClose={() => setIgredientsModalOpen(false)}
                     >
-                        new ingredient
+                        add ingredient
                     </Modal>
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Steps</legend>
-                    <div className='cb-form-field'></div>
-                    <div className='cb-form-end'>
+                    {steps.length > 0 && (
+                        <div className='cb-form-field'>
+                            <ol>
+                                {steps.map((step, index) => (
+                                    <li key={index}>
+                                        {step}{' '}
+                                        <button
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setSteps(
+                                                    steps.filter(
+                                                        (s, i) => i !== index
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            X
+                                        </button>
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                    )}
+                    <div className='cb-form-field'>
+                        <textarea
+                            onChange={e =>
+                                e.target.value
+                                    ? setTempStep(e.target.value)
+                                    : setTempStep('')
+                            }
+                            value={tempStep}
+                        />
                         <button
                             onClick={e => {
                                 e.preventDefault();
-                                setStepsModalOpen(true);
+                                if (tempStep) setSteps([...steps, tempStep]);
+                                setTempStep('');
+                                setStepsModalOpen(false);
                             }}
                         >
-                            Add step
+                            add
                         </button>
                     </div>
-                    <Modal
-                        open={stepsModalOpen}
-                        onClose={() => setStepsModalOpen(false)}
-                    >
-                        new step
-                    </Modal>
                 </fieldset>
                 <fieldset className='cb-form'>
                     <legend>Tags</legend>
@@ -154,18 +189,20 @@ export default function NewRecipe() {
                                 setTagsModalOpen(true);
                             }}
                         >
-                            Add tags
+                            Add tag
                         </button>
                     </div>
                     <Modal
                         open={tagsModalOpen}
                         onClose={() => setTagsModalOpen(false)}
                     >
-                        new tag
+                        Add tag
                     </Modal>
                 </fieldset>
                 <div className='cb-form-end'>
-                    <button className='cb-form-button'>Submit Recipe</button>
+                    <button onClick={submitForm} className='cb-form-button'>
+                        Submit Recipe
+                    </button>
                 </div>
             </form>
         </main>
