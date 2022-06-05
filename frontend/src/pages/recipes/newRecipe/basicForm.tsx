@@ -1,6 +1,5 @@
 import React from 'react';
 
-import CloseIcon from '../../../components/icons/closeIcon';
 import { recipeMeta } from '../../../values/types';
 
 export default function BasicForm({
@@ -25,6 +24,7 @@ export default function BasicForm({
                             name: e.target.value ? e.target.value : ''
                         });
                     }}
+                    value={recipe.name}
                 />
             </div>
             <div className='cb-form-field'>
@@ -42,6 +42,7 @@ export default function BasicForm({
                             )
                         });
                     }}
+                    value={recipe.prep_time !== 0 ? recipe.prep_time : ''}
                 />
             </div>
             <div className='cb-form-field'>
@@ -55,6 +56,7 @@ export default function BasicForm({
                             description: e.target.value ? e.target.value : ''
                         });
                     }}
+                    value={recipe.description}
                 />
             </div>
             <div className='cb-form-field checkbox'>
@@ -68,6 +70,7 @@ export default function BasicForm({
                             vegetarian: e.target.checked
                         });
                     }}
+                    checked={recipe.vegetarian}
                 />
                 <label htmlFor='vegetarian'>This recipe is vegetarian</label>
             </div>
@@ -82,14 +85,28 @@ export default function BasicForm({
                         e.target.value &&
                             setRecipe({
                                 ...recipe,
-                                quantity: parseInt(e.target.value)
+                                quantity: parseInt(
+                                    e.target.value ? e.target.value : '0'
+                                )
                             });
                     }}
+                    value={recipe.quantity !== 0 ? recipe.quantity : ''}
                 />
             </div>
             <div className='cb-form-field'>
                 <label htmlFor='unit'>Unit</label>
-                <input type='text' name='unit' required />
+                <input
+                    type='text'
+                    name='unit'
+                    required
+                    onChange={e => {
+                        setRecipe({
+                            ...recipe,
+                            unit: e.target.value ? e.target.value : ''
+                        });
+                    }}
+                    value={recipe.unit}
+                />
             </div>
             <div className='cb-form-field'>
                 <label htmlFor='difficulty'>
@@ -106,10 +123,15 @@ export default function BasicForm({
                         setRecipe({
                             ...recipe,
                             difficulty: parseInt(
-                                e.target.value ? e.target.value : ''
+                                e.target.value ? e.target.value : '1'
                             )
                         });
                     }}
+                    value={
+                        recipe.difficulty > 1 && recipe.difficulty < 5
+                            ? recipe.difficulty
+                            : 3
+                    }
                 />
             </div>
             <div className='cb-form-end'></div>
