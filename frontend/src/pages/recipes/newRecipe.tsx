@@ -17,6 +17,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
     //         .then(data => setExistingIngredients(data.ingredients));
     // }, []);
 
+    // state
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
@@ -81,6 +82,45 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
             if (res.ok) setSubmitted(true);
         });
     };
+    // end state
+
+    // functions
+    const tempIngredientIsValid = () =>
+        !!tempIngredient.english_name &&
+        !!tempIngredient.hindi_name_devnagari &&
+        !!tempIngredient.hindi_name_latin &&
+        tempIngredient.quantity > 0 &&
+        !!tempIngredient.unit;
+
+    const addNewIngredient = () => {
+        if (!tempIngredientIsValid()) return;
+        setIgredientsModalOpen(false);
+
+        setIngredients([...ingredients, tempIngredient]);
+
+        setTempIngredient({
+            english_name: '',
+            hindi_name_devnagari: '',
+            hindi_name_latin: '',
+            quantity: 0,
+            unit: ''
+        });
+    };
+
+    const tempStepIsValid = () => !!tempStep;
+    const addNewStep = () => {
+        if (tempStepIsValid()) setSteps([...steps, tempStep]);
+        setTempStep('');
+    };
+
+    const tempTagIsValid = () => !!tempTag && !tags.includes(tempTag);
+
+    const addNewTag = () => {
+        if (tempTagIsValid()) setTags([...tags, tempTag.toLowerCase()]);
+        setTempTag('');
+    };
+
+    // end functions
 
     return submitted ? (
         <Navigate to='/user' />
@@ -88,7 +128,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         <main>
             <h1>Add New Recipe</h1>
             <form className='cb-forms'>
-                <fieldset className='cb-form'>
+                <fieldset id='basic-information' className='cb-form'>
                     <legend>Basic Information</legend>
                     <div className='cb-form-field'>
                         <label htmlFor='name'>Recipe name</label>
@@ -197,7 +237,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                     </div>
                     <div className='cb-form-end'></div>
                 </fieldset>
-                <fieldset className='cb-form'>
+                <fieldset id='ingredients' className='cb-form'>
                     <legend>Ingredients</legend>
                     {/* <div className='cb-form-field'>
                         <label>existing:</label>
@@ -239,7 +279,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                                 );
                                             }}
                                         >
-                                            X
+                                            <CloseIcon
+                                                style={{
+                                                    height: '1em',
+                                                    width: '1em'
+                                                }}
+                                            />
                                         </button>
                                     </li>
                                 ))}
@@ -262,6 +307,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                             });
                                         }}
                                         value={tempIngredient.english_name}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addNewIngredient();
+                                            }
+                                        }}
                                     />
                                 </div>
                                 <div className='cb-form-field'>
@@ -278,6 +329,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                             });
                                         }}
                                         value={tempIngredient.hindi_name_latin}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addNewIngredient();
+                                            }
+                                        }}
                                     />
                                 </div>
                                 <div className='cb-form-field'>
@@ -297,6 +354,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                         value={
                                             tempIngredient.hindi_name_devnagari
                                         }
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addNewIngredient();
+                                            }
+                                        }}
                                     />
                                 </div>
                             </fieldset>
@@ -319,6 +382,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                                 ? ''
                                                 : tempIngredient.quantity
                                         }
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addNewIngredient();
+                                            }
+                                        }}
                                     />
                                 </div>
                                 <div className='cb-form-field'>
@@ -333,43 +402,26 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                             });
                                         }}
                                         value={tempIngredient.unit}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addNewIngredient();
+                                            }
+                                        }}
                                     />
                                 </div>
                             </fieldset>
                             <div className='cb-form-end'>
-                                {tempIngredient.english_name &&
-                                    tempIngredient.hindi_name_devnagari &&
-                                    tempIngredient.hindi_name_latin &&
-                                    tempIngredient.quantity > 0 &&
-                                    tempIngredient.unit && (
-                                        <button
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                setIgredientsModalOpen(false);
-                                                let allSet =
-                                                    tempIngredient.english_name &&
-                                                    tempIngredient.hindi_name_devnagari &&
-                                                    tempIngredient.hindi_name_latin &&
-                                                    tempIngredient.quantity &&
-                                                    tempIngredient.unit;
-                                                allSet &&
-                                                    setIngredients([
-                                                        ...ingredients,
-                                                        tempIngredient
-                                                    ]);
-
-                                                setTempIngredient({
-                                                    english_name: '',
-                                                    hindi_name_devnagari: '',
-                                                    hindi_name_latin: '',
-                                                    quantity: 0,
-                                                    unit: ''
-                                                });
-                                            }}
-                                        >
-                                            Add ingredient
-                                        </button>
-                                    )}
+                                {tempIngredientIsValid() && (
+                                    <button
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            addNewIngredient();
+                                        }}
+                                    >
+                                        Add ingredient
+                                    </button>
+                                )}
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
@@ -397,7 +449,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                         </button>
                     </div>
                 </fieldset>
-                <fieldset className='cb-form'>
+                <fieldset id='steps' className='cb-form'>
                     <legend>Steps</legend>
                     {steps.length > 0 && (
                         <div className='cb-form-field'>
@@ -415,7 +467,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                                 );
                                             }}
                                         >
-                                            X
+                                            <CloseIcon
+                                                style={{
+                                                    height: '1em',
+                                                    width: '1em'
+                                                }}
+                                            />
                                         </button>
                                     </li>
                                 ))}
@@ -430,19 +487,26 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                 )
                             }
                             value={tempStep}
-                        />
-                        <button
-                            onClick={e => {
-                                e.preventDefault();
-                                if (tempStep) setSteps([...steps, tempStep]);
-                                setTempStep('');
+                            onKeyDown={e => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    addNewStep();
+                                }
                             }}
-                        >
-                            add
-                        </button>
+                        />
+                        {tempStepIsValid() && (
+                            <button
+                                onClick={e => {
+                                    e.preventDefault();
+                                    addNewStep();
+                                }}
+                            >
+                                Add step
+                            </button>
+                        )}
                     </div>
                 </fieldset>
-                <fieldset className='cb-form'>
+                <fieldset id='tags' className='cb-form'>
                     <legend>Tags</legend>
                     {tags.length > 0 && (
                         <div className='recipe-tags'>
@@ -473,17 +537,23 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                 setTempTag(e.target.value ? e.target.value : '')
                             }
                             value={tempTag}
-                        />
-                        <button
-                            onClick={e => {
-                                e.preventDefault();
-                                if (tempTag && !tags.includes(tempTag))
-                                    setTags([...tags, tempTag.toLowerCase()]);
-                                setTempTag('');
+                            onKeyDown={e => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    addNewTag();
+                                }
                             }}
-                        >
-                            add
-                        </button>
+                        />
+                        {tempTagIsValid() && (
+                            <button
+                                onClick={e => {
+                                    e.preventDefault();
+                                    addNewTag();
+                                }}
+                            >
+                                Add tag
+                            </button>
+                        )}
                     </div>
                 </fieldset>
                 <div className='cb-form-end'>
