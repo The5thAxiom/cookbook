@@ -444,19 +444,12 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                     {tags.length > 0 && (
                         <div className='recipe-tags'>
                             {tags.map((tag, index) => (
-                                <div
-                                    key={index}
-                                    className='nrf-tag'
-                                    style={{
-                                        backgroundColor: 'var(--orange-light)',
-                                        padding: '5px',
-                                        borderRadius: '10px'
-                                    }}
-                                >
-                                    {tag}{' '}
-                                    <span
+                                <div key={index} className='nrf-tag'>
+                                    <div className='nrf-tag-contents'>
+                                        {tag}
+                                    </div>
+                                    <div
                                         className='nrf-tag-x'
-                                        style={{ cursor: 'pointer' }}
                                         onClick={() =>
                                             setTags(
                                                 tags.filter(
@@ -465,8 +458,8 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                             )
                                         }
                                     >
-                                        X
-                                    </span>
+                                        x
+                                    </div>
                                 </div>
                             ))}
                         </div>

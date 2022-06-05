@@ -4,3 +4,27 @@ dialog {
     border-color: var(--orange-main);
     border-radius: 10px;
 }
+
+.nrf-tag {
+    background-color: var(--orange-light);
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+}
+
+.nrf-tag-x {
+    cursor: pointer;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1em;
+    width: 1em;
+}
+
+.nrf-tag-x:hover {
+    background-color: var(--orange-main);
+    color: var(--yellow-main);
+}
