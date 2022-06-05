@@ -109,7 +109,16 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         if (tags) setTags(JSON.parse(tags));
     };
 
+    const clearSavedRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        localStorage.removeItem('saved_recipe_info');
+        localStorage.removeItem('saved_recipe_ingredients');
+        localStorage.removeItem('saved_recipe_steps');
+        localStorage.removeItem('saved_recipe_tags');
+    };
+
     const clearRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         setRecipeMeta({
             id: 0,
             description: '',
@@ -146,10 +155,13 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                         Save Recipe
                     </button>
                     <button onClick={loadRecipe} className='cb-form-button'>
-                        Load Recipe
+                        Load Saved Recipe
                     </button>
-                    <button onClick={clearRecipe} className='cb-form-button'>
-                        Clear Recipe
+                    <button
+                        onClick={clearSavedRecipe}
+                        className='cb-form-button'
+                    >
+                        Clear Saved Recipe
                     </button>
                 </div>
                 <BasicForm recipe={recipeMeta} setRecipe={setRecipeMeta} />
@@ -174,6 +186,9 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                 <div className='cb-form-end'>
                     <button onClick={submitForm} className='cb-form-button'>
                         Submit Recipe
+                    </button>
+                    <button onClick={clearRecipe} className='cb-form-button'>
+                        Clear Recipe
                     </button>
                 </div>
             </form>
