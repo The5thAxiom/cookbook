@@ -12,7 +12,7 @@ import NavBar from './components/navBar';
 import Home from './pages/home';
 
 import CheckRecipe from './pages/recipes/checkRecipe';
-import NewRecipe from './pages/recipes/newRecipe';
+import NewRecipe from './pages/recipes/newRecipe/newRecipe';
 import BrowseRecipes from './pages/recipes/browseRecipes';
 
 // import BrowseSkills from './pages/browsseSkills';
