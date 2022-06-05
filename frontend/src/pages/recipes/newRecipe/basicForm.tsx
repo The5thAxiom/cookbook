@@ -128,7 +128,7 @@ export default function BasicForm({
                         });
                     }}
                     value={
-                        recipe.difficulty > 1 && recipe.difficulty < 5
+                        recipe.difficulty >= 1 && recipe.difficulty <= 5
                             ? recipe.difficulty
                             : 3
                     }
