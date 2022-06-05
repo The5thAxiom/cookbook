@@ -7,8 +7,6 @@ import StepForm from './stepForm';
 import TagForm from './tagForm';
 import BasicForm from './basicForm';
 
-import CloseIcon from '../../../components/icons/closeIcon';
-
 import './newRecipe.css';
 
 export default function NewRecipe({ accessToken }: { accessToken: string }) {
@@ -27,7 +25,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         description: '',
         name: '',
         prep_time: 0,
-        difficulty: 0,
+        difficulty: 1,
         quantity: 0,
         unit: '',
         vegetarian: false,
@@ -85,12 +83,75 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         });
     };
 
+    const saveRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        localStorage.setItem('saved_recipe_info', JSON.stringify(recipeMeta));
+        localStorage.setItem(
+            'saved_recipe_ingredients',
+            JSON.stringify(ingredients)
+        );
+        localStorage.setItem('saved_recipe_steps', JSON.stringify(steps));
+        localStorage.setItem('saved_recipe_tags', JSON.stringify(tags));
+        if (recipeMeta.name)
+            window.alert(`${recipeMeta.name} was saved locally!`);
+    };
+
+    const loadRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        let info = localStorage.getItem('saved_recipe_info');
+        let ings = localStorage.getItem('saved_recipe_ingredients');
+        let steps = localStorage.getItem('saved_recipe_steps');
+        let tags = localStorage.getItem('saved_recipe_tags');
+
+        if (info) setRecipeMeta(JSON.parse(info));
+        if (ings) setIngredients(JSON.parse(ings));
+        if (steps) setSteps(JSON.parse(steps));
+        if (tags) setTags(JSON.parse(tags));
+    };
+
+    const clearRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setRecipeMeta({
+            id: 0,
+            description: '',
+            name: '',
+            prep_time: 0,
+            difficulty: 1,
+            quantity: 0,
+            unit: '',
+            vegetarian: false,
+            contributor_username: ''
+        });
+        setIngredients([]);
+        setTempIngredient({
+            english_name: '',
+            hindi_name_devnagari: '',
+            hindi_name_latin: '',
+            quantity: 0,
+            unit: ''
+        });
+        setSteps([]);
+        setTempStep('');
+        setTags([]);
+        setTempTag('');
+    };
+
     return submitted ? (
         <Navigate to='/user' />
     ) : (
         <main>
             <h1>Add New Recipe</h1>
             <form className='cb-forms'>
+                <div className='cb-form-end'>
+                    <button onClick={saveRecipe} className='cb-form-button'>
+                        Save Recipe
+                    </button>
+                    <button onClick={loadRecipe} className='cb-form-button'>
+                        Load Recipe
+                    </button>
+                    <button onClick={clearRecipe} className='cb-form-button'>
+                        Clear Recipe
+                    </button>
+                </div>
                 <BasicForm recipe={recipeMeta} setRecipe={setRecipeMeta} />
                 <IngredientForm
                     ingredients={ingredients}
@@ -110,7 +171,6 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                     tempTag={tempTag}
                     setTempTag={setTempTag}
                 />
-
                 <div className='cb-form-end'>
                     <button onClick={submitForm} className='cb-form-button'>
                         Submit Recipe
