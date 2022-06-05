@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { recipeIngredient, recipeMeta } from '../../values/types';
+
+import CloseIcon from '../../components/icons/closeIcon';
+
 import './newRecipe.css';
 
 export default function NewRecipe({ accessToken }: { accessToken: string }) {
@@ -458,7 +461,7 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
                                             )
                                         }
                                     >
-                                        x
+                                        <CloseIcon />
                                     </div>
                                 </div>
                             ))}

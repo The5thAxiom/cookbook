@@ -26,5 +26,8 @@ dialog {
 
 .nrf-tag-x:hover {
     background-color: var(--orange-main);
-    color: var(--yellow-main);
+}
+
+.nrf-tag-x:hover > svg {
+    fill: var(--yellow-main);
 }
