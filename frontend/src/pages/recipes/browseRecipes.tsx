@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCards from '../../components/recipes/recipeCards';
-import { recipeMeta } from '../../values/types';
 
 export default function BrowseRecipes() {
     const [searchParams] = useSearchParams();

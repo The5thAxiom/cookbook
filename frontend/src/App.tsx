@@ -12,7 +12,7 @@ import NavBar from './components/navBar';
 import Home from './pages/home';
 
 import CheckRecipe from './pages/recipes/checkRecipe';
-import NewRecipe from './pages/recipes/newRecipe';
+import NewRecipe from './pages/recipes/newRecipe/newRecipe';
 import BrowseRecipes from './pages/recipes/browseRecipes';
 
 // import BrowseSkills from './pages/browsseSkills';
@@ -50,7 +50,10 @@ export default function App() {
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
                         <Route path='filter' element={<BrowseRecipes />} />
-                        <Route path='new' element={<NewRecipe />} />
+                        <Route
+                            path='new'
+                            element={<NewRecipe accessToken={accessToken} />}
+                        />
                     </Route>
                     {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />

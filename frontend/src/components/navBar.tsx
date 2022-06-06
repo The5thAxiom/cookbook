@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { navBarLinks } from '../values/navBarLinks';
-import { navBarLink } from '../values/types';
+
 import LogoutIcon from '../components/icons/logoutIcon';
 
 export default function NavBar({

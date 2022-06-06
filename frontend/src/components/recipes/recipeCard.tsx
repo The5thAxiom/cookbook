@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { recipeMeta } from '../../values/types';
+
 import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
 import LoadingAnimation from './../loadingAnimation';
