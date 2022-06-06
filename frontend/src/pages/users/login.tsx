@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { userLoginData } from '../../values/types';
 
 export default function Login({
     accessToken,

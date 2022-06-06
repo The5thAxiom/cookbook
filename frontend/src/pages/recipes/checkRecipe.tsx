@@ -3,7 +3,6 @@ import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
-import { recipeFull, recipeIngredient, recipeMeta } from '../../values/types';
 
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import CloseIcon from '../../../components/icons/closeIcon';
-import { recipeIngredient } from '../../../values/types';
 
 export default function IngredientForm({
     ingredients,

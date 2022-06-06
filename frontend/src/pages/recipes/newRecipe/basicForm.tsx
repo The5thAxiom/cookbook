@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { recipeMeta } from '../../../values/types';
-
 export default function BasicForm({
     recipe,
     setRecipe

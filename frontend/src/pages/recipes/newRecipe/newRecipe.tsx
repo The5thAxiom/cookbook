@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { recipeIngredient, recipeMeta } from '../../../values/types';
 
 import IngredientForm from './ingredientForm';
 import StepForm from './stepForm';
