@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CloseIcon from '../../../components/icons/closeIcon';
 
@@ -19,6 +19,14 @@ export default function TagForm({
         if (tempTagIsValid()) setTags([...tags, tempTag.toLowerCase()]);
         setTempTag('');
     };
+
+    const [existingTags, setExistingTags] = useState<string[]>([]);
+
+    useEffect(() => {
+        fetch('/api/tags/all')
+            .then(res => (res.ok ? res.json() : { tags: [] }))
+            .then(data => setExistingTags(data.tags));
+    }, []);
 
     return (
         <fieldset id='tags' className='cb-form'>
@@ -52,7 +60,14 @@ export default function TagForm({
                             addNewTag();
                         }
                     }}
+                    list='existing-tags'
                 />
+                <datalist id='existing-tags'>
+                    {existingTags &&
+                        existingTags
+                            .filter(t => !tags.includes(t))
+                            .map((t, i) => <option key={i} value={t} />)}
+                </datalist>
                 {tempTagIsValid() && (
                     <button
                         onClick={e => {
@@ -67,3 +82,4 @@ export default function TagForm({
         </fieldset>
     );
 }
+
