@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CloseIcon from '../../../components/icons/closeIcon';
 
@@ -13,15 +13,27 @@ export default function IngredientForm({
     tempIngredient: recipeIngredient;
     setTempIngredient: React.Dispatch<React.SetStateAction<recipeIngredient>>;
 }) {
-    // const [existingIngredients, setExistingIngredients] = useState<
-    //     ingredient[]
-    // >(null as any);
+    const [existingIngredients, setExistingIngredients] = useState<
+        ingredient[]
+    >([]);
 
-    // useEffect(() => {
-    //     fetch('/api/ingredients/all')
-    //         .then(res => (res.ok ? res.json() : null))
-    //         .then(data => setExistingIngredients(data.ingredients));
-    // }, []);
+    useEffect(() => {
+        fetch('/api/ingredients/all')
+            .then(res => (res.ok ? res.json() : null))
+            .then(data => setExistingIngredients(data.ingredients));
+    }, []);
+
+    const checkIfExists = (i: ingredient): recipeIngredient => {
+        const existing = existingIngredients.filter(
+            e =>
+                e.english_name === i.english_name ||
+                e.hindi_name_devnagari === i.hindi_name_devnagari ||
+                e.hindi_name_latin === i.hindi_name_latin
+        )[0];
+        if (existing) return { ...tempIngredient, ...existing };
+        else return { ...tempIngredient, ...i };
+    };
+
     const [ingredientsModalOpen, setIgredientsModalOpen] =
         useState<boolean>(false);
 
@@ -46,30 +58,10 @@ export default function IngredientForm({
             unit: ''
         });
     };
+
     return (
         <fieldset id='ingredients' className='cb-form'>
             <legend>Ingredients</legend>
-            {/* <div className='cb-form-field'>
-                        <label>existing:</label>
-                        <select>
-                            {existingIngredients && (
-                                <>
-                                    <option value=''>
-                                        See existing ingredients
-                                    </option>
-                                    {existingIngredients.map((i, index) => (
-                                        <option key={index}>
-                                            {i.english_name}
-                                            {' | '}
-                                            {i.hindi_name_latin}
-                                            {' | '}
-                                            {i.hindi_name_devnagari}
-                                        </option>
-                                    ))}
-                                </>
-                            )}
-                        </select>
-                    </div> */}
             <div className='cb-form-field'>
                 {ingredients.length > 0 && (
                     <ol>
@@ -108,12 +100,14 @@ export default function IngredientForm({
                             <label>Ingredient (english name)</label>
                             <input
                                 onChange={e => {
-                                    setTempIngredient({
-                                        ...tempIngredient,
-                                        english_name: e.target.value
-                                            ? e.target.value
-                                            : ''
-                                    });
+                                    setTempIngredient(
+                                        checkIfExists({
+                                            ...tempIngredient,
+                                            english_name: e.target.value
+                                                ? e.target.value
+                                                : ''
+                                        })
+                                    );
                                 }}
                                 value={tempIngredient.english_name}
                                 onKeyDown={e => {
@@ -122,18 +116,37 @@ export default function IngredientForm({
                                         addNewIngredient();
                                     }
                                 }}
+                                list='existing-eng'
                             />
+                            <datalist id='existing-eng'>
+                                {existingIngredients &&
+                                    existingIngredients
+                                        .filter(
+                                            ing =>
+                                                !ingredients
+                                                    .map(i => i.english_name)
+                                                    .includes(ing.english_name)
+                                        )
+                                        .map((ing, i) => (
+                                            <option
+                                                key={i}
+                                                value={ing.english_name}
+                                            />
+                                        ))}
+                            </datalist>
                         </div>
                         <div className='cb-form-field'>
                             <label>Ingredient (hindi name in latin)</label>
                             <input
                                 onChange={e => {
-                                    setTempIngredient({
-                                        ...tempIngredient,
-                                        hindi_name_latin: e.target.value
-                                            ? e.target.value
-                                            : ''
-                                    });
+                                    setTempIngredient(
+                                        checkIfExists({
+                                            ...tempIngredient,
+                                            hindi_name_latin: e.target.value
+                                                ? e.target.value
+                                                : ''
+                                        })
+                                    );
                                 }}
                                 value={tempIngredient.hindi_name_latin}
                                 onKeyDown={e => {
@@ -142,18 +155,41 @@ export default function IngredientForm({
                                         addNewIngredient();
                                     }
                                 }}
+                                list='existing-hin-lat'
                             />
+                            <datalist id='existing-hin-lat'>
+                                {existingIngredients &&
+                                    existingIngredients
+                                        .filter(
+                                            ing =>
+                                                !ingredients
+                                                    .map(
+                                                        i => i.hindi_name_latin
+                                                    )
+                                                    .includes(
+                                                        ing.hindi_name_latin
+                                                    )
+                                        )
+                                        .map((ing, i) => (
+                                            <option
+                                                key={i}
+                                                value={ing.hindi_name_latin}
+                                            />
+                                        ))}
+                            </datalist>
                         </div>
                         <div className='cb-form-field'>
                             <label>Ingredient (hindi name in devnagari)</label>
                             <input
                                 onChange={e => {
-                                    setTempIngredient({
-                                        ...tempIngredient,
-                                        hindi_name_devnagari: e.target.value
-                                            ? e.target.value
-                                            : ''
-                                    });
+                                    setTempIngredient(
+                                        checkIfExists({
+                                            ...tempIngredient,
+                                            hindi_name_devnagari: e.target.value
+                                                ? e.target.value
+                                                : ''
+                                        })
+                                    );
                                 }}
                                 value={tempIngredient.hindi_name_devnagari}
                                 onKeyDown={e => {
@@ -162,7 +198,29 @@ export default function IngredientForm({
                                         addNewIngredient();
                                     }
                                 }}
+                                list='existing-hin-dev'
                             />
+                            <datalist id='existing-hin-dev'>
+                                {existingIngredients &&
+                                    existingIngredients
+                                        .filter(
+                                            ing =>
+                                                !ingredients
+                                                    .map(
+                                                        i =>
+                                                            i.hindi_name_devnagari
+                                                    )
+                                                    .includes(
+                                                        ing.hindi_name_devnagari
+                                                    )
+                                        )
+                                        .map((ing, i) => (
+                                            <option
+                                                key={i}
+                                                value={ing.hindi_name_devnagari}
+                                            />
+                                        ))}
+                            </datalist>
                         </div>
                     </fieldset>
                     <fieldset className='cb-forms'>
