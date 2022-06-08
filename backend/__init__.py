@@ -45,7 +45,9 @@ bcrypt = Bcrypt(app)
 
 # this will initialize the tables
 from backend.models import *
-db.create_all()
+
+# this needs to be called once from the shell, not everytime :facepalm:
+# db.create_all()
 
 from backend.controllers import *
 from backend.endpoints import *
