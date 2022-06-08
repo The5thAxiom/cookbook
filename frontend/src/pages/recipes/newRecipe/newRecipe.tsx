@@ -9,16 +9,6 @@ import BasicForm from './basicForm';
 import './newRecipe.css';
 
 export default function NewRecipe({ accessToken }: { accessToken: string }) {
-    // const [existingIngredients, setExistingIngredients] = useState<
-    //     ingredient[]
-    // >(null as any);
-
-    // useEffect(() => {
-    //     fetch('/api/ingredients/all')
-    //         .then(res => (res.ok ? res.json() : null))
-    //         .then(data => setExistingIngredients(data.ingredients));
-    // }, []);
-
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',

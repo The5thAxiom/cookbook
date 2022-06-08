@@ -13,6 +13,15 @@ export default function IngredientForm({
     tempIngredient: recipeIngredient;
     setTempIngredient: React.Dispatch<React.SetStateAction<recipeIngredient>>;
 }) {
+    // const [existingIngredients, setExistingIngredients] = useState<
+    //     ingredient[]
+    // >(null as any);
+
+    // useEffect(() => {
+    //     fetch('/api/ingredients/all')
+    //         .then(res => (res.ok ? res.json() : null))
+    //         .then(data => setExistingIngredients(data.ingredients));
+    // }, []);
     const [ingredientsModalOpen, setIgredientsModalOpen] =
         useState<boolean>(false);
 
@@ -244,3 +253,4 @@ export default function IngredientForm({
         </fieldset>
     );
 }
+
