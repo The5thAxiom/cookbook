@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { recipeMeta } from '../../values/types';
+
 import BackwardArrowIcon from '../icons/backwardArrowIcon';
 import ForwardArrowIcon from '../icons/forwardArrowIcon';
 import LoadingAnimation from '../loadingAnimation';
@@ -53,3 +53,4 @@ export default function RecipeCarousel({
         );
     }
 }
+

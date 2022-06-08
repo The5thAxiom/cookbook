@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
-import { userData } from '../../values/types';
 
 export default function User() {
     const [user, setUser] = useState<userData>(null as any);

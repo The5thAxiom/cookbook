@@ -1,4 +1,3 @@
-import { navBarLink } from './types';
 import HomeIcon from '../components/icons/homeIcon';
 import BrowseIcon from '../components/icons/browseIcon';
 // import WhatCanIMakeIcon from '../components/icons/whatCanIMakeIcon';
@@ -9,5 +8,6 @@ export const navBarLinks: navBarLink[] = [
     { to: '/recipes', icon: BrowseIcon },
     // {to: "/skills", name: "broswe skills"},
     // { to: '/recipes/filter', icon: WhatCanIMakeIcon },
-    { to: '/user', icon: AboutIcon },
+    { to: '/user', icon: AboutIcon }
 ];
+

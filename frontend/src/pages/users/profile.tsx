@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
-import { recipeMeta, userData } from '../../values/types';
 
 import './profile.css';
 

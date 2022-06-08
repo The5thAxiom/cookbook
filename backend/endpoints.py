@@ -231,6 +231,17 @@ def ingredients_all():
         }
     )
 
+
+@app.route('/api/tags/all')
+def tags_all():
+    return jsonify(
+        {
+            "tags": [
+                t.name for t in Tag.query.all()
+            ]
+        }
+    )
+
     # @app.route('/api/recipes/all/tags')
     # def recipes_all_tags():
     #     return jsonify({"recipes":

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { userLoginData } from '../../values/types';
 
 export default function Login({
     accessToken,
@@ -30,7 +29,6 @@ export default function Login({
     };
     return (
         <main>
-            <b>{accessToken && accessToken}</b>
             <h1>Login</h1>
             <form className='cb-form'>
                 <div className='cb-form-field'>

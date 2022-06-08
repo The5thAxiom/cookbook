@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { recipeMeta } from '../values/types';
+
 import BackwardArrowIcon from './icons/backwardArrowIcon';
 import ForwardArrowIcon from './icons/forwardArrowIcon';
 import LoadingAnimation from './loadingAnimation';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { navBarIcon } from '../../values/types';
+
 import './navIcons.css';
 
 export default function AboutIcon({ isActive }: navBarIcon) {
@@ -32,3 +32,4 @@ export default function AboutIcon({ isActive }: navBarIcon) {
             </svg>
         );
 }
+
