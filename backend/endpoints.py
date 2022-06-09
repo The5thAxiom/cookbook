@@ -124,6 +124,24 @@ def user_str_recipes_full(username):
         })
 
 
+@app.route('/api/users/<username>/collections/<collection>')
+@jwt_required()
+def user_collection(username, collection):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        return jsonify({
+            "recipes": [
+                getRecipeMeta(recipe)
+                for recipe
+                in Collection.query\
+                    .filter(Collection.user_id == user.id)\
+                    .first().recipes
+            ]
+        })
+
+
 @app.route('/api/recipes', methods=['POST'])
 @jwt_required()
 def recipes():
