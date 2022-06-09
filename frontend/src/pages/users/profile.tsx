@@ -16,6 +16,12 @@ export default function Profile({
 }) {
     const [user, setUser] = useState<userData>(null as any);
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
+    const [collections, setCollections] = useState<
+        {
+            name: string;
+            recipes: recipeMeta[];
+        }[]
+    >(null as any);
 
     useEffect(() => {
         fetch('/api/users/profile', {
@@ -47,6 +53,36 @@ export default function Profile({
                 .then(data => setRecipes(data.recipes));
     }, [user]);
 
+    useEffect(() => {
+        setCollections(null as any);
+        if (user)
+            fetch(`/api/users/${user.username}/collections`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    else {
+                        removeAccessToken();
+                        throw new Error();
+                    }
+                })
+                .then(data => {
+                    data.access_token && setAccessToken(data.access_token);
+                    setCollections(
+                        data.collections.map((c: any) => {
+                            return {
+                                name: c.name,
+                                recipes: c.recipes
+                            };
+                        })
+                    );
+                })
+                .catch(e => {});
+    }, [user]);
+
     if (user)
         return (
             <main>
@@ -71,6 +107,23 @@ export default function Profile({
                 <section id='skills'>
                     {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
                 <li><NavLink end to='/skills'>see your skills</NavLink></li> */}
+                </section>
+                <section>
+                    <h2>Your Collections</h2>
+                    {collections ? (
+                        collections.map((c, i) => (
+                            <div className='collection' key={i}>
+                                <h3>{c.name}</h3>
+                                <RecipeCarousel
+                                    recipes={c.recipes}
+                                    carousel
+                                    columns={2}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <LoadingAnimation />
+                    )}
                 </section>
             </main>
         );

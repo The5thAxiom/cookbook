@@ -136,7 +136,10 @@ def user_collections(username):
     else:
         if request.method == 'GET':
             return jsonify({'collections': [
-                c.name for c in user.collections
+                {
+                    'name': c.name,
+                    'recipes': [getRecipeMeta(r) for r in c.recipes]
+                } for c in user.collections
             ]})
         if request.method == 'POST':
             collection_name = request.json.get('collection_name', None)
@@ -168,13 +171,13 @@ def user_collection(username, collection_name):
     if user is None or collection is None:
         abort(404)
     if request.method == 'GET':
-            return jsonify({
-                "recipes": [
-                    getRecipeMeta(recipe)
-                    for recipe
-                    in collection.recipes
-                ]
-            })
+        return jsonify({
+            "recipes": [
+                getRecipeMeta(recipe)
+                for recipe
+                in collection.recipes
+            ]
+        })
     if request.method == 'POST':
         recipe_id = request.json.get('recipe_id', None)
         recipe = Recipe.query.get(recipe_id)
