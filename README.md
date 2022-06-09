@@ -132,3 +132,7 @@ Making a simple app using React and Flask.
 -   I don't know how a db this complex will be stored, i might have to use plain
     sql cause i don't know how the flask sqlalchemy stuff works.
 -   this is going to be tricky
+
+## how to migrate:
+    - `flask db migrate` to detect changes
+    - `flask db upgrade` to push the changes to the db
