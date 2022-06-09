@@ -125,27 +125,71 @@ def user_str_recipes_full(username):
 
 
 @app.route(
-    '/api/users/<username>/collections/<collection>',
+    '/api/users/<username>/collections',
     methods=['GET', 'POST']
 )
 @jwt_required()
-def user_collection(username, collection):
+def user_collections(username):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        if request.method == 'GET':
+            return jsonify({'collections': [
+                c.name for c in user.collections
+            ]})
+        if request.method == 'POST':
+            collection_name = request.json.get('collection_name', None)
+            collection = Collection.query\
+                .filter(Collection.name == collection_name)\
+                .first()
+            if collection is None:
+                db.session.add(Collection(**{
+                    'name': collection_name,
+                    'user_id': user.id
+                }))
+                db.session.commit()
+                return Response(status=201)
+            else:
+                return Response(status=202)
+
+
+@app.route(
+    '/api/users/<username>/collections/<collection_name>',
+    methods=['GET', 'POST']
+)
+@jwt_required()
+def user_collection(username, collection_name):
+    user = User.query.filter(User.username == username).first()
+    collection = Collection.query\
+        .filter(Collection.user_id == user.id)\
+        .filter(Collection.name == collection_name)\
+        .first()
+    if user is None or collection is None:
+        abort(404)
     if request.method == 'GET':
-        user = User.query.filter(User.username == username).first()
-        if user is None:
-            abort(404)
-        else:
             return jsonify({
                 "recipes": [
                     getRecipeMeta(recipe)
                     for recipe
-                    in Collection.query\
-                        .filter(Collection.user_id == user.id)\
-                        .first().recipes
+                    in collection.recipes
                 ]
             })
     if request.method == 'POST':
-        return jsonify({'message': 'coming soon'})
+        recipe_id = request.json.get('recipe_id', None)
+        recipe = Recipe.query.get(recipe_id)
+        if recipe is None:
+            abort(404)
+        else:
+            if recipe.id in [r.id for r in collection.recipes]:
+                return Response(status=202)
+            db.engine.execute(
+                Collection_Recipe.insert().values(**{
+                    'collection_id': collection.id,
+                    'recipe_id': recipe.id
+                })
+            )
+            return Response(status=201)
 
 
 @app.route('/api/recipes', methods=['POST'])

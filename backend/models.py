@@ -41,6 +41,11 @@ class User(db.Model):
         backref=db.backref('contributor', uselist=False),
         lazy=True
     )
+    collections = db.relationship(
+        'Collection',
+        backref=db.backref('user', uselist=False),
+        lazy=True
+    )
 
     def to_dict(self):
         return {
@@ -160,6 +165,11 @@ class Tag(db.Model):
 
 Collection_Recipe = db.Table('Collection_Recipe',
     db.Column(
+        'id',
+        db.Integer,
+        primary_key=True
+    ),
+    db.Column(
         'collection_id',
         db.Integer,
         db.ForeignKey('collection.id'),
@@ -168,7 +178,7 @@ Collection_Recipe = db.Table('Collection_Recipe',
     db.Column(
         'recipe_id',
         db.Integer,
-        db.ForeignKey('collection.id'),
+        db.ForeignKey('recipe.id'),
         nullable=False
     )
 )
