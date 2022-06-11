@@ -5,23 +5,12 @@ import { navBarLinks } from '../values/navBarLinks';
 import LogoutIcon from '../components/icons/logoutIcon';
 
 export default function NavBar({
-    accessToken,
-    removeAccessToken
+    user,
+    logOutUser
 }: {
-    accessToken: string;
-    removeAccessToken: any;
+    user: userData;
+    logOutUser: () => void;
 }) {
-    const logout = () => {
-        fetch('/api/users/logout', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        }).then(res => {
-            removeAccessToken();
-        });
-    };
-
     return (
         <nav id='nav-bar'>
             {/* <NavLink className='navbar-link' to={'/'}>
@@ -38,11 +27,11 @@ export default function NavBar({
                     to={link.to}
                 />
             ))}
-            {accessToken !== '' && (
+            {user && (
                 <NavLink
                     end
                     className='navbar-link'
-                    onClick={logout}
+                    onClick={logOutUser}
                     to='/user'
                 >
                     <LogoutIcon />

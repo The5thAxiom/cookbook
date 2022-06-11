@@ -43,7 +43,14 @@ export default function App() {
         });
     };
 
-    useEffect(() => {
+    const logOutUser = () => {
+        setUser(null as any);
+        fetchAsUser('/api/users/logout').then(res => {
+            removeAccessToken();
+        });
+    };
+
+    const fetchUser = () => {
         fetchAsUser('/api/users/profile')
             .then(res => {
                 if (res.ok) return res.json();
@@ -57,7 +64,11 @@ export default function App() {
                 setUser(data);
             })
             .catch(e => {});
-    }, [accessToken, setAccessToken, removeAccessToken]);
+    };
+
+    useEffect(() => {
+        if (accessToken !== '') fetchUser();
+    }, [accessToken]);
 
     return (
         <HashRouter basename=''>
@@ -66,10 +77,7 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar
-                                accessToken={accessToken}
-                                removeAccessToken={removeAccessToken}
-                            />
+                            <NavBar user={user} logOutUser={logOutUser} />
                             <Outlet />
                             <Footer />
                         </>
@@ -94,7 +102,7 @@ export default function App() {
                 </Route> */}
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
-                        {accessToken !== '' ? (
+                        {user ? (
                             <Route
                                 index
                                 element={
