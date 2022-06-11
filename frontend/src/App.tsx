@@ -43,6 +43,23 @@ export default function App() {
         });
     };
 
+    const logInUser = (data: userLoginData) => {
+        fetch('/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    window.alert('wrong login attempt');
+                    throw new Error();
+                }
+            })
+            .then(data => setAccessToken(data.access_token));
+    };
+
     const logOutUser = () => {
         setUser(null as any);
         fetchAsUser('/api/users/logout').then(res => {
@@ -93,10 +110,7 @@ export default function App() {
                             <Route
                                 path='new'
                                 element={
-                                    <NewRecipe
-                                        fetchAsUser={fetchAsUser}
-                                        accessToken={accessToken}
-                                    />
+                                    <NewRecipe fetchAsUser={fetchAsUser} />
                                 }
                             />
                         )}
@@ -123,12 +137,7 @@ export default function App() {
                             <>
                                 <Route
                                     index
-                                    element={
-                                        <Login
-                                            accessToken={accessToken}
-                                            setAccessToken={setAccessToken}
-                                        />
-                                    }
+                                    element={<Login logInUser={logInUser} />}
                                 />
                                 <Route path='new' element={<Signup />} />
                             </>

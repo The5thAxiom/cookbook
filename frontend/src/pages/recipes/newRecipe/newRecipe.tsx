@@ -9,10 +9,8 @@ import BasicForm from './basicForm';
 import './newRecipe.css';
 
 export default function NewRecipe({
-    accessToken,
     fetchAsUser
 }: {
-    accessToken: string;
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 }) {
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
