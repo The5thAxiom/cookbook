@@ -100,7 +100,6 @@ export default function App() {
                                 element={
                                     <Profile
                                         user={user}
-                                        accessToken={accessToken}
                                         fetchAsUser={fetchAsUser}
                                     />
                                 }

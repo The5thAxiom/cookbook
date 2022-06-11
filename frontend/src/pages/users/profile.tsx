@@ -7,11 +7,9 @@ import './profile.css';
 
 export default function Profile({
     user,
-    accessToken,
     fetchAsUser
 }: {
     user: userData;
-    accessToken: string;
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 }) {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
