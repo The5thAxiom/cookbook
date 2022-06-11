@@ -69,18 +69,33 @@ export default function Profile({
                 <li><NavLink end to='/skills'>see your skills</NavLink></li> */}
             </section>
             <section>
-                <h2>Your Collections</h2>
-                {collections ? (
-                    collections.map((c, i) => (
-                        <div className='collection' key={i}>
-                            <h3>{c.name}</h3>
+                <h2>Your Favourites</h2>
+                {collections &&
+                    collections
+                        .filter(c => c.name === 'favourites')
+                        .map(c => (
                             <RecipeCarousel
                                 recipes={c.recipes}
                                 carousel
                                 columns={2}
                             />
-                        </div>
-                    ))
+                        ))}
+            </section>
+            <section>
+                <h2>Your Collections</h2>
+                {collections ? (
+                    collections
+                        .filter(c => c.name !== 'favourites')
+                        .map((c, i) => (
+                            <div className='collection' key={i}>
+                                <h3>{c.name}</h3>
+                                <RecipeCarousel
+                                    recipes={c.recipes}
+                                    carousel
+                                    columns={2}
+                                />
+                            </div>
+                        ))
                 ) : (
                     <LoadingAnimation />
                 )}
