@@ -24,7 +24,7 @@ import Profile from './pages/users/profile';
 import Login from './pages/users/login';
 import Signup from './pages/users/signup';
 
-import useCurrentUser from './useCurrentUser';
+import useCurrentUser from './hooks/useCurrentUser';
 
 export default function App() {
     const [user, fetchAsUser, logInUser, logOutUser] = useCurrentUser();
