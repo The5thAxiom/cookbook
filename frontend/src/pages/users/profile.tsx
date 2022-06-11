@@ -7,10 +7,12 @@ import './profile.css';
 
 export default function Profile({
     user,
-    accessToken
+    accessToken,
+    fetchAsUser
 }: {
     user: userData;
     accessToken: string;
+    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 }) {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
     const [collections, setCollections] = useState<
@@ -23,19 +25,13 @@ export default function Profile({
     useEffect(() => {
         setRecipes(null as any);
         fetch(`/api/users/${user.username}/recipes`)
-            // .then(res => (res.ok ? res.json() : { recipes: [] }))
             .then(res => res.json())
             .then(data => setRecipes(data.recipes));
     }, []);
 
     useEffect(() => {
         setCollections(null as any);
-        fetch(`/api/users/${user.username}/collections`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
+        fetchAsUser(`/api/users/${user.username}/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollections(

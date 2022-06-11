@@ -30,13 +30,21 @@ export default function App() {
     const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
     const [user, setUser] = useState<userData>(null as any);
 
-    useEffect(() => {
-        fetch('/api/users/profile', {
-            method: 'GET',
+    const fetchAsUser = (
+        input: RequestInfo,
+        init?: RequestInit
+    ): Promise<Response> => {
+        return fetch(input, {
+            ...init,
             headers: {
+                ...init?.headers,
                 Authorization: `Bearer ${accessToken}`
             }
-        })
+        });
+    };
+
+    useEffect(() => {
+        fetchAsUser('/api/users/profile')
             .then(res => {
                 if (res.ok) return res.json();
                 else {
@@ -93,6 +101,7 @@ export default function App() {
                                     <Profile
                                         user={user}
                                         accessToken={accessToken}
+                                        fetchAsUser={fetchAsUser}
                                     />
                                 }
                             />
