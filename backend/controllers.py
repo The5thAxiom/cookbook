@@ -1,6 +1,7 @@
 from backend import db, bcrypt
 from backend.models import *
 
+
 def addFullRecipe(newRecipeFull: str, contributor_id: int):
     newRecipe = Recipe(**{
         "name": newRecipeFull["name"],
@@ -53,8 +54,15 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
 
 
 def addNewUser(newUser: dict):
-    newUser['password'] = bcrypt.generate_password_hash(newUser['password'].encode('utf-8'))
-    db.session.add(User(**newUser))
+    newUser['password'] = bcrypt.generate_password_hash(
+        newUser['password'].encode('utf-8'))
+    user = User(**newUser)
+    db.session.add(user)
+    db.session.commit()
+    db.session.add(Collection(**{
+        'name': 'favourites',
+        'user_id': user.id
+    }))
     db.session.commit()
 
 

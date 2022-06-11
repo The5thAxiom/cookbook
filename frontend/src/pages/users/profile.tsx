@@ -70,16 +70,16 @@ export default function Profile({
             </section>
             <section>
                 <h2>Your Favourites</h2>
-                {collections &&
-                    collections
-                        .filter(c => c.name === 'favourites')
-                        .map(c => (
-                            <RecipeCarousel
-                                recipes={c.recipes}
-                                carousel
-                                columns={2}
-                            />
-                        ))}
+                {collections && (
+                    <RecipeCarousel
+                        recipes={
+                            collections.filter(c => c.name === 'favourites')[0]
+                                .recipes
+                        }
+                        carousel
+                        columns={2}
+                    />
+                )}
             </section>
             <section>
                 <h2>Your Collections</h2>

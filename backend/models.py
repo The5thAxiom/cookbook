@@ -164,28 +164,29 @@ class Tag(db.Model):
 
 
 Collection_Recipe = db.Table('Collection_Recipe',
-    db.Column(
-        'id',
-        db.Integer,
-        primary_key=True
-    ),
-    db.Column(
-        'collection_id',
-        db.Integer,
-        db.ForeignKey('collection.id'),
-        nullable=False
-    ),
-    db.Column(
-        'recipe_id',
-        db.Integer,
-        db.ForeignKey('recipe.id'),
-        nullable=False
-    )
-)
+                             db.Column(
+                                 'id',
+                                 db.Integer,
+                                 primary_key=True
+                             ),
+                             db.Column(
+                                 'collection_id',
+                                 db.Integer,
+                                 db.ForeignKey('collection.id'),
+                                 nullable=False
+                             ),
+                             db.Column(
+                                 'recipe_id',
+                                 db.Integer,
+                                 db.ForeignKey('recipe.id'),
+                                 nullable=False
+                             )
+                             )
+
 
 class Collection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), nullable=False, unique=True)
+    name = db.Column(db.String(64), nullable=False, unique=False)
     user_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),
