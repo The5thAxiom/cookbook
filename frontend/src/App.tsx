@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import './values/colors.css';
@@ -28,6 +28,29 @@ import useAccessToken from './useAccessToken';
 
 export default function App() {
     const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
+    const [user, setUser] = useState<userData>(null as any);
+
+    useEffect(() => {
+        fetch('/api/users/profile', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+            .then(res => {
+                if (res.ok) return res.json();
+                else {
+                    removeAccessToken();
+                    throw new Error();
+                }
+            })
+            .then(data => {
+                data.access_token && setAccessToken(data.access_token);
+                setUser(data);
+            })
+            .catch(e => {});
+    }, [accessToken, setAccessToken, removeAccessToken]);
+
     return (
         <HashRouter basename=''>
             <Routes>
@@ -68,9 +91,8 @@ export default function App() {
                                 index
                                 element={
                                     <Profile
+                                        user={user}
                                         accessToken={accessToken}
-                                        setAccessToken={setAccessToken}
-                                        removeAccessToken={removeAccessToken}
                                     />
                                 }
                             />
