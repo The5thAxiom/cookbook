@@ -11,14 +11,18 @@ Making a simple app using React and Flask.
 -   [ ] the backend only handles recipes now, we need the same for skills
 
 ## Frontend
-- [x] delete the frontend and start from scratch (non-functional react components 🤮)
-- [x] basic react router homepage and recipe list setup
+
+-   [x] delete the frontend and start from scratch (non-functional react components 🤮)
+-   [x] basic react router homepage and recipe list setup
+
 ## Other
-- [ ] Make proper readme page (highlight the stuff used, what it does, etc)
-- [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
+
+-   [ ] Make proper readme page (highlight the stuff used, what it does, etc)
+-   [ ] maybe make another backend using mongodb or something (document based databases might work well for this)
 
 # credits
-- authorization added by following [this](https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7) page
+
+-   authorization added by following [this](https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7) page
 
 # How to run
 
@@ -132,3 +136,15 @@ Making a simple app using React and Flask.
 -   I don't know how a db this complex will be stored, i might have to use plain
     sql cause i don't know how the flask sqlalchemy stuff works.
 -   this is going to be tricky
+
+# environment variables required
+
+| variable name  | prod or dev | required value |
+| :------------: | :---------: | :------------: |
+|   FLASK_ENV    |     dev     |  development   |
+| JWT_SECRET_KEY |    both     |       -        |
+| MYSQL_PASSWORD |    both     |       -        |
+| MYSQL_USERNAME |    both     |       -        |
+|  MYSQL_SERVER  |    both     |       -        |
+|    MYSQL_DB    |    both     |       -        |
+
