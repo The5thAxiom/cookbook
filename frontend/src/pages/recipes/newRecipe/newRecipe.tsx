@@ -8,7 +8,11 @@ import BasicForm from './basicForm';
 
 import './newRecipe.css';
 
-export default function NewRecipe({ accessToken }: { accessToken: string }) {
+export default function NewRecipe({
+    fetchAsUser
+}: {
+    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+}) {
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
@@ -60,11 +64,10 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
             })
         };
         console.log(recipe);
-        fetch('/api/recipes', {
+        fetchAsUser('/api/recipes', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(recipe)
         }).then(res => {
