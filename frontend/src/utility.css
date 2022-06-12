@@ -11,3 +11,12 @@
 .util-clickable {
     cursor: pointer;
 }
+
+.util-icon {
+    fill: var(--orange-main);
+}
+
+.util-icon:hover {
+    transform: scale(1.2);
+}
+

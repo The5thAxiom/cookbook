@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './navIcons.css';
 
 export default function AboutIcon({ isActive }: navBarIcon) {

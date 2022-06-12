@@ -3,7 +3,8 @@ import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
-
+import HeartIcon from '../../components/icons/heartIcon';
+import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function CheckRecipe() {
@@ -89,14 +90,14 @@ export default function CheckRecipe() {
                                 className='util-clickable'
                                 onClick={removeFromFavourites}
                             >
-                                X
+                                <BrokenHeartIcon />
                             </span>
                         ) : (
                             <span
                                 className='util-clickable'
                                 onClick={addToFavourites}
                             >
-                                ❤️
+                                <HeartIcon />
                             </span>
                         )}
                     </section>

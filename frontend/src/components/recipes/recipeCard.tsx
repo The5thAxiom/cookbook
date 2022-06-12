@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
 import LoadingAnimation from './../loadingAnimation';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import HeartIcon from '../../components/icons/heartIcon';
+import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 
 export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
@@ -65,14 +67,14 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                             className='util-clickable'
                             onClick={removeFromFavourites}
                         >
-                            X
+                            <BrokenHeartIcon />
                         </span>
                     ) : (
                         <span
                             className='util-clickable'
                             onClick={addToFavourites}
                         >
-                            ❤️
+                            <HeartIcon />
                         </span>
                     )}
                 </div>
