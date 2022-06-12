@@ -15,16 +15,43 @@ export default function CheckRecipe() {
 
     const [user, fetchAsUser] = useCurrentUser();
 
+    const [userFavourites, setUserFavourites] = useState<recipeMeta[]>(
+        null as any
+    );
+
+    const fetchUserFavourites = () =>
+        fetchAsUser(`/api/users/${user.username}/collections/favourites`)
+            .then(res => res.json())
+            .then(data => setUserFavourites(data.recipes));
+
+    useEffect(() => {
+        if (user && recipe) fetchUserFavourites();
+    }, [user, recipe]);
+
     const addToFavourites = () => {
         fetchAsUser(`/api/users/${user.username}/collections/favourites`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ recipe_id: recipe.id })
-        }).then(res =>
-            res.ok
-                ? window.alert(`${recipe.name} was added to favourites!`)
-                : window.alert('try again:(')
-        );
+        }).then(res => {
+            if (res.ok) {
+                window.alert(`${recipe.name} was added to favourites!`);
+                fetchUserFavourites();
+            } else window.alert('try again:(');
+        });
+    };
+
+    const removeFromFavourites = () => {
+        fetchAsUser(`/api/users/${user.username}/collections/favourites`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipe_id: recipe.id })
+        }).then(res => {
+            if (res.ok) {
+                window.alert(`${recipe.name} was removed from favourites!`);
+                fetchUserFavourites();
+            } else window.alert('try again:(');
+        });
     };
 
     useEffect(() => {
@@ -54,13 +81,24 @@ export default function CheckRecipe() {
         return (
             <main>
                 {user && (
-                    <section>
-                        <span
-                            className='util-clickable util-row-flexend'
-                            onClick={addToFavourites}
-                        >
-                            ❤️
-                        </span>
+                    <section className='util-row-flexend'>
+                        {userFavourites &&
+                        userFavourites.filter(r => r.id === recipe.id)
+                            .length === 1 ? (
+                            <span
+                                className='util-clickable'
+                                onClick={removeFromFavourites}
+                            >
+                                X
+                            </span>
+                        ) : (
+                            <span
+                                className='util-clickable'
+                                onClick={addToFavourites}
+                            >
+                                ❤️
+                            </span>
+                        )}
                     </section>
                 )}
                 <section className='util-centered'>
