@@ -1,14 +1,8 @@
 flask:
 	flask run
 
-flask-newdb:
-	rm -f backend/Cookbook.db
-	flask run
-
-post:
-	cd test_datasets/users && ./post_users.sh
-	cd test_datasets/user_logins && ./post_logins.sh
-	cd test_datasets/recipes && ./post_recipes.sh
+db:
+	python -c 'import run.py; db.create_all()'
 
 react:
 	cd frontend && npm start

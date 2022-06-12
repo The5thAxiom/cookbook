@@ -4,18 +4,25 @@ Making a simple app using React and Flask.
 
 # How To Run Locally (For Development)
 
+-   setup venv
 -   setup database
 -   setup environment variables
 -   build the frontend
 -   run the server
 -   makefile
 
-## Database Setup
+## Setup `venv`
+
+-   Create a python virtual environment (venv) using the command `...`
+-   Activate the venv
+-   Run the command `pip install -r requirements.txt`
+
+## Setup Database
 
 -   Setup a mysql server (I use XAMPP for development)
 -   Create a database
 -   Run a python shell and run the following commands:
-    -   `import app.py`
+    -   `import run.py`
     -   `db.create_all()`
 -   Now, the database should be populated with tables
 
@@ -49,4 +56,8 @@ Making a simple app using React and Flask.
 -   This will be rerun at every save in a react file, so you can develop easily.
 
 ## Makefile
+
+-   These steps have been simplified in the makefile.
+-   This is yet to be fully implemented.
+-   Once it will be, running the command `new-setup` will do most of the work.
 
