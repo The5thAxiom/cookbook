@@ -1,3 +1,13 @@
 .util-centered {
     text-align: center;
 }
+
+.util-row-flexend {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.util-clickable {
+    cursor: pointer;
+}

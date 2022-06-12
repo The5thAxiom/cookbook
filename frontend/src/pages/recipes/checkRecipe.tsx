@@ -4,12 +4,28 @@ import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
 
+import useCurrentUser from '../../hooks/useCurrentUser';
+
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const [nextRecipe, setNextRecipe] = useState<recipeMeta>(null as any);
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
     const [isLast, setIsLast] = useState<boolean>(null as any);
     const params = useParams();
+
+    const [user, fetchAsUser] = useCurrentUser();
+
+    const addToFavourites = () => {
+        fetchAsUser(`/api/users/${user.username}/collections/favourites`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipe_id: recipe.id })
+        }).then(res =>
+            res.ok
+                ? window.alert(`${recipe.name} was added to favourites!`)
+                : window.alert('try again:(')
+        );
+    };
 
     useEffect(() => {
         setRecipe(null as any);
@@ -37,6 +53,14 @@ export default function CheckRecipe() {
     if (recipe)
         return (
             <main>
+                <section>
+                    <span
+                        className='util-clickable util-row-flexend'
+                        onClick={addToFavourites}
+                    >
+                        ❤️
+                    </span>
+                </section>
                 <section className='util-centered'>
                     <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
                     <div>

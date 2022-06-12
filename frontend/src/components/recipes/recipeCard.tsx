@@ -30,7 +30,10 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
             <div>
-                <span style={{ cursor: 'pointer' }} onClick={addToFavourites}>
+                <span
+                    className='util-clickable util-row-flexend'
+                    onClick={addToFavourites}
+                >
                     ❤️
                 </span>
             </div>
