@@ -29,14 +29,16 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
 
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
-            <div>
-                <span
-                    className='util-clickable util-row-flexend'
-                    onClick={addToFavourites}
-                >
-                    ❤️
-                </span>
-            </div>
+            {user && (
+                <div>
+                    <span
+                        className='util-clickable util-row-flexend'
+                        onClick={addToFavourites}
+                    >
+                        ❤️
+                    </span>
+                </div>
+            )}
             <div className='recipe-card-name'>
                 <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink>
             </div>

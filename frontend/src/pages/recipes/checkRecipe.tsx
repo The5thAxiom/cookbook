@@ -53,14 +53,16 @@ export default function CheckRecipe() {
     if (recipe)
         return (
             <main>
-                <section>
-                    <span
-                        className='util-clickable util-row-flexend'
-                        onClick={addToFavourites}
-                    >
-                        ❤️
-                    </span>
-                </section>
+                {user && (
+                    <section>
+                        <span
+                            className='util-clickable util-row-flexend'
+                            onClick={addToFavourites}
+                        >
+                            ❤️
+                        </span>
+                    </section>
+                )}
                 <section className='util-centered'>
                     <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
                     <div>
