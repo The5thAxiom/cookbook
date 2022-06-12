@@ -159,7 +159,7 @@ def user_collections(username):
 
 @app.route(
     '/api/users/<username>/collections/<collection_name>',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST', 'DELETE']
 )
 @jwt_required()
 def user_collection(username, collection_name):
@@ -186,13 +186,28 @@ def user_collection(username, collection_name):
         else:
             if recipe.id in [r.id for r in collection.recipes]:
                 return Response(status=202)
-            db.engine.execute(
-                Collection_Recipe.insert().values(**{
-                    'collection_id': collection.id,
-                    'recipe_id': recipe.id
-                })
-            )
-            return Response(status=201)
+            else:
+                db.engine.execute(
+                    Collection_Recipe.insert().values(**{
+                        'collection_id': collection.id,
+                        'recipe_id': recipe.id
+                    })
+                )
+                return Response(status=201)
+    if request.method == 'DELETE':
+        recipe_id = request.json.get('recipe_id', None)
+        recipe = Recipe.query.get(recipe_id)
+        if recipe is None:
+            abort(404)
+        else:
+            if recipe.id not in [r.id for r in collection.recipes]:
+                return Response(status=202)
+            else:
+                db.session.query(Collection_Recipe)\
+                    .filter_by(collection_id=collection.id)\
+                    .filter_by(recipe_id=recipe_id).delete()
+                db.session.commit()
+                return Response(status=201)
 
 
 @app.route('/api/recipes', methods=['POST'])
