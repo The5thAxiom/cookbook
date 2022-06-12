@@ -3,9 +3,7 @@ import { useParams, NavLink } from 'react-router-dom';
 import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
-import HeartIcon from '../../components/icons/heartIcon';
-import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import RecipeActions from '../../components/recipes/recipeActions';
 
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
@@ -13,47 +11,6 @@ export default function CheckRecipe() {
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
     const [isLast, setIsLast] = useState<boolean>(null as any);
     const params = useParams();
-
-    const [user, fetchAsUser] = useCurrentUser();
-
-    const [userFavourites, setUserFavourites] = useState<recipeMeta[]>(
-        null as any
-    );
-
-    const fetchUserFavourites = () =>
-        fetchAsUser(`/api/users/${user.username}/collections/favourites`)
-            .then(res => res.json())
-            .then(data => setUserFavourites(data.recipes));
-
-    useEffect(() => {
-        if (user && recipe) fetchUserFavourites();
-    }, [user, recipe]);
-
-    const addToFavourites = () => {
-        fetchAsUser(`/api/users/${user.username}/collections/favourites`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ recipe_id: recipe.id })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${recipe.name} was added to favourites!`);
-                fetchUserFavourites();
-            } else window.alert('try again:(');
-        });
-    };
-
-    const removeFromFavourites = () => {
-        fetchAsUser(`/api/users/${user.username}/collections/favourites`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ recipe_id: recipe.id })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${recipe.name} was removed from favourites!`);
-                fetchUserFavourites();
-            } else window.alert('try again:(');
-        });
-    };
 
     useEffect(() => {
         setRecipe(null as any);
@@ -81,27 +38,7 @@ export default function CheckRecipe() {
     if (recipe)
         return (
             <main>
-                {user && (
-                    <section className='util-row-flexend'>
-                        {userFavourites &&
-                        userFavourites.filter(r => r.id === recipe.id)
-                            .length === 1 ? (
-                            <span
-                                className='util-clickable'
-                                onClick={removeFromFavourites}
-                            >
-                                <BrokenHeartIcon />
-                            </span>
-                        ) : (
-                            <span
-                                className='util-clickable'
-                                onClick={addToFavourites}
-                            >
-                                <HeartIcon />
-                            </span>
-                        )}
-                    </section>
-                )}
+                <RecipeActions recipe={recipe} />
                 <section className='util-centered'>
                     <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
                     <div>
