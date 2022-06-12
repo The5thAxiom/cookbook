@@ -173,3 +173,11 @@ a:visited:active {
 }
 
 /*** end scrollbar ***/
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+}
+
