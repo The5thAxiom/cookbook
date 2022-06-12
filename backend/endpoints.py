@@ -161,6 +161,9 @@ def user_collections(username):
                 .filter(Collection.name == collection_name)\
                 .first()
             if collection is not None:
+                db.session.query(Collection_Recipe)\
+                    .filter_by(collection_id=collection.id)\
+                    .delete()
                 db.session.delete(collection)
                 db.session.commit()
                 return Response(status=201)
