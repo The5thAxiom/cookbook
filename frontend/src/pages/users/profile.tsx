@@ -127,6 +127,7 @@ export default function Profile({
                             Collection Name{' '}
                             <input
                                 type='text'
+                                value={newCollection ? newCollection : ''}
                                 onChange={e => setNewCollection(e.target.value)}
                             ></input>
                         </div>
@@ -136,6 +137,7 @@ export default function Profile({
                                     onClick={() => {
                                         addNewCollection(newCollection);
                                         setCollectionDialogOpen(false);
+                                        setNewCollection(null as any);
                                     }}
                                 >
                                     Add collection
@@ -144,6 +146,7 @@ export default function Profile({
                             <button
                                 onClick={() => {
                                     setCollectionDialogOpen(false);
+                                    setNewCollection(null as any);
                                 }}
                             >
                                 Close
