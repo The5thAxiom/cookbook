@@ -126,7 +126,7 @@ def user_str_recipes_full(username):
 
 @app.route(
     '/api/users/<username>/collections',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST', 'DELETE']
 )
 @jwt_required()
 def user_collections(username):
@@ -151,6 +151,17 @@ def user_collections(username):
                     'name': collection_name,
                     'user_id': user.id
                 }))
+                db.session.commit()
+                return Response(status=201)
+            else:
+                return Response(status=202)
+        if request.method == 'DELETE':
+            collection_name = request.json.get('collection_name', None)
+            collection = Collection.query\
+                .filter(Collection.name == collection_name)\
+                .first()
+            if collection is not None:
+                db.session.delete(collection)
                 db.session.commit()
                 return Response(status=201)
             else:

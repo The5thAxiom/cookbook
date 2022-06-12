@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import CloseIcon from '../../components/icons/closeIcon';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
 
@@ -19,6 +20,9 @@ export default function Profile({
             recipes: recipeMeta[];
         }[]
     >(null as any);
+    const [collectionDialogOpen, setCollectionDialogOpen] =
+        useState<boolean>(false);
+    const [newCollection, setNewCollection] = useState<string>(null as any);
 
     useEffect(() => {
         setRecipes(null as any);
@@ -27,8 +31,7 @@ export default function Profile({
             .then(data => setRecipes(data.recipes));
     }, []);
 
-    useEffect(() => {
-        setCollections(null as any);
+    const fetchCollections = () =>
         fetchAsUser(`/api/users/${user.username}/collections`)
             .then(res => res.json())
             .then(data => {
@@ -42,7 +45,37 @@ export default function Profile({
                 );
             })
             .catch(e => {});
+
+    useEffect(() => {
+        setCollections(null as any);
+        fetchCollections();
     }, []);
+
+    const addNewCollection = (collection_name: string) => {
+        fetchAsUser(`api/users/${user.username}/collections`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ collection_name: collection_name })
+        }).then(res => {
+            if (res.ok) {
+                window.alert(`${collection_name} was added`);
+                fetchCollections();
+            } else window.alert(`try again`);
+        });
+    };
+
+    const removeCollection = (collection_name: string) => {
+        fetchAsUser(`api/users/${user.username}/collections`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ collection_name: collection_name })
+        }).then(res => {
+            if (res.ok) {
+                window.alert(`${collection_name} was deleted`);
+                fetchCollections();
+            } else window.alert(`try again`);
+        });
+    };
 
     return (
         <main>
@@ -83,12 +116,55 @@ export default function Profile({
             </section>
             <section>
                 <h2>Your Collections</h2>
+                <div className='profile-action-buttons'>
+                    <div onClick={() => setCollectionDialogOpen(true)}>
+                        Add new collection
+                    </div>
+                </div>
+                <dialog open={collectionDialogOpen}>
+                    <div className='cb-form'>
+                        <div className='cb-form-field'>
+                            Collection Name{' '}
+                            <input
+                                type='text'
+                                onChange={e => setNewCollection(e.target.value)}
+                            ></input>
+                        </div>
+                        <div className='cb-form-end'>
+                            {newCollection && (
+                                <button
+                                    onClick={() => {
+                                        addNewCollection(newCollection);
+                                        setCollectionDialogOpen(false);
+                                    }}
+                                >
+                                    Add collection
+                                </button>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setCollectionDialogOpen(false);
+                                }}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </dialog>
                 {collections ? (
                     collections
                         .filter(c => c.name !== 'favourites')
                         .map((c, i) => (
                             <div className='collection' key={i}>
-                                <h3>{c.name}</h3>
+                                <h3>
+                                    {c.name}{' '}
+                                    <span
+                                        className='util-icon util-clickable'
+                                        onClick={() => removeCollection(c.name)}
+                                    >
+                                        <CloseIcon />
+                                    </span>
+                                </h3>
                                 <RecipeCarousel
                                     recipes={c.recipes}
                                     carousel
