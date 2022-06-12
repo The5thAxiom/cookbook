@@ -60,149 +60,149 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         });
     };
 
-    if (user && userCollections)
+    if (user && userCollections) {
+        const collectionsWithCurrentRecipe = userCollections
+            .filter(c => c.name !== 'favourites')
+            .filter(c => c.recipes.filter(r => r.id === recipe.id).length > 0);
+
+        const collectionsWithoutCurrentRecipe = userCollections
+            .filter(c => c.name !== 'favourites')
+            .filter(
+                c => c.recipes.filter(r => r.id === recipe.id).length === 0
+            );
+
         return (
             <div className='util-row-flexend'>
                 {userCollections.filter(c => c.name !== 'favourites') && (
                     <>
-                        <div>
-                            <span
-                                className='util-clickable'
-                                onClick={() => setRemoveDialogOpen(true)}
-                            >
-                                <BookmarkRemoveIcon />
-                            </span>
-                            <dialog open={removeDialogOpen}>
-                                <div className='cb-form'>
-                                    <div className='cb-form-field'>
-                                        Remove {recipe.name} from collection
-                                        <select
-                                            defaultValue='--select--'
-                                            onChange={e =>
-                                                setSelectedCollection(
-                                                    e.target.value
-                                                )
-                                            }
-                                        >
-                                            <option value=''>--select--</option>
-                                            {userCollections
-                                                .filter(
-                                                    c => c.name !== 'favourites'
-                                                )
-                                                .filter(
-                                                    c =>
-                                                        c.recipes.filter(
-                                                            r =>
-                                                                r.id ===
-                                                                recipe.id
-                                                        ).length > 0
-                                                )
-                                                .map((c, i) => (
-                                                    <option
-                                                        key={i}
-                                                        value={c.name}
-                                                    >
-                                                        {c.name}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                    </div>
-                                    <div className='cb-form-end'>
-                                        {selectedCollection && (
-                                            <button
-                                                onClick={() => {
-                                                    setRemoveDialogOpen(false);
-                                                    removeFromCollection(
-                                                        selectedCollection
-                                                    );
+                        {collectionsWithCurrentRecipe.length > 0 && (
+                            <div>
+                                <span
+                                    className='util-clickable'
+                                    onClick={() => setRemoveDialogOpen(true)}
+                                >
+                                    <BookmarkRemoveIcon />
+                                </span>
+                                <dialog open={removeDialogOpen}>
+                                    <div className='cb-form'>
+                                        <div className='cb-form-field'>
+                                            Remove {recipe.name} from collection
+                                            <select
+                                                defaultValue='--select--'
+                                                onChange={e =>
                                                     setSelectedCollection(
-                                                        null as any
-                                                    );
-                                                }}
+                                                        e.target.value
+                                                    )
+                                                }
                                             >
-                                                Remove
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={() =>
-                                                setRemoveDialogOpen(false)
-                                            }
-                                        >
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </dialog>
-                        </div>
-                        <div>
-                            <span
-                                className='util-clickable'
-                                onClick={() => setAddDialogOpen(true)}
-                            >
-                                <BookmarkAddIcon />
-                            </span>
-                            <dialog open={addDialogOpen}>
-                                <div className='cb-form'>
-                                    <div className='cb-form-field'>
-                                        Add {recipe.name} to collection
-                                        <select
-                                            defaultValue='--select--'
-                                            onChange={e =>
-                                                setSelectedCollection(
-                                                    e.target.value
-                                                )
-                                            }
-                                        >
-                                            <option value=''>--select--</option>
-                                            {userCollections
-                                                .filter(
-                                                    c => c.name !== 'favourites'
-                                                )
-                                                .filter(
-                                                    c =>
-                                                        c.recipes.filter(
-                                                            r =>
-                                                                r.id ===
-                                                                recipe.id
-                                                        ).length === 0
-                                                )
-                                                .map((c, i) => (
-                                                    <option
-                                                        key={i}
-                                                        value={c.name}
-                                                    >
-                                                        {c.name}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                    </div>
-                                    <div className='cb-form-end'>
-                                        {selectedCollection && (
+                                                <option value=''>
+                                                    --select--
+                                                </option>
+                                                {collectionsWithCurrentRecipe.map(
+                                                    (c, i) => (
+                                                        <option
+                                                            key={i}
+                                                            value={c.name}
+                                                        >
+                                                            {c.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div className='cb-form-end'>
+                                            {selectedCollection && (
+                                                <button
+                                                    onClick={() => {
+                                                        setRemoveDialogOpen(
+                                                            false
+                                                        );
+                                                        removeFromCollection(
+                                                            selectedCollection
+                                                        );
+                                                        setSelectedCollection(
+                                                            null as any
+                                                        );
+                                                    }}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
                                             <button
-                                                onClick={() => {
-                                                    setAddDialogOpen(false);
-                                                    addToCollection(
-                                                        selectedCollection
-                                                    );
-                                                    setSelectedCollection(
-                                                        null as any
-                                                    );
-                                                }}
+                                                onClick={() =>
+                                                    setRemoveDialogOpen(false)
+                                                }
                                             >
-                                                Add
+                                                Close
                                             </button>
-                                        )}
-                                        <button
-                                            onClick={() =>
-                                                setAddDialogOpen(false)
-                                            }
-                                        >
-                                            Close
-                                        </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </dialog>
-                        </div>
+                                </dialog>
+                            </div>
+                        )}
+                        {collectionsWithoutCurrentRecipe.length > 0 && (
+                            <div>
+                                <span
+                                    className='util-clickable'
+                                    onClick={() => setAddDialogOpen(true)}
+                                >
+                                    <BookmarkAddIcon />
+                                </span>
+                                <dialog open={addDialogOpen}>
+                                    <div className='cb-form'>
+                                        <div className='cb-form-field'>
+                                            Add {recipe.name} to collection
+                                            <select
+                                                defaultValue='--select--'
+                                                onChange={e =>
+                                                    setSelectedCollection(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value=''>
+                                                    --select--
+                                                </option>
+                                                {collectionsWithoutCurrentRecipe.map(
+                                                    (c, i) => (
+                                                        <option
+                                                            key={i}
+                                                            value={c.name}
+                                                        >
+                                                            {c.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div className='cb-form-end'>
+                                            {selectedCollection && (
+                                                <button
+                                                    onClick={() => {
+                                                        setAddDialogOpen(false);
+                                                        addToCollection(
+                                                            selectedCollection
+                                                        );
+                                                        setSelectedCollection(
+                                                            null as any
+                                                        );
+                                                    }}
+                                                >
+                                                    Add
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() =>
+                                                    setAddDialogOpen(false)
+                                                }
+                                            >
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </dialog>
+                            </div>
+                        )}
                     </>
                 )}
                 <div>
@@ -227,5 +227,5 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                 </div>
             </div>
         );
-    else return <></>;
+    } else return <></>;
 }
