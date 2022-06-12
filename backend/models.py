@@ -163,7 +163,7 @@ class Tag(db.Model):
     name = db.Column(db.String(64), nullable=False)
 
 
-Collection_Recipe = db.Table('collection_recipe',
+Collection_Recipe = db.Table('collection__recipe',
                              db.Column(
                                  'id',
                                  db.Integer,
