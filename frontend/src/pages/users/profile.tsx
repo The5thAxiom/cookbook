@@ -14,12 +14,7 @@ export default function Profile({
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 }) {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
-    const [collections, setCollections] = useState<
-        {
-            name: string;
-            recipes: recipeMeta[];
-        }[]
-    >(null as any);
+    const [collections, setCollections] = useState<collection[]>(null as any);
     const [collectionDialogOpen, setCollectionDialogOpen] =
         useState<boolean>(false);
     const [newCollection, setNewCollection] = useState<string>(null as any);

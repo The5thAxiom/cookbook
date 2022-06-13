@@ -9,12 +9,7 @@ import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const [user, fetchAsUser] = useCurrentUser();
 
-    const [userCollections, setUserCollections] = useState<
-        {
-            name: string;
-            recipes: recipeMeta[];
-        }[]
-    >();
+    const [userCollections, setUserCollections] = useState<collection[]>();
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
     const [removeDialogOpen, setRemoveDialogOpen] = useState<boolean>(false);
@@ -229,3 +224,4 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         );
     } else return <></>;
 }
+

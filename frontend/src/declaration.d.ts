@@ -88,3 +88,7 @@ declare type accessTokenData = {
     access_token: string;
 };
 
+declare type collection = {
+    name: string;
+    recipes: recipeMeta[];
+};
