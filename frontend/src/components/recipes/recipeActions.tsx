@@ -9,7 +9,7 @@ import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const [user, fetchAsUser] = useCurrentUser();
 
-    const [userCollections, setUserCollections] = useState<collection[]>();
+    const [collections, setCollections] = useState<collection[]>();
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
     const [removeDialogOpen, setRemoveDialogOpen] = useState<boolean>(false);
@@ -27,7 +27,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const fetchUserCollections = () =>
         fetchAsUser(`/api/users/${user.username}/collections`)
             .then(res => res.json())
-            .then(data => setUserCollections(data.collections));
+            .then(data => setCollections(data.collections));
 
     const addToCollection = (name: string) => {
         fetchAsUser(`/api/users/${user.username}/collections/${name}`, {
@@ -55,12 +55,12 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         });
     };
 
-    if (user && userCollections) {
-        const collectionsWithCurrentRecipe = userCollections
+    if (user && collections) {
+        const collectionsWithCurrentRecipe = collections
             .filter(c => c.name !== 'favourites')
             .filter(c => c.recipes.filter(r => r.id === recipe.id).length > 0);
 
-        const collectionsWithoutCurrentRecipe = userCollections
+        const collectionsWithoutCurrentRecipe = collections
             .filter(c => c.name !== 'favourites')
             .filter(
                 c => c.recipes.filter(r => r.id === recipe.id).length === 0
@@ -68,7 +68,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
 
         return (
             <div className='util-row-flexend'>
-                {userCollections.filter(c => c.name !== 'favourites') && (
+                {collections.filter(c => c.name !== 'favourites') && (
                     <>
                         {collectionsWithCurrentRecipe.length > 0 && (
                             <div>
@@ -201,7 +201,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                     </>
                 )}
                 <div>
-                    {userCollections
+                    {collections
                         .filter(c => c.name === 'favourites')[0]
                         .recipes.filter(r => r.id === recipe.id).length ===
                     1 ? (
