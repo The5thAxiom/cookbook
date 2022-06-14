@@ -26,9 +26,11 @@ import Signup from './pages/users/signup';
 
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
+import userStore from './hooks/userStore';
 
 export default function App() {
-    const { user, fetchAsUser, logInUser, logOutUser } = useCurrentUser();
+    const { user, setUser } = userStore();
+    const { fetchAsUser, logInUser, logOutUser } = useCurrentUser(setUser);
     const {
         collections,
         addNewCollection,

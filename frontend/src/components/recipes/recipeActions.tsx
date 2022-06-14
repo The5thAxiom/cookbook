@@ -7,6 +7,7 @@ import HeartIcon from '../../components/icons/heartIcon';
 import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
 import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
+import userStore from '../../hooks/userStore';
 
 export default function RecipeActions({
     recipe,
@@ -19,7 +20,8 @@ export default function RecipeActions({
     addToCollection: (collection_name: string, recipe: recipeMeta) => void;
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 }) {
-    const { user, fetchAsUser } = useCurrentUser();
+    const { user, setUser } = userStore();
+    const { fetchAsUser, logInUser, logOutUser } = useCurrentUser(setUser);
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
     const [removeDialogOpen, setRemoveDialogOpen] = useState<boolean>(false);

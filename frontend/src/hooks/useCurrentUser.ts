@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import useAccessToken from './useAccessToken';
 
-export default function useCurrentUser(): {
-    user: userData;
+import userStore from './userStore';
+
+export default function useCurrentUser(setUser: (user: userData) => void): {
+    // user: userData;
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
     logInUser: (data: userLoginData) => void;
     logOutUser: () => void;
 } {
     const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
 
-    const [user, setUser] = useState<userData>(null as any);
+    // const [user, setUser] = useState<userData>(null as any);
+    // const { user, setUser } = userStore();
 
     useEffect(() => {
         if (accessToken !== '') fetchUser();
@@ -68,6 +71,6 @@ export default function useCurrentUser(): {
             })
             .catch(e => {});
     };
-    return { user, fetchAsUser, logInUser, logOutUser };
+    return { fetchAsUser, logInUser, logOutUser };
 }
 
