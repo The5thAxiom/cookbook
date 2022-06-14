@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import useAccessToken from './useAccessToken';
 
-import userStore from './userStore';
+import userStore from '../stores/userStore';
 
 export default function useCurrentUser(setUser: (user: userData) => void): {
     // user: userData;

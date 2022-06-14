@@ -4,7 +4,7 @@ import HeartIcon from '../../components/icons/heartIcon';
 import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
 import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
-import userStore from '../../hooks/userStore';
+import userStore from '../../stores/userStore';
 
 export default function RecipeActions({
     recipe,
