@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import useCurrentUser from '../../hooks/useCurrentUser';
-import useCollections from '../../hooks/useCollections';
-
 import HeartIcon from '../../components/icons/heartIcon';
 import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
@@ -20,8 +17,7 @@ export default function RecipeActions({
     addToCollection: (collection_name: string, recipe: recipeMeta) => void;
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 }) {
-    const { user, setUser } = userStore();
-    const { fetchAsUser, logInUser, logOutUser } = useCurrentUser(setUser);
+    const { user } = userStore();
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
     const [removeDialogOpen, setRemoveDialogOpen] = useState<boolean>(false);
