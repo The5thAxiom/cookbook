@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import useAccessToken from './useAccessToken';
 
+import create from 'zustand';
+
 export default function useCurrentUser(): [
     user: userData,
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
@@ -8,6 +10,17 @@ export default function useCurrentUser(): [
     logOutUser: () => void
 ] {
     const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
+
+    // const useStore = create<{
+    //     user: userData;
+    //     setUser: (user: userData) => void;
+    // }>(set => ({
+    //     user: null as any,
+    //     setUser: () => set({ user: user })
+    // }));
+
+    // const { user, setUser } = useStore();
+
     const [user, setUser] = useState<userData>(null as any);
 
     useEffect(() => {
@@ -63,8 +76,10 @@ export default function useCurrentUser(): [
             .then(data => {
                 data.access_token && setAccessToken(data.access_token);
                 setUser(data);
+                console.log('fetched user');
             })
             .catch(e => {});
     };
     return [user, fetchAsUser, logInUser, logOutUser];
 }
+

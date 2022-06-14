@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
+import useCollections from '../../hooks/useCollections';
 
 import './profile.css';
 
@@ -14,7 +15,12 @@ export default function Profile({
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 }) {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
-    const [collections, setCollections] = useState<collection[]>(null as any);
+
+    const { collections, addNewCollection, removeCollection } = useCollections(
+        user,
+        fetchAsUser
+    );
+
     const [collectionDialogOpen, setCollectionDialogOpen] =
         useState<boolean>(false);
     const [newCollection, setNewCollection] = useState<string>(null as any);
@@ -25,52 +31,6 @@ export default function Profile({
             .then(res => res.json())
             .then(data => setRecipes(data.recipes));
     }, []);
-
-    const fetchCollections = () =>
-        fetchAsUser(`/api/users/${user.username}/collections`)
-            .then(res => res.json())
-            .then(data => {
-                setCollections(
-                    data.collections.map((c: any) => {
-                        return {
-                            name: c.name,
-                            recipes: c.recipes
-                        };
-                    })
-                );
-            })
-            .catch(e => {});
-
-    useEffect(() => {
-        setCollections(null as any);
-        fetchCollections();
-    }, []);
-
-    const addNewCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ collection_name: collection_name })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${collection_name} was added`);
-                fetchCollections();
-            } else window.alert(`try again`);
-        });
-    };
-
-    const removeCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ collection_name: collection_name })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${collection_name} was deleted`);
-                fetchCollections();
-            } else window.alert(`try again`);
-        });
-    };
 
     return (
         <main>
