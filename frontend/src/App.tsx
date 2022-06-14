@@ -25,9 +25,17 @@ import Login from './pages/users/login';
 import Signup from './pages/users/signup';
 
 import useCurrentUser from './hooks/useCurrentUser';
+import useCollections from './hooks/useCollections';
 
 export default function App() {
     const { user, fetchAsUser, logInUser, logOutUser } = useCurrentUser();
+    const {
+        collections,
+        addNewCollection,
+        removeCollection,
+        addToCollection,
+        removeFromCollection
+    } = useCollections(user, fetchAsUser);
 
     return (
         <HashRouter basename=''>
@@ -45,9 +53,36 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path='home' element={<Home />} />
                     <Route path='recipes' element={<Outlet />}>
-                        <Route index element={<BrowseRecipes />} />
-                        <Route path=':id' element={<CheckRecipe />} />
-                        <Route path='filter' element={<BrowseRecipes />} />
+                        <Route
+                            index
+                            element={
+                                <BrowseRecipes
+                                    collections={collections}
+                                    addToCollection={addToCollection}
+                                    removeFromCollection={removeFromCollection}
+                                />
+                            }
+                        />
+                        <Route
+                            path=':id'
+                            element={
+                                <CheckRecipe
+                                    collections={collections}
+                                    addToCollection={addToCollection}
+                                    removeFromCollection={removeFromCollection}
+                                />
+                            }
+                        />
+                        <Route
+                            path='filter'
+                            element={
+                                <BrowseRecipes
+                                    collections={collections}
+                                    addToCollection={addToCollection}
+                                    removeFromCollection={removeFromCollection}
+                                />
+                            }
+                        />
                         {user && (
                             <Route
                                 path='new'
@@ -72,6 +107,13 @@ export default function App() {
                                     <Profile
                                         user={user}
                                         fetchAsUser={fetchAsUser}
+                                        collections={collections}
+                                        addToCollection={addToCollection}
+                                        removeFromCollection={
+                                            removeFromCollection
+                                        }
+                                        removeCollection={removeCollection}
+                                        addNewCollection={addNewCollection}
                                     />
                                 }
                             />

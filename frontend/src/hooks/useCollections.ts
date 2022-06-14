@@ -13,17 +13,18 @@ export default function useCollections(
 } {
     const [collections, setCollections] = useState<collection[]>(null as any);
 
+    useEffect(() => {
+        fetchCollections();
+    }, [user]);
+
     const fetchCollections = () =>
+        user &&
         fetchAsUser(`/api/users/${user.username}/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollections(data.collections);
                 console.log('fetched collections');
             });
-
-    useEffect(() => {
-        if (user) fetchCollections();
-    }, [user]);
 
     const addToCollection = (collection_name: string, recipe: recipeMeta) => {
         fetchAsUser(

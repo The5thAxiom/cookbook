@@ -8,15 +8,18 @@ import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
 import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
 
-export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
+export default function RecipeActions({
+    recipe,
+    collections,
+    addToCollection,
+    removeFromCollection
+}: {
+    recipe: recipeMeta;
+    collections: collection[];
+    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
+    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
+}) {
     const { user, fetchAsUser } = useCurrentUser();
-
-    const {
-        collections,
-        fetchCollections,
-        addToCollection,
-        removeFromCollection
-    } = useCollections(user, fetchAsUser);
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
     const [removeDialogOpen, setRemoveDialogOpen] = useState<boolean>(false);
@@ -24,12 +27,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const [selectedCollection, setSelectedCollection] = useState<string>(
         null as any
     );
-
-    useEffect(() => {
-        if (user && recipe) {
-            fetchCollections();
-        }
-    }, [user, recipe]);
 
     if (user && collections) {
         const collectionsWithCurrentRecipe = collections

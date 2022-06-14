@@ -9,17 +9,21 @@ import './profile.css';
 
 export default function Profile({
     user,
-    fetchAsUser
+    collections,
+    addNewCollection,
+    removeCollection,
+    addToCollection,
+    removeFromCollection
 }: {
     user: userData;
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+    collections: collection[];
+    addNewCollection: (collection_name: string) => void;
+    removeCollection: (collection_name: string) => void;
+    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
+    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 }) {
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
-
-    const { collections, addNewCollection, removeCollection } = useCollections(
-        user,
-        fetchAsUser
-    );
 
     const [collectionDialogOpen, setCollectionDialogOpen] =
         useState<boolean>(false);
@@ -50,7 +54,14 @@ export default function Profile({
                         All recipes
                     </NavLink>
                 </div>
-                <RecipeCarousel recipes={recipes} carousel columns={2} />
+                <RecipeCarousel
+                    recipes={recipes}
+                    carousel
+                    columns={2}
+                    collections={collections}
+                    addToCollection={addToCollection}
+                    removeFromCollection={removeFromCollection}
+                />
             </section>
             <section id='skills'>
                 {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
@@ -66,6 +77,9 @@ export default function Profile({
                         }
                         carousel
                         columns={2}
+                        collections={collections}
+                        addToCollection={addToCollection}
+                        removeFromCollection={removeFromCollection}
                     />
                 )}
             </section>
@@ -127,6 +141,9 @@ export default function Profile({
                                     recipes={c.recipes}
                                     carousel
                                     columns={2}
+                                    collections={collections}
+                                    addToCollection={addToCollection}
+                                    removeFromCollection={removeFromCollection}
                                 />
                             </div>
                         ))

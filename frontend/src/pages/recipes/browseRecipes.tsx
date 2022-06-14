@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCards from '../../components/recipes/recipeCards';
 
-export default function BrowseRecipes() {
+export default function BrowseRecipes({
+    collections,
+    addToCollection,
+    removeFromCollection
+}: {
+    collections: collection[];
+    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
+    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
+}) {
     const [searchParams] = useSearchParams();
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
@@ -27,7 +35,14 @@ export default function BrowseRecipes() {
     return (
         <main>
             <h1>Recipes</h1>
-            {<RecipeCards recipes={recipes} />}
+            {
+                <RecipeCards
+                    recipes={recipes}
+                    collections={collections}
+                    addToCollection={addToCollection}
+                    removeFromCollection={removeFromCollection}
+                />
+            }
         </main>
     );
 }

@@ -5,7 +5,15 @@ import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
 import RecipeActions from '../../components/recipes/recipeActions';
 
-export default function CheckRecipe() {
+export default function CheckRecipe({
+    collections,
+    addToCollection,
+    removeFromCollection
+}: {
+    collections: collection[];
+    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
+    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
+}) {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const [nextRecipe, setNextRecipe] = useState<recipeMeta>(null as any);
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
@@ -38,7 +46,12 @@ export default function CheckRecipe() {
     if (recipe)
         return (
             <main>
-                <RecipeActions recipe={recipe} />
+                <RecipeActions
+                    recipe={recipe}
+                    collections={collections}
+                    addToCollection={addToCollection}
+                    removeFromCollection={removeFromCollection}
+                />
                 <section className='util-centered'>
                     <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
                     <div>
