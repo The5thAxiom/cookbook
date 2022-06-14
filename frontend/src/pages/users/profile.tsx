@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
-import useCollections from '../../hooks/useCollections';
 
+import collectionsStore from '../../stores/collectionsStore';
 import './profile.css';
 
 export default function Profile({
     user,
-    collections,
+    // collections,
     addNewCollection,
     removeCollection,
     addToCollection,
@@ -23,6 +23,8 @@ export default function Profile({
     addToCollection: (collection_name: string, recipe: recipeMeta) => void;
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 }) {
+    const collections = collectionsStore(state => state.collections);
+
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
     const [collectionDialogOpen, setCollectionDialogOpen] =
