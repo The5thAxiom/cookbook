@@ -9,7 +9,7 @@ import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
 import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
-    const [user, fetchAsUser] = useCurrentUser();
+    const { user, fetchAsUser } = useCurrentUser();
 
     const {
         collections,

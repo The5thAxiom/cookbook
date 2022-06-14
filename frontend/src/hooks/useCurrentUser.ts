@@ -3,12 +3,12 @@ import useAccessToken from './useAccessToken';
 
 import create from 'zustand';
 
-export default function useCurrentUser(): [
-    user: userData,
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-    logInUser: (data: userLoginData) => void,
-    logOutUser: () => void
-] {
+export default function useCurrentUser(): {
+    user: userData;
+    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+    logInUser: (data: userLoginData) => void;
+    logOutUser: () => void;
+} {
     const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
 
     // const useStore = create<{
@@ -16,7 +16,7 @@ export default function useCurrentUser(): [
     //     setUser: (user: userData) => void;
     // }>(set => ({
     //     user: null as any,
-    //     setUser: () => set({ user: user })
+    //     setUser: (user: userData) => set({ user: user })
     // }));
 
     // const { user, setUser } = useStore();
@@ -80,6 +80,6 @@ export default function useCurrentUser(): [
             })
             .catch(e => {});
     };
-    return [user, fetchAsUser, logInUser, logOutUser];
+    return { user, fetchAsUser, logInUser, logOutUser };
 }
 

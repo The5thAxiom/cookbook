@@ -27,7 +27,7 @@ import Signup from './pages/users/signup';
 import useCurrentUser from './hooks/useCurrentUser';
 
 export default function App() {
-    const [user, fetchAsUser, logInUser, logOutUser] = useCurrentUser();
+    const { user, fetchAsUser, logInUser, logOutUser } = useCurrentUser();
 
     return (
         <HashRouter basename=''>
