@@ -38,6 +38,17 @@ Making a simple app using React and Flask.
 |    MYSQL_DB    |    both     |       -        |
 
 -   The mysql credentials should match the db created in the previous step
+-   Create a file called `.env` in the root of the application. It should look something like (fill the `...`'s with actual values):
+
+    ```
+    FLASK_ENV=development
+    JWT_SECRET_KEY=...
+
+    MYSQL_PASSWORD=...
+    MYSQL_USERNAME=...
+    MYSQL_SERVER=...
+    MYSQL_DB=...
+    ```
 
 ## Build the frontend
 
