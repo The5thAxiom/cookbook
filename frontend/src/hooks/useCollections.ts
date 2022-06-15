@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import collectionStore from '../stores/collectionsStore';
 import userStore from '../stores/userStore';
 import useCurrentUser from './useCurrentUser';

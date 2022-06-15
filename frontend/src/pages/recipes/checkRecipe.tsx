@@ -4,8 +4,6 @@ import LoadingAnimation from '../../components/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
 import RecipeActions from '../../components/recipes/recipeActions';
-import useCollections from '../../hooks/useCollections';
-import collectionStore from '../../stores/collectionsStore';
 
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
@@ -13,14 +11,6 @@ export default function CheckRecipe() {
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
     const [isLast, setIsLast] = useState<boolean>(null as any);
     const params = useParams();
-
-    const collections = collectionStore(state => state.collections);
-    const {
-        addNewCollection,
-        removeCollection,
-        addToCollection,
-        removeFromCollection
-    } = useCollections();
 
     useEffect(() => {
         setRecipe(null as any);

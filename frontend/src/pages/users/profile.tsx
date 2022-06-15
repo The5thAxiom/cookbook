@@ -23,7 +23,7 @@ export default function Profile({ user }: { user: userData }) {
         fetch(`/api/users/${user.username}/recipes`)
             .then(res => res.json())
             .then(data => setRecipes(data.recipes));
-    }, []);
+    }, [user.username]);
 
     return (
         <main>

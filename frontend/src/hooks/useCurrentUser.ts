@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import userStore from '../stores/userStore';
 import accessTokenStore from '../stores/accessTokenStore';
+import collectionStore from '../stores/collectionsStore';
 
 export default function useCurrentUser(): {
     fetchUser: () => void;
@@ -12,6 +12,7 @@ export default function useCurrentUser(): {
     const { accessToken, setAccessToken, removeAccessToken } =
         accessTokenStore();
     const setUser = userStore(state => state.setUser);
+    const setCollections = collectionStore(state => state.setCollections);
 
     const fetchAsUser = (
         input: RequestInfo,
@@ -68,10 +69,10 @@ export default function useCurrentUser(): {
     };
 
     const logOutUser = () => {
+        fetchAsUser('/api/users/logout');
+        removeAccessToken();
         setUser(null as any);
-        fetchAsUser('/api/users/logout').then(res => {
-            removeAccessToken();
-        });
+        setCollections(null as any);
     };
 
     const fetchUser = () => {

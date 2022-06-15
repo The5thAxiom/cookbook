@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import './values/colors.css';
@@ -31,18 +31,18 @@ import accessTokenStore from './stores/accessTokenStore';
 
 export default function App() {
     const { user } = userStore();
-    const { fetchUser, logInUser, logOutUser } = useCurrentUser();
+    const { fetchUser, logInUser } = useCurrentUser();
 
     const accessToken = accessTokenStore(state => state.accessToken);
     useEffect(() => {
         if (accessToken !== '' && !user) fetchUser();
-    }, [accessToken]);
+    }, [accessToken, fetchUser, user]);
 
     const { collections, fetchCollections } = useCollections();
 
     useEffect(() => {
         if (user && !collections) fetchCollections();
-    }, [user]);
+    }, [user, fetchCollections, collections]);
 
     return (
         <HashRouter basename=''>
