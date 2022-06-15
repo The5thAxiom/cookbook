@@ -13,16 +13,18 @@ export default function useCollections(): {
 } {
     const { collections, setCollections } = collectionStore();
     const user = userStore(state => state.user);
-    const { fetchAsUser } = useCurrentUser();
+    const { fetchAsUser, fetchJsonAsUser } = useCurrentUser();
 
     const fetchCollections = () =>
         user &&
-        fetchAsUser(`/api/users/${user.username}/collections`)
-            .then(res => res.json())
+        fetchJsonAsUser<{ collections: collection[] }>(
+            `/api/users/${user.username}/collections`
+        )
             .then(data => {
                 setCollections(data.collections);
                 // console.log('fetched collections');
-            });
+            })
+            .catch(e => console.log("couldn't fetch collections"));
 
     const addToCollection = (collection_name: string, recipe: recipeMeta) => {
         fetchAsUser(

@@ -5,6 +5,7 @@ import accessTokenStore from '../stores/accessTokenStore';
 export default function useCurrentUser(): {
     fetchUser: () => void;
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+    fetchJsonAsUser: <T>(input: RequestInfo, init?: RequestInit) => Promise<T>;
     logInUser: (data: userLoginData) => void;
     logOutUser: () => void;
 } {
@@ -24,6 +25,30 @@ export default function useCurrentUser(): {
             }
         });
     };
+
+    function fetchJsonAsUser<T>(
+        input: RequestInfo,
+        init?: RequestInit
+    ): Promise<T> {
+        return fetch(input, {
+            ...init,
+            headers: {
+                ...init?.headers,
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                let ans = data;
+                const token = data.access_token;
+                if (token) {
+                    // console.log('token set!');
+                    setAccessToken(token);
+                    delete ans['access_token'];
+                }
+                return ans as T;
+            });
+    }
 
     const logInUser = (data: userLoginData) => {
         fetch('/api/users/login', {
@@ -65,6 +90,6 @@ export default function useCurrentUser(): {
             })
             .catch(e => {});
     };
-    return { fetchUser, fetchAsUser, logInUser, logOutUser };
+    return { fetchUser, fetchAsUser, fetchJsonAsUser, logInUser, logOutUser };
 }
 
