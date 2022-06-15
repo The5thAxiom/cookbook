@@ -70,12 +70,30 @@ def getRecipeById(id: int) -> Recipe:
     return Recipe.query.get(id)
 
 
+# there HAS to be a better way to implement these functions
+# but this is quick and dirty and I don't wanna do anything
+# more 'complex' or 'pythonic' rn :(
 def getNextOf(id: int) -> int:
-    return id + 1
+    ids = [recipe.id for recipe in Recipe.query.all()]
+    next_id = 0
+    for i in ids:
+        if i > id:
+            next_id = i
+            break
+    # print(f"next of {id}: {next_id}")
+    return next_id
 
 
 def getPrevOf(id: int) -> int:
-    return id - 1
+    ids = [recipe.id for recipe in Recipe.query.all()]
+    prev_id = 0
+    for i in ids:
+        if i < id and i > prev_id:
+            prev_id = i
+        elif i >= id:
+            break
+    # print(f"prev of {id}: {prev_id}")
+    return prev_id
 
 
 def getRecipeMeta(recipeById: Recipe):
