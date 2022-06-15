@@ -37,7 +37,12 @@ export default function CheckRecipe() {
 
     if (recipe)
         return (
-            <main>
+            <main
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}
+            >
                 <RecipeActions recipe={recipe} />
                 <section className='util-centered'>
                     <h1 style={{ marginBottom: '0.5rem' }}>{recipe.name}</h1>
@@ -63,7 +68,6 @@ export default function CheckRecipe() {
                         <RecipeTags tags={recipe.recipe_tags} />
                     )}
                 </section>
-                <hr />
                 <section id='ingredients'>
                     <h2>Ingredients</h2>
                     <ol>
@@ -79,7 +83,6 @@ export default function CheckRecipe() {
                         )}
                     </ol>
                 </section>
-                <hr />
                 <section id='steps'>
                     <h2>Steps</h2>
                     <ol>
