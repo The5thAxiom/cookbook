@@ -144,6 +144,7 @@ def user_collections(username):
         if request.method == 'POST':
             collection_name = request.json.get('collection_name', None)
             collection = Collection.query\
+                .filter(Collection.user_id == user.id)\
                 .filter(Collection.name == collection_name)\
                 .first()
             if collection is None:
@@ -158,6 +159,7 @@ def user_collections(username):
         if request.method == 'DELETE':
             collection_name = request.json.get('collection_name', None)
             collection = Collection.query\
+                .filter(Collection.user_id == user.id)\
                 .filter(Collection.name == collection_name)\
                 .first()
             if collection is not None:
