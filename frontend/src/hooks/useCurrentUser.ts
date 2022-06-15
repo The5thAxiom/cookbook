@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import userStore from '../stores/userStore';
-import useAccessToken from './useAccessToken';
+import accessTokenStore from '../stores/accessTokenStore';
 
 export default function useCurrentUser(): {
     fetchUser: () => void;
@@ -8,7 +8,8 @@ export default function useCurrentUser(): {
     logInUser: (data: userLoginData) => void;
     logOutUser: () => void;
 } {
-    const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
+    const { accessToken, setAccessToken, removeAccessToken } =
+        accessTokenStore();
     const setUser = userStore(state => state.setUser);
 
     const fetchAsUser = (

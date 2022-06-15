@@ -27,13 +27,13 @@ import Signup from './pages/users/signup';
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 import userStore from './stores/userStore';
-import useAccessToken from './hooks/useAccessToken';
+import accessTokenStore from './stores/accessTokenStore';
 
 export default function App() {
     const { user } = userStore();
     const { fetchUser, logInUser, logOutUser } = useCurrentUser();
 
-    const { accessToken } = useAccessToken();
+    const accessToken = accessTokenStore(state => state.accessToken);
     useEffect(() => {
         if (accessToken !== '' && !user) fetchUser();
     }, [accessToken]);
