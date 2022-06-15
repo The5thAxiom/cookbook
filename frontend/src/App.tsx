@@ -31,21 +31,14 @@ import useAccessToken from './hooks/useAccessToken';
 
 export default function App() {
     const { user } = userStore();
-    const { fetchUser, fetchAsUser, logInUser, logOutUser } = useCurrentUser();
+    const { fetchUser, logInUser, logOutUser } = useCurrentUser();
 
     const { accessToken } = useAccessToken();
     useEffect(() => {
         if (accessToken !== '' && !user) fetchUser();
     }, [accessToken]);
 
-    const {
-        collections,
-        fetchCollections,
-        addNewCollection,
-        removeCollection,
-        addToCollection,
-        removeFromCollection
-    } = useCollections();
+    const { collections, fetchCollections } = useCollections();
 
     useEffect(() => {
         if (user && !collections) fetchCollections();
@@ -58,7 +51,7 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar user={user} logOutUser={logOutUser} />
+                            <NavBar />
                             <Outlet />
                             <Footer />
                         </>
@@ -70,14 +63,7 @@ export default function App() {
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
                         <Route path='filter' element={<BrowseRecipes />} />
-                        {user && (
-                            <Route
-                                path='new'
-                                element={
-                                    <NewRecipe fetchAsUser={fetchAsUser} />
-                                }
-                            />
-                        )}
+                        {user && <Route path='new' element={<NewRecipe />} />}
                     </Route>
                     {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />

@@ -7,12 +7,9 @@ import TagForm from './tagForm';
 import BasicForm from './basicForm';
 
 import './newRecipe.css';
+import useCurrentUser from '../../../hooks/useCurrentUser';
 
-export default function NewRecipe({
-    fetchAsUser
-}: {
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-}) {
+export default function NewRecipe() {
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
@@ -24,6 +21,8 @@ export default function NewRecipe({
         vegetarian: false,
         contributor_username: ''
     });
+
+    const { fetchAsUser } = useCurrentUser();
 
     const [ingredients, setIngredients] = useState<recipeIngredient[]>([]);
     const [tempIngredient, setTempIngredient] = useState<recipeIngredient>({
