@@ -8,18 +8,10 @@ import './recipeCarousel.css';
 
 export default function RecipeCarousel({
     recipes,
-    carousel,
-    columns,
-    collections,
-    addToCollection,
-    removeFromCollection
+    columns
 }: {
     recipes: recipeMeta[];
-    carousel: boolean;
     columns: number;
-    collections: collection[];
-    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
-    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 }) {
     const [step, setStep] = useState<number>(0);
 
@@ -47,13 +39,7 @@ export default function RecipeCarousel({
                     // }}
                 >
                     {recipes.slice(step, step + columns).map(r => (
-                        <RecipeCard
-                            key={r.id}
-                            recipe={r}
-                            collections={collections}
-                            addToCollection={addToCollection}
-                            removeFromCollection={removeFromCollection}
-                        />
+                        <RecipeCard key={r.id} recipe={r} />
                     ))}
                 </div>
                 {step + columns <= recipes.length && (

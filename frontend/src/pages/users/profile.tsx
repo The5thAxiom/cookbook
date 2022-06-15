@@ -3,27 +3,14 @@ import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
+import useCollections from '../../hooks/useCollections';
 
 import collectionsStore from '../../stores/collectionsStore';
 import './profile.css';
 
-export default function Profile({
-    user,
-    // collections,
-    addNewCollection,
-    removeCollection,
-    addToCollection,
-    removeFromCollection
-}: {
-    user: userData;
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-    collections: collection[];
-    addNewCollection: (collection_name: string) => void;
-    removeCollection: (collection_name: string) => void;
-    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
-    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
-}) {
+export default function Profile({ user }: { user: userData }) {
     const collections = collectionsStore(state => state.collections);
+    const { addNewCollection, removeCollection } = useCollections();
 
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
@@ -56,14 +43,7 @@ export default function Profile({
                         All recipes
                     </NavLink>
                 </div>
-                <RecipeCarousel
-                    recipes={recipes}
-                    carousel
-                    columns={2}
-                    collections={collections}
-                    addToCollection={addToCollection}
-                    removeFromCollection={removeFromCollection}
-                />
+                <RecipeCarousel recipes={recipes} columns={2} />
             </section>
             <section id='skills'>
                 {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
@@ -77,11 +57,7 @@ export default function Profile({
                             collections.filter(c => c.name === 'favourites')[0]
                                 .recipes
                         }
-                        carousel
                         columns={2}
-                        collections={collections}
-                        addToCollection={addToCollection}
-                        removeFromCollection={removeFromCollection}
                     />
                 )}
             </section>
@@ -141,11 +117,7 @@ export default function Profile({
                                 </h3>
                                 <RecipeCarousel
                                     recipes={c.recipes}
-                                    carousel
                                     columns={2}
-                                    collections={collections}
-                                    addToCollection={addToCollection}
-                                    removeFromCollection={removeFromCollection}
                                 />
                             </div>
                         ))

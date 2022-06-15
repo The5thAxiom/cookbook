@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import collectionStore from '../stores/collectionsStore';
+import userStore from '../stores/userStore';
+import useCurrentUser from './useCurrentUser';
 
-export default function useCollections(
-    user: userData,
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>
-): {
+export default function useCollections(): {
     collections: collection[];
     fetchCollections: () => void;
     addNewCollection: (collection_name: string) => void;
@@ -13,10 +12,8 @@ export default function useCollections(
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 } {
     const { collections, setCollections } = collectionStore();
-
-    useEffect(() => {
-        fetchCollections();
-    }, [user]);
+    const user = userStore(state => state.user);
+    const { fetchAsUser } = useCurrentUser();
 
     const fetchCollections = () =>
         user &&

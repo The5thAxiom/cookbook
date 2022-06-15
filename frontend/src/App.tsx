@@ -27,17 +27,29 @@ import Signup from './pages/users/signup';
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 import userStore from './stores/userStore';
+import useAccessToken from './hooks/useAccessToken';
 
 export default function App() {
-    const { user, setUser } = userStore();
-    const { fetchAsUser, logInUser, logOutUser } = useCurrentUser(setUser);
+    const { user } = userStore();
+    const { fetchUser, fetchAsUser, logInUser, logOutUser } = useCurrentUser();
+
+    const { accessToken } = useAccessToken();
+    useEffect(() => {
+        if (accessToken !== '' && !user) fetchUser();
+    }, [accessToken]);
+
     const {
         collections,
+        fetchCollections,
         addNewCollection,
         removeCollection,
         addToCollection,
         removeFromCollection
-    } = useCollections(user, fetchAsUser);
+    } = useCollections();
+
+    useEffect(() => {
+        if (user && !collections) fetchCollections();
+    }, [user]);
 
     return (
         <HashRouter basename=''>
@@ -55,36 +67,9 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path='home' element={<Home />} />
                     <Route path='recipes' element={<Outlet />}>
-                        <Route
-                            index
-                            element={
-                                <BrowseRecipes
-                                    collections={collections}
-                                    addToCollection={addToCollection}
-                                    removeFromCollection={removeFromCollection}
-                                />
-                            }
-                        />
-                        <Route
-                            path=':id'
-                            element={
-                                <CheckRecipe
-                                    collections={collections}
-                                    addToCollection={addToCollection}
-                                    removeFromCollection={removeFromCollection}
-                                />
-                            }
-                        />
-                        <Route
-                            path='filter'
-                            element={
-                                <BrowseRecipes
-                                    collections={collections}
-                                    addToCollection={addToCollection}
-                                    removeFromCollection={removeFromCollection}
-                                />
-                            }
-                        />
+                        <Route index element={<BrowseRecipes />} />
+                        <Route path=':id' element={<CheckRecipe />} />
+                        <Route path='filter' element={<BrowseRecipes />} />
                         {user && (
                             <Route
                                 path='new'
@@ -103,22 +88,7 @@ export default function App() {
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
                         {user ? (
-                            <Route
-                                index
-                                element={
-                                    <Profile
-                                        user={user}
-                                        fetchAsUser={fetchAsUser}
-                                        collections={collections}
-                                        addToCollection={addToCollection}
-                                        removeFromCollection={
-                                            removeFromCollection
-                                        }
-                                        removeCollection={removeCollection}
-                                        addNewCollection={addNewCollection}
-                                    />
-                                }
-                            />
+                            <Route index element={<Profile user={user} />} />
                         ) : (
                             <>
                                 <Route

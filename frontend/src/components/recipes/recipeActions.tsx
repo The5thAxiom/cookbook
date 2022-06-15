@@ -5,20 +5,12 @@ import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
 import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
 import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
 import userStore from '../../stores/userStore';
-import collectionStore from '../../stores/collectionsStore';
+import collectionsStore from '../../stores/collectionsStore';
+import useCollections from '../../hooks/useCollections';
 
-export default function RecipeActions({
-    recipe,
-    // collections,
-    addToCollection,
-    removeFromCollection
-}: {
-    recipe: recipeMeta;
-    collections: collection[];
-    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
-    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
-}) {
-    const collections = collectionStore(state => state.collections);
+export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
+    const collections = collectionsStore(state => state.collections);
+    const { addToCollection, removeFromCollection } = useCollections();
     const user = userStore(state => state.user);
 
     const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);

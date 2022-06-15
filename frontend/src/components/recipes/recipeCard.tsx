@@ -5,17 +5,7 @@ import RecipeTags from './recipeTags';
 import LoadingAnimation from './../loadingAnimation';
 import RecipeActions from '../../components/recipes/recipeActions';
 
-export default function RecipeCard({
-    recipe,
-    collections,
-    addToCollection,
-    removeFromCollection
-}: {
-    recipe: recipeMeta;
-    collections: collection[];
-    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
-    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
-}) {
+export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
 
     useEffect(() => {
@@ -26,12 +16,7 @@ export default function RecipeCard({
 
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
-            <RecipeActions
-                recipe={recipe}
-                collections={collections}
-                addToCollection={addToCollection}
-                removeFromCollection={removeFromCollection}
-            />
+            <RecipeActions recipe={recipe} />
             <div className='recipe-card-name'>
                 <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink>
             </div>
