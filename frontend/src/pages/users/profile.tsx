@@ -76,6 +76,13 @@ export default function Profile({ user }: { user: userData }) {
                                 type='text'
                                 value={newCollection ? newCollection : ''}
                                 onChange={e => setNewCollection(e.target.value)}
+                                onKeyDown={e => {
+                                    if (e.key === 'Enter') {
+                                        addNewCollection(newCollection);
+                                        setCollectionDialogOpen(false);
+                                        setNewCollection(null as any);
+                                    }
+                                }}
                             ></input>
                         </div>
                         <div className='cb-form-end'>
@@ -128,4 +135,3 @@ export default function Profile({ user }: { user: userData }) {
         </main>
     );
 }
-
