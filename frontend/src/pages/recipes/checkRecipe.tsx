@@ -24,11 +24,11 @@ export default function CheckRecipe() {
         setNextRecipe(null as any);
         setPrevRecipe(null as any);
         if (recipe) {
-            if (recipe.next_id !== 0)
+            if (recipe.prev_id !== 0)
                 fetch(`/api/recipes/${recipe.prev_id}`)
                     .then(res => res.json())
                     .then(data => setPrevRecipe(data));
-            if (recipe.prev_id !== 0)
+            if (recipe.next_id !== 0)
                 fetch(`/api/recipes/${recipe.next_id}`)
                     .then(res => res.json())
                     .then(data => setNextRecipe(data));

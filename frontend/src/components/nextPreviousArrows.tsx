@@ -7,8 +7,8 @@ import LoadingAnimation from './loadingAnimation';
 import './nextPreviousArrows.css';
 
 export default function NextPreviousArrows({
-    prevRecipe,
-    nextRecipe
+    nextRecipe,
+    prevRecipe
 }: {
     nextRecipe: recipeMeta;
     prevRecipe: recipeMeta;
