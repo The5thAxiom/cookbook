@@ -1,4 +1,4 @@
-# Samys-Cookbook
+# cookbook
 
 Making a simple app using React and Flask.
 
@@ -49,7 +49,11 @@ Making a simple app using React and Flask.
     MYSQL_SERVER=...
     MYSQL_DB=...
     ```
-
+- Make sure the secret key is a long random string. You can generate it by typing the following lines in the python shell:
+    ```python
+    import secrets
+    print(secrets.token_urlsafe(64))
+    ```
 ## Build the frontend
 
 -   Go into the 'frontend' folder and run the command `npm run build`.
