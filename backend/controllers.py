@@ -70,6 +70,14 @@ def getRecipeById(id: int) -> Recipe:
     return Recipe.query.get(id)
 
 
+def getNextOf(id: int) -> int:
+    return id + 1
+
+
+def getPrevOf(id: int) -> int:
+    return id - 1
+
+
 def getRecipeMeta(recipeById: Recipe):
     return {
         "id": recipeById.id,
@@ -80,7 +88,9 @@ def getRecipeMeta(recipeById: Recipe):
         "vegetarian": recipeById.vegetarian,
         "quantity": recipeById.quantity,
         "unit": recipeById.unit,
-        "contributor_username": recipeById.contributor.username
+        "contributor_username": recipeById.contributor.username,
+        "next_id": getNextOf(recipeById.id),
+        "prev_id": getPrevOf(recipeById.id)
     }
 
 
@@ -128,5 +138,7 @@ def getRecipeFull(recipeById: Recipe):
         "contributor_bio": recipeById.contributor.bio,
         "recipe_tags": getRecipeTags(recipeById),
         "recipe_ingredients": getRecipeIngredients(recipeById),
-        "recipe_steps": getRecipeSteps(recipeById)
+        "recipe_steps": getRecipeSteps(recipeById),
+        "next_id": getNextOf(recipeById.id),
+        "prev_id": getPrevOf(recipeById.id)
     }

@@ -20,6 +20,8 @@ declare type recipeMeta = {
     unit: string;
     vegetarian: boolean;
     contributor_username: string;
+    next_id?: number;
+    prev_id?: number;
 };
 
 declare type recipeIngredient = {
@@ -51,6 +53,8 @@ declare type recipeFull = {
     recipe_ingredients: recipeIngredient[];
     recipe_steps: string[];
     recipe_tags: string[];
+    next_id: number;
+    prev_id: number;
 };
 
 declare type arrowData = {
@@ -92,3 +96,4 @@ declare type collection = {
     name: string;
     recipes: recipeMeta[];
 };
+

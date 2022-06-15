@@ -9,31 +9,31 @@ export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const [nextRecipe, setNextRecipe] = useState<recipeMeta>(null as any);
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
-    const [isLast, setIsLast] = useState<boolean>(null as any);
     const params = useParams();
 
     useEffect(() => {
         setRecipe(null as any);
-        setNextRecipe(null as any);
-        setPrevRecipe(null as any);
+
         const currentId = Number(params.id);
         fetch(`/api/recipes/${currentId}/full`)
             .then(r => r.json())
             .then((r: recipeFull) => setRecipe(r));
-        fetch('/api/recipes/count')
-            .then(res => res.json())
-            .then(data => setIsLast(data.count === currentId));
-        if (Number(params.id) > 1) {
-            fetch(`/api/recipes/${currentId - 1}`)
-                .then(res => res.json())
-                .then(data => setPrevRecipe(data));
+    }, [params.id]);
+
+    useEffect(() => {
+        setNextRecipe(null as any);
+        setPrevRecipe(null as any);
+        if (recipe) {
+            if (recipe.next_id !== 0)
+                fetch(`/api/recipes/${recipe.prev_id}`)
+                    .then(res => res.json())
+                    .then(data => setPrevRecipe(data));
+            if (recipe.prev_id !== 0)
+                fetch(`/api/recipes/${recipe.next_id}`)
+                    .then(res => res.json())
+                    .then(data => setNextRecipe(data));
         }
-        if (isLast === false) {
-            fetch(`/api/recipes/${currentId + 1}`)
-                .then(res => res.json())
-                .then(data => setNextRecipe(data));
-        }
-    }, [params.id, isLast]);
+    }, [recipe]);
 
     if (recipe)
         return (
@@ -93,11 +93,8 @@ export default function CheckRecipe() {
                     </ol>
                 </section>
                 <NextPreviousArrows
-                    id={Number(params.id)}
-                    isLast={isLast}
-                    top={false}
-                    prevName={prevRecipe}
-                    nextName={nextRecipe}
+                    prevRecipe={prevRecipe}
+                    nextRecipe={nextRecipe}
                 />
             </main>
         );
