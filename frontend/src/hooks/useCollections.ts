@@ -21,7 +21,7 @@ export default function useCollections(): {
             .then(res => res.json())
             .then(data => {
                 setCollections(data.collections);
-                console.log('fetched collections');
+                // console.log('fetched collections');
             });
 
     const addToCollection = (collection_name: string, recipe: recipeMeta) => {

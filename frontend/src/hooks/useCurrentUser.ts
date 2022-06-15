@@ -61,7 +61,7 @@ export default function useCurrentUser(): {
             .then(data => {
                 data.access_token && setAccessToken(data.access_token);
                 setUser(data);
-                console.log('fetched user');
+                // console.log('fetched user');
             })
             .catch(e => {});
     };
