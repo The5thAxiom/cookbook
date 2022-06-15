@@ -3,18 +3,17 @@ import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
 import LoadingAnimation from '../../components/loadingAnimation';
 import RecipeCarousel from '../../components/recipes/recipeCarousel';
+import useCollections from '../../hooks/useCollections';
 
+import collectionsStore from '../../stores/collectionsStore';
 import './profile.css';
 
-export default function Profile({
-    user,
-    fetchAsUser
-}: {
-    user: userData;
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-}) {
+export default function Profile({ user }: { user: userData }) {
+    const collections = collectionsStore(state => state.collections);
+    const { addNewCollection, removeCollection } = useCollections();
+
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
-    const [collections, setCollections] = useState<collection[]>(null as any);
+
     const [collectionDialogOpen, setCollectionDialogOpen] =
         useState<boolean>(false);
     const [newCollection, setNewCollection] = useState<string>(null as any);
@@ -25,52 +24,6 @@ export default function Profile({
             .then(res => res.json())
             .then(data => setRecipes(data.recipes));
     }, []);
-
-    const fetchCollections = () =>
-        fetchAsUser(`/api/users/${user.username}/collections`)
-            .then(res => res.json())
-            .then(data => {
-                setCollections(
-                    data.collections.map((c: any) => {
-                        return {
-                            name: c.name,
-                            recipes: c.recipes
-                        };
-                    })
-                );
-            })
-            .catch(e => {});
-
-    useEffect(() => {
-        setCollections(null as any);
-        fetchCollections();
-    }, []);
-
-    const addNewCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ collection_name: collection_name })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${collection_name} was added`);
-                fetchCollections();
-            } else window.alert(`try again`);
-        });
-    };
-
-    const removeCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ collection_name: collection_name })
-        }).then(res => {
-            if (res.ok) {
-                window.alert(`${collection_name} was deleted`);
-                fetchCollections();
-            } else window.alert(`try again`);
-        });
-    };
 
     return (
         <main>
@@ -90,7 +43,7 @@ export default function Profile({
                         All recipes
                     </NavLink>
                 </div>
-                <RecipeCarousel recipes={recipes} carousel columns={2} />
+                <RecipeCarousel recipes={recipes} columns={2} />
             </section>
             <section id='skills'>
                 {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
@@ -104,7 +57,6 @@ export default function Profile({
                             collections.filter(c => c.name === 'favourites')[0]
                                 .recipes
                         }
-                        carousel
                         columns={2}
                     />
                 )}
@@ -165,7 +117,6 @@ export default function Profile({
                                 </h3>
                                 <RecipeCarousel
                                     recipes={c.recipes}
-                                    carousel
                                     columns={2}
                                 />
                             </div>

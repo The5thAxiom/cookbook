@@ -25,9 +25,24 @@ import Login from './pages/users/login';
 import Signup from './pages/users/signup';
 
 import useCurrentUser from './hooks/useCurrentUser';
+import useCollections from './hooks/useCollections';
+import userStore from './stores/userStore';
+import accessTokenStore from './stores/accessTokenStore';
 
 export default function App() {
-    const [user, fetchAsUser, logInUser, logOutUser] = useCurrentUser();
+    const { user } = userStore();
+    const { fetchUser, logInUser, logOutUser } = useCurrentUser();
+
+    const accessToken = accessTokenStore(state => state.accessToken);
+    useEffect(() => {
+        if (accessToken !== '' && !user) fetchUser();
+    }, [accessToken]);
+
+    const { collections, fetchCollections } = useCollections();
+
+    useEffect(() => {
+        if (user && !collections) fetchCollections();
+    }, [user]);
 
     return (
         <HashRouter basename=''>
@@ -36,7 +51,7 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar user={user} logOutUser={logOutUser} />
+                            <NavBar />
                             <Outlet />
                             <Footer />
                         </>
@@ -48,14 +63,7 @@ export default function App() {
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
                         <Route path='filter' element={<BrowseRecipes />} />
-                        {user && (
-                            <Route
-                                path='new'
-                                element={
-                                    <NewRecipe fetchAsUser={fetchAsUser} />
-                                }
-                            />
-                        )}
+                        {user && <Route path='new' element={<NewRecipe />} />}
                     </Route>
                     {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />
@@ -66,15 +74,7 @@ export default function App() {
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
                         {user ? (
-                            <Route
-                                index
-                                element={
-                                    <Profile
-                                        user={user}
-                                        fetchAsUser={fetchAsUser}
-                                    />
-                                }
-                            />
+                            <Route index element={<Profile user={user} />} />
                         ) : (
                             <>
                                 <Route

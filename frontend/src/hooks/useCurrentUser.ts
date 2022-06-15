@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
-import useAccessToken from './useAccessToken';
+import userStore from '../stores/userStore';
+import accessTokenStore from '../stores/accessTokenStore';
 
-export default function useCurrentUser(): [
-    user: userData,
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-    logInUser: (data: userLoginData) => void,
-    logOutUser: () => void
-] {
-    const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
-    const [user, setUser] = useState<userData>(null as any);
-
-    useEffect(() => {
-        if (accessToken !== '') fetchUser();
-    }, [accessToken]);
+export default function useCurrentUser(): {
+    fetchUser: () => void;
+    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+    logInUser: (data: userLoginData) => void;
+    logOutUser: () => void;
+} {
+    const { accessToken, setAccessToken, removeAccessToken } =
+        accessTokenStore();
+    const setUser = userStore(state => state.setUser);
 
     const fetchAsUser = (
         input: RequestInfo,
@@ -63,8 +61,10 @@ export default function useCurrentUser(): [
             .then(data => {
                 data.access_token && setAccessToken(data.access_token);
                 setUser(data);
+                // console.log('fetched user');
             })
             .catch(e => {});
     };
-    return [user, fetchAsUser, logInUser, logOutUser];
+    return { fetchUser, fetchAsUser, logInUser, logOutUser };
 }
+

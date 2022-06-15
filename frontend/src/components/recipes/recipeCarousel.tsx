@@ -8,11 +8,9 @@ import './recipeCarousel.css';
 
 export default function RecipeCarousel({
     recipes,
-    carousel,
     columns
 }: {
     recipes: recipeMeta[];
-    carousel: boolean;
     columns: number;
 }) {
     const [step, setStep] = useState<number>(0);
