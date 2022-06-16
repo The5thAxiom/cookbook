@@ -1,3 +1,22 @@
 .util-centered {
     text-align: center;
 }
+
+.util-row-flexend {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.util-clickable {
+    cursor: pointer;
+}
+
+.util-icon {
+    fill: var(--orange-main);
+}
+
+.util-icon:hover {
+    transform: scale(1.2);
+}
+

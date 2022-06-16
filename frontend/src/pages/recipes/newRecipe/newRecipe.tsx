@@ -7,8 +7,9 @@ import TagForm from './tagForm';
 import BasicForm from './basicForm';
 
 import './newRecipe.css';
+import useCurrentUser from '../../../hooks/useCurrentUser';
 
-export default function NewRecipe({ accessToken }: { accessToken: string }) {
+export default function NewRecipe() {
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
@@ -20,6 +21,8 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
         vegetarian: false,
         contributor_username: ''
     });
+
+    const { fetchAsUser } = useCurrentUser();
 
     const [ingredients, setIngredients] = useState<recipeIngredient[]>([]);
     const [tempIngredient, setTempIngredient] = useState<recipeIngredient>({
@@ -60,11 +63,10 @@ export default function NewRecipe({ accessToken }: { accessToken: string }) {
             })
         };
         console.log(recipe);
-        fetch('/api/recipes', {
+        fetchAsUser('/api/recipes', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(recipe)
         }).then(res => {

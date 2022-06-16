@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
 import LoadingAnimation from './../loadingAnimation';
+import RecipeActions from '../../components/recipes/recipeActions';
 
 export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
@@ -15,6 +16,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
 
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
+            <RecipeActions recipe={recipe} />
             <div className='recipe-card-name'>
                 <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink>
             </div>

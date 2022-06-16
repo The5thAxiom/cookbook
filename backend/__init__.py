@@ -3,6 +3,7 @@ import os
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import\
@@ -22,7 +23,7 @@ app = Flask(
 CORS(app)
 
 app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
@@ -35,18 +36,22 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql+mysqlconnector://{
 }/{
     os.environ.get('MYSQL_DB')
 }"""
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # we don't need real time updates as this is a REST based api
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # we don't need real time updates as this is a REST based api
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 bcrypt = Bcrypt(app)
 
 # this will initialize the tables
 from backend.models import *
-db.create_all()
+
+# this needs to be called once from the shell, not everytime :facepalm:
+# db.create_all()
 
 from backend.controllers import *
 from backend.endpoints import *
+
 
 @app.route('/')
 def index():

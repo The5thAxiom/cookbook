@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import './values/colors.css';
@@ -24,10 +24,26 @@ import Profile from './pages/users/profile';
 import Login from './pages/users/login';
 import Signup from './pages/users/signup';
 
-import useAccessToken from './useAccessToken';
+import useCurrentUser from './hooks/useCurrentUser';
+import useCollections from './hooks/useCollections';
+import userStore from './stores/userStore';
+import accessTokenStore from './stores/accessTokenStore';
 
 export default function App() {
-    const { accessToken, setAccessToken, removeAccessToken } = useAccessToken();
+    const { user } = userStore();
+    const { fetchUser, logInUser } = useCurrentUser();
+
+    const accessToken = accessTokenStore(state => state.accessToken);
+    useEffect(() => {
+        if (accessToken !== '' && !user) fetchUser();
+    }, [accessToken, fetchUser, user]);
+
+    const { collections, fetchCollections } = useCollections();
+
+    useEffect(() => {
+        if (user && !collections) fetchCollections();
+    }, [user, fetchCollections, collections]);
+
     return (
         <HashRouter basename=''>
             <Routes>
@@ -35,10 +51,7 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar
-                                accessToken={accessToken}
-                                removeAccessToken={removeAccessToken}
-                            />
+                            <NavBar />
                             <Outlet />
                             <Footer />
                         </>
@@ -50,10 +63,7 @@ export default function App() {
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
                         <Route path='filter' element={<BrowseRecipes />} />
-                        <Route
-                            path='new'
-                            element={<NewRecipe accessToken={accessToken} />}
-                        />
+                        {user && <Route path='new' element={<NewRecipe />} />}
                     </Route>
                     {/* <Route path='skills' element={<Outlet />}>
                     <Route index element={<BrowseSkills />} />
@@ -63,27 +73,13 @@ export default function App() {
                 </Route> */}
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
-                        {accessToken !== '' ? (
-                            <Route
-                                index
-                                element={
-                                    <Profile
-                                        accessToken={accessToken}
-                                        setAccessToken={setAccessToken}
-                                        removeAccessToken={removeAccessToken}
-                                    />
-                                }
-                            />
+                        {user ? (
+                            <Route index element={<Profile user={user} />} />
                         ) : (
                             <>
                                 <Route
                                     index
-                                    element={
-                                        <Login
-                                            accessToken={accessToken}
-                                            setAccessToken={setAccessToken}
-                                        />
-                                    }
+                                    element={<Login logInUser={logInUser} />}
                                 />
                                 <Route path='new' element={<Signup />} />
                             </>

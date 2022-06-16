@@ -49,11 +49,13 @@ Making a simple app using React and Flask.
     MYSQL_SERVER=...
     MYSQL_DB=...
     ```
-- Make sure the secret key is a long random string. You can generate it by typing the following lines in the python shell:
+
+-   Make sure the secret key is a long random string. You can generate it by typing the following lines in the python shell:
     ```python
     import secrets
     print(secrets.token_urlsafe(64))
     ```
+
 ## Build the frontend
 
 -   Go into the 'frontend' folder and run the command `npm run build`.
@@ -75,4 +77,3 @@ Making a simple app using React and Flask.
 -   These steps have been simplified in the makefile.
 -   This is yet to be fully implemented.
 -   Once it will be, running the command `new-setup` will do most of the work.
-

@@ -2,31 +2,12 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 export default function Login({
-    accessToken,
-    setAccessToken
+    logInUser
 }: {
-    accessToken: string;
-    setAccessToken: any;
+    logInUser: (data: userLoginData) => void;
 }) {
     const [userData, setUserData] = useState<userLoginData>(null as any);
 
-    const submitForm = (e: React.FormEvent) => {
-        e.preventDefault();
-        async function fetchData() {
-            const res = await fetch('/api/users/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
-            });
-            if (res.ok) {
-                let a = await res.json();
-                setAccessToken(a.access_token);
-            } else {
-                window.alert('wrong login attempt');
-            }
-        }
-        fetchData();
-    };
     return (
         <main>
             <h1>Login</h1>
@@ -62,7 +43,13 @@ export default function Login({
                     />
                 </div>
                 <div className='cb-form-end'>
-                    <button className='cb-form-button' onClick={submitForm}>
+                    <button
+                        className='cb-form-button'
+                        onClick={e => {
+                            e.preventDefault();
+                            logInUser(userData);
+                        }}
+                    >
                         Login
                     </button>
                     <NavLink end to='/user/new'>

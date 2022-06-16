@@ -64,7 +64,7 @@ def refresh_expiring_jwts(response):
     try:
         exp_timestamp = get_jwt()["exp"]
         now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=15))
         if target_timestamp > exp_timestamp:
             access_token = create_access_token(identity=get_jwt_identity())
             data = response.get_json()
@@ -122,6 +122,110 @@ def user_str_recipes_full(username):
                 )
             ]
         })
+
+
+@app.route(
+    '/api/collections',
+    methods=['GET', 'POST', 'DELETE']
+)
+@jwt_required()
+def user_collections():
+    username = get_jwt_identity()
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        abort(404)
+    else:
+        if request.method == 'GET':
+            return jsonify({'collections': [
+                {
+                    'name': c.name,
+                    'recipes': [getRecipeMeta(r) for r in c.recipes]
+                } for c in user.collections
+            ]})
+        if request.method == 'POST':
+            collection_name = request.json.get('collection_name', None)
+            collection = Collection.query\
+                .filter(Collection.user_id == user.id)\
+                .filter(Collection.name == collection_name)\
+                .first()
+            if collection is None:
+                db.session.add(Collection(**{
+                    'name': collection_name,
+                    'user_id': user.id
+                }))
+                db.session.commit()
+                return Response(status=201)
+            else:
+                return Response(status=202)
+        if request.method == 'DELETE':
+            collection_name = request.json.get('collection_name', None)
+            collection = Collection.query\
+                .filter(Collection.user_id == user.id)\
+                .filter(Collection.name == collection_name)\
+                .first()
+            if collection is not None:
+                db.session.query(Collection_Recipe)\
+                    .filter_by(collection_id=collection.id)\
+                    .delete()
+                db.session.delete(collection)
+                db.session.commit()
+                return Response(status=201)
+            else:
+                return Response(status=202)
+
+
+@app.route(
+    '/api/collections/<collection_name>',
+    methods=['GET', 'POST', 'DELETE']
+)
+@jwt_required()
+def user_collection(collection_name):
+    username = get_jwt_identity()
+    user = User.query.filter(User.username == username).first()
+    collection = Collection.query\
+        .filter(Collection.user_id == user.id)\
+        .filter(Collection.name == collection_name)\
+        .first()
+    if user is None or collection is None:
+        abort(404)
+    if request.method == 'GET':
+        return jsonify({
+            "recipes": [
+                getRecipeMeta(recipe)
+                for recipe
+                in collection.recipes
+            ]
+        })
+    if request.method == 'POST':
+        recipe_id = request.json.get('recipe_id', None)
+        recipe = Recipe.query.get(recipe_id)
+        if recipe is None:
+            abort(404)
+        else:
+            if recipe.id in [r.id for r in collection.recipes]:
+                return Response(status=202)
+            else:
+                db.engine.execute(
+                    Collection_Recipe.insert().values(**{
+                        'collection_id': collection.id,
+                        'recipe_id': recipe.id
+                    })
+                )
+                return Response(status=201)
+    if request.method == 'DELETE':
+        recipe_id = request.json.get('recipe_id', None)
+        recipe = Recipe.query.get(recipe_id)
+        if recipe is None:
+            abort(404)
+        else:
+            if recipe.id not in [r.id for r in collection.recipes]:
+                return Response(status=202)
+            else:
+                db.session.query(Collection_Recipe)\
+                    .filter_by(collection_id=collection.id)\
+                    .filter_by(recipe_id=recipe_id).delete()
+                db.session.commit()
+                return Response(status=201)
 
 
 @app.route('/api/recipes', methods=['POST'])

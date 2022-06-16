@@ -7,35 +7,25 @@ import LoadingAnimation from './loadingAnimation';
 import './nextPreviousArrows.css';
 
 export default function NextPreviousArrows({
-    top,
-    id,
-    isLast,
-    prevName,
-    nextName
+    nextRecipe,
+    prevRecipe
 }: {
-    isLast: boolean;
-    id: number;
-    top: boolean;
-    nextName?: recipeMeta;
-    prevName?: recipeMeta;
+    nextRecipe: recipeMeta;
+    prevRecipe: recipeMeta;
 }) {
     return (
-        <nav
-            className={`next-previous-arrows${
-                top ? ' top-arrows' : ' bottom-arrows'
-            }`}
-        >
-            {Number(id) > 1 && (
+        <nav className='next-previous-arrows'>
+            {prevRecipe && (
                 <NavLink
                     className='arrow left-arrow'
-                    to={`/recipes/${Number(id) - 1}`}
+                    to={`/recipes/${prevRecipe.id}`}
                 >
                     <BackwardArrowIcon className='arrow-icon' />
-                    {prevName ? (
+                    {prevRecipe ? (
                         <div className='arrow-page-name arrow-prev-page-name'>
                             Prev
                             <br />
-                            {prevName.name}
+                            {prevRecipe.name}
                         </div>
                     ) : (
                         <LoadingAnimation />
@@ -43,16 +33,16 @@ export default function NextPreviousArrows({
                 </NavLink>
             )}
             {/* <NavLink end to='/recipes/browse'>back</NavLink> */}
-            {!isLast && (
+            {nextRecipe && (
                 <NavLink
                     className='arrow right-arrow'
-                    to={`/recipes/${Number(id) + 1}`}
+                    to={`/recipes/${nextRecipe.id}`}
                 >
-                    {nextName ? (
+                    {nextRecipe ? (
                         <div className='arrow-page-name arrow-next-page-name'>
                             Next
                             <br />
-                            {nextName.name}
+                            {nextRecipe.name}
                         </div>
                     ) : (
                         <LoadingAnimation />
