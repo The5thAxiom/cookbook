@@ -16,9 +16,7 @@ export default function useCollections(): {
 
     const fetchCollections = () =>
         user &&
-        fetchJsonAsUser<{ collections: collection[] }>(
-            `/api/users/${user.username}/collections`
-        )
+        fetchJsonAsUser<{ collections: collection[] }>(`/api/collections`)
             .then(data => {
                 setCollections(data.collections);
                 // console.log('fetched collections');
@@ -26,14 +24,11 @@ export default function useCollections(): {
             .catch(e => console.log("couldn't fetch collections"));
 
     const addToCollection = (collection_name: string, recipe: recipeMeta) => {
-        fetchAsUser(
-            `/api/users/${user.username}/collections/${collection_name}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ recipe_id: recipe.id })
-            }
-        ).then(res => {
+        fetchAsUser(`/api/collections/${collection_name}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipe_id: recipe.id })
+        }).then(res => {
             if (res.ok) {
                 window.alert(`${recipe.name} was added to ${collection_name}!`);
                 fetchCollections();
@@ -45,14 +40,11 @@ export default function useCollections(): {
         collection_name: string,
         recipe: recipeMeta
     ) => {
-        fetchAsUser(
-            `/api/users/${user.username}/collections/${collection_name}`,
-            {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ recipe_id: recipe.id })
-            }
-        ).then(res => {
+        fetchAsUser(`/api/collections/${collection_name}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipe_id: recipe.id })
+        }).then(res => {
             if (res.ok) {
                 window.alert(
                     `${recipe.name} was removed from ${collection_name}!`
@@ -63,7 +55,7 @@ export default function useCollections(): {
     };
 
     const addNewCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
+        fetchAsUser(`api/collections`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ collection_name: collection_name })
@@ -76,7 +68,7 @@ export default function useCollections(): {
     };
 
     const removeCollection = (collection_name: string) => {
-        fetchAsUser(`api/users/${user.username}/collections`, {
+        fetchAsUser(`api/collections`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ collection_name: collection_name })

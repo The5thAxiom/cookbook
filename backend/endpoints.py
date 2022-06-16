@@ -125,11 +125,12 @@ def user_str_recipes_full(username):
 
 
 @app.route(
-    '/api/users/<username>/collections',
+    '/api/collections',
     methods=['GET', 'POST', 'DELETE']
 )
 @jwt_required()
-def user_collections(username):
+def user_collections():
+    username = get_jwt_identity()
     user = User.query.filter(User.username == username).first()
     if user is None:
         abort(404)
@@ -174,11 +175,12 @@ def user_collections(username):
 
 
 @app.route(
-    '/api/users/<username>/collections/<collection_name>',
+    '/api/collections/<collection_name>',
     methods=['GET', 'POST', 'DELETE']
 )
 @jwt_required()
-def user_collection(username, collection_name):
+def user_collection(collection_name):
+    username = get_jwt_identity()
     user = User.query.filter(User.username == username).first()
     collection = Collection.query\
         .filter(Collection.user_id == user.id)\
