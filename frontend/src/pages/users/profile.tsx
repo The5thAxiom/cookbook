@@ -14,8 +14,6 @@ export default function Profile({ user }: { user: userData }) {
 
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
-    const [collectionDialogOpen, setCollectionDialogOpen] =
-        useState<boolean>(false);
     const [newCollection, setNewCollection] = useState<string>(null as any);
 
     useEffect(() => {
@@ -64,11 +62,19 @@ export default function Profile({ user }: { user: userData }) {
             <section>
                 <h2>Your Collections</h2>
                 <div className='profile-action-buttons'>
-                    <div onClick={() => setCollectionDialogOpen(true)}>
+                    <div
+                        onClick={() =>
+                            (
+                                document.getElementById(
+                                    'new-collection-dialog'
+                                ) as HTMLDialogElement
+                            ).showModal()
+                        }
+                    >
                         Add new collection
                     </div>
                 </div>
-                <dialog open={collectionDialogOpen}>
+                <dialog open={false} id='new-collection-dialog'>
                     <div className='cb-form'>
                         <div className='cb-form-field'>
                             Collection Name{' '}
@@ -79,7 +85,11 @@ export default function Profile({ user }: { user: userData }) {
                                 onKeyDown={e => {
                                     if (e.key === 'Enter') {
                                         addNewCollection(newCollection);
-                                        setCollectionDialogOpen(false);
+                                        (
+                                            document.getElementById(
+                                                'new-collection-dialog'
+                                            ) as HTMLDialogElement
+                                        ).close();
                                         setNewCollection(null as any);
                                     }
                                 }}
@@ -90,8 +100,12 @@ export default function Profile({ user }: { user: userData }) {
                                 <button
                                     onClick={() => {
                                         addNewCollection(newCollection);
-                                        setCollectionDialogOpen(false);
                                         setNewCollection(null as any);
+                                        (
+                                            document.getElementById(
+                                                'new-collection-dialog'
+                                            ) as HTMLDialogElement
+                                        ).close();
                                     }}
                                 >
                                     Add collection
@@ -99,8 +113,12 @@ export default function Profile({ user }: { user: userData }) {
                             )}
                             <button
                                 onClick={() => {
-                                    setCollectionDialogOpen(false);
                                     setNewCollection(null as any);
+                                    (
+                                        document.getElementById(
+                                            'new-collection-dialog'
+                                        ) as HTMLDialogElement
+                                    ).close();
                                 }}
                             >
                                 Close
@@ -135,3 +153,4 @@ export default function Profile({ user }: { user: userData }) {
         </main>
     );
 }
+
