@@ -1,6 +1,0 @@
-dialog.modal {
-    z-index: 1;
-    background-color: var(--primary-bg);
-    border-color: var(--orange-main);
-    border-radius: 10px;
-}

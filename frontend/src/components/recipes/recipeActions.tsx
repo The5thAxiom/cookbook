@@ -39,11 +39,17 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                             <div>
                                 <span
                                     className='util-clickable'
-                                    onClick={() => setRemoveDialogOpen(true)}
+                                    onClick={() =>
+                                        (
+                                            document.getElementById(
+                                                'remove-dialog'
+                                            ) as HTMLDialogElement
+                                        ).showModal()
+                                    }
                                 >
                                     <BookmarkRemoveIcon />
                                 </span>
-                                <dialog open={removeDialogOpen}>
+                                <dialog open={false} id='remove-dialog'>
                                     <div className='cb-form'>
                                         <div className='cb-form-field'>
                                             Remove {recipe.name} from collection
@@ -74,9 +80,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                             {selectedCollection && (
                                                 <button
                                                     onClick={() => {
-                                                        setRemoveDialogOpen(
-                                                            false
-                                                        );
                                                         removeFromCollection(
                                                             selectedCollection,
                                                             recipe
@@ -84,6 +87,11 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                                         setSelectedCollection(
                                                             null as any
                                                         );
+                                                        (
+                                                            document.getElementById(
+                                                                'remove-dialog'
+                                                            ) as HTMLDialogElement
+                                                        ).close();
                                                     }}
                                                 >
                                                     Remove
@@ -91,7 +99,11 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                             )}
                                             <button
                                                 onClick={() =>
-                                                    setRemoveDialogOpen(false)
+                                                    (
+                                                        document.getElementById(
+                                                            'remove-dialog'
+                                                        ) as HTMLDialogElement
+                                                    ).close()
                                                 }
                                             >
                                                 Close
@@ -105,11 +117,17 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                             <div>
                                 <span
                                     className='util-clickable'
-                                    onClick={() => setAddDialogOpen(true)}
+                                    onClick={() =>
+                                        (
+                                            document.getElementById(
+                                                'add-dialog'
+                                            ) as HTMLDialogElement
+                                        ).showModal()
+                                    }
                                 >
                                     <BookmarkAddIcon />
                                 </span>
-                                <dialog open={addDialogOpen}>
+                                <dialog open={false} id='add-dialog'>
                                     <div className='cb-form'>
                                         <div className='cb-form-field'>
                                             Add {recipe.name} to collection
@@ -140,7 +158,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                             {selectedCollection && (
                                                 <button
                                                     onClick={() => {
-                                                        setAddDialogOpen(false);
                                                         addToCollection(
                                                             selectedCollection,
                                                             recipe
@@ -148,6 +165,11 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                                         setSelectedCollection(
                                                             null as any
                                                         );
+                                                        (
+                                                            document.getElementById(
+                                                                'add-dialog'
+                                                            ) as HTMLDialogElement
+                                                        ).close();
                                                     }}
                                                 >
                                                     Add
@@ -155,7 +177,11 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                             )}
                                             <button
                                                 onClick={() =>
-                                                    setAddDialogOpen(false)
+                                                    (
+                                                        document.getElementById(
+                                                            'add-dialog'
+                                                        ) as HTMLDialogElement
+                                                    ).close()
                                                 }
                                             >
                                                 Close
