@@ -8,10 +8,12 @@ import './recipeCarousel.css';
 
 export default function RecipeCarousel({
     recipes,
-    columns
+    columns,
+    reversed
 }: {
     recipes: recipeMeta[];
     columns: number;
+    reversed?: boolean;
 }) {
     const [step, setStep] = useState<number>(0);
 
@@ -38,9 +40,11 @@ export default function RecipeCarousel({
                     //     gridTemplateColumns: '1fr '.repeat(columns)
                     // }}
                 >
-                    {recipes.slice(step, step + columns).map(r => (
-                        <RecipeCard key={r.id} recipe={r} />
-                    ))}
+                    {(reversed ? recipes.slice().reverse() : recipes)
+                        .slice(step, step + columns)
+                        .map(r => (
+                            <RecipeCard key={r.id} recipe={r} />
+                        ))}
                 </div>
                 {step + columns < recipes.length && (
                     <div className='arrow next' onClick={carouselNext}>

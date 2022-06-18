@@ -41,7 +41,7 @@ export default function Profile({ user }: { user: userData }) {
                         All recipes
                     </NavLink>
                 </div>
-                <RecipeCarousel recipes={recipes} columns={2} />
+                <RecipeCarousel recipes={recipes} reversed columns={2} />
             </section>
             <section id='skills'>
                 {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
