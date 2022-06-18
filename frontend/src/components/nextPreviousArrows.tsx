@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 import BackwardArrowIcon from './icons/backwardArrowIcon';
 import ForwardArrowIcon from './icons/forwardArrowIcon';
-import LoadingAnimation from './loadingAnimation';
 import './nextPreviousArrows.css';
 
 export default function NextPreviousArrows({
@@ -21,15 +20,11 @@ export default function NextPreviousArrows({
                     to={`/recipes/${prevRecipe.id}`}
                 >
                     <BackwardArrowIcon className='arrow-icon' />
-                    {prevRecipe ? (
-                        <div className='arrow-page-name arrow-prev-page-name'>
-                            Prev
-                            <br />
-                            {prevRecipe.name}
-                        </div>
-                    ) : (
-                        <LoadingAnimation />
-                    )}
+                    <div className='arrow-page-name arrow-prev-page-name'>
+                        Prev
+                        <br />
+                        {prevRecipe.name}
+                    </div>
                 </NavLink>
             )}
             {/* <NavLink end to='/recipes/browse'>back</NavLink> */}
@@ -38,15 +33,11 @@ export default function NextPreviousArrows({
                     className='arrow right-arrow'
                     to={`/recipes/${nextRecipe.id}`}
                 >
-                    {nextRecipe ? (
-                        <div className='arrow-page-name arrow-next-page-name'>
-                            Next
-                            <br />
-                            {nextRecipe.name}
-                        </div>
-                    ) : (
-                        <LoadingAnimation />
-                    )}
+                    <div className='arrow-page-name arrow-next-page-name'>
+                        Next
+                        <br />
+                        {nextRecipe.name}
+                    </div>
                     <ForwardArrowIcon className='arrow-icon' />
                 </NavLink>
             )}

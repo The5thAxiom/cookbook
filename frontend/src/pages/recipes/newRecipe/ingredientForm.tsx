@@ -34,9 +34,6 @@ export default function IngredientForm({
         else return { ...tempIngredient, ...i };
     };
 
-    const [ingredientsModalOpen, setIgredientsModalOpen] =
-        useState<boolean>(false);
-
     const tempIngredientIsValid = () =>
         !!tempIngredient.english_name &&
         !!tempIngredient.hindi_name_devnagari &&
@@ -46,7 +43,7 @@ export default function IngredientForm({
 
     const addNewIngredient = () => {
         if (!tempIngredientIsValid()) return;
-        setIgredientsModalOpen(false);
+        // setIgredientsModalOpen(false);
 
         setIngredients([...ingredients, tempIngredient]);
 
@@ -57,6 +54,11 @@ export default function IngredientForm({
             quantity: 0,
             unit: ''
         });
+        (
+            document.getElementById(
+                'new-ingredient-dialog'
+            ) as HTMLDialogElement
+        ).close();
     };
 
     return (
@@ -93,7 +95,7 @@ export default function IngredientForm({
                 )}
             </div>
             <div className='cb-form-end'>
-                <dialog open={ingredientsModalOpen}>
+                <dialog open={false} id='new-ingredient-dialog'>
                     <fieldset className='cb-form'>
                         <legend>Ingredient</legend>
                         <div className='cb-form-field'>
@@ -285,7 +287,11 @@ export default function IngredientForm({
                         <button
                             onClick={e => {
                                 e.preventDefault();
-                                setIgredientsModalOpen(false);
+                                (
+                                    document.getElementById(
+                                        'new-ingredient-dialog'
+                                    ) as HTMLDialogElement
+                                ).close();
                                 setTempIngredient({
                                     english_name: '',
                                     hindi_name_devnagari: '',
@@ -302,7 +308,11 @@ export default function IngredientForm({
                 <button
                     onClick={e => {
                         e.preventDefault();
-                        setIgredientsModalOpen(true);
+                        (
+                            document.getElementById(
+                                'new-ingredient-dialog'
+                            ) as HTMLDialogElement
+                        ).showModal();
                     }}
                 >
                     Add ingredient

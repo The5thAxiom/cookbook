@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import './values/colors.css';
-import './App.css';
-import './forms.css';
-import './utility.css';
+import './styles/App.css';
+import './styles/forms.css';
+import './styles/utility.css';
 
 import Footer from './components/footer';
 import NavBar from './components/navBar';

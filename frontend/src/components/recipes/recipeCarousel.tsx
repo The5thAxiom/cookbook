@@ -42,7 +42,7 @@ export default function RecipeCarousel({
                         <RecipeCard key={r.id} recipe={r} />
                     ))}
                 </div>
-                {step + columns <= recipes.length && (
+                {step + columns < recipes.length && (
                     <div className='arrow next' onClick={carouselNext}>
                         <ForwardArrowIcon />
                     </div>

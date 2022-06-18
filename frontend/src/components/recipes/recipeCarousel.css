@@ -18,7 +18,6 @@
 
 .recipe-cards-carousel-container > .arrow:hover {
     background-color: var(--orange-main);
-    transform: scale(1.1);
 }
 .recipe-cards-carousel-container > .arrow:hover > svg {
     fill: var(--yellow-main);
@@ -56,3 +55,4 @@
         width: auto;
     }
 }
+
