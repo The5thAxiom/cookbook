@@ -12,5 +12,7 @@ react-build:
 
 deploy:
 	cd frontend && npm run build
+	git add frontend/build/
+	git commit -m 'build for deployment'
 	git push origin main
 	git push heroku main
