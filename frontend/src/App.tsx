@@ -15,10 +15,6 @@ import CheckRecipe from './pages/recipes/checkRecipe';
 import NewRecipe from './pages/recipes/newRecipe/newRecipe';
 import BrowseRecipes from './pages/recipes/browseRecipes';
 
-// import BrowseSkills from './pages/browsseSkills';
-// import CheckSkill from './pages/checkSkill';
-// import NewSkill from './pages/newSkill';
-
 import User from './pages/users/user';
 import Profile from './pages/users/profile';
 import Login from './pages/users/login';
@@ -28,17 +24,20 @@ import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
+import collectionStore from './stores/collectionsStore';
 
 export default function App() {
-    const { user } = userStore();
-    const { fetchUser, logInUser } = useCurrentUser();
-
     const accessToken = accessTokenStore(state => state.accessToken);
+
+    const user = userStore(state => state.user);
+    const { logInUser, fetchUser } = useCurrentUser();
+
+    const { fetchCollections } = useCollections();
+    const collections = collectionStore(state => state.collections);
+
     useEffect(() => {
         if (accessToken !== '' && !user) fetchUser();
-    }, [accessToken, fetchUser, user]);
-
-    const { collections, fetchCollections } = useCollections();
+    }, [accessToken, user]);
 
     useEffect(() => {
         if (user && !collections) fetchCollections();
@@ -65,12 +64,6 @@ export default function App() {
                         <Route path='filter' element={<BrowseRecipes />} />
                         {user && <Route path='new' element={<NewRecipe />} />}
                     </Route>
-                    {/* <Route path='skills' element={<Outlet />}>
-                    <Route index element={<BrowseSkills />} />
-                    <Route path=':id' element={<CheckSkill />} />
-                    <Route path='filter' element={<FilterSkills />} />
-                    <Route path='new' element={<NewSkill />} />
-                </Route> */}
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}
                         {user ? (

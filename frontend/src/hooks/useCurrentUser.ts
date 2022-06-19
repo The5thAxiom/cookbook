@@ -11,7 +11,12 @@ export default function useCurrentUser(): {
     const { setAccessToken, removeAccessToken } = accessTokenStore();
     const setUser = userStore(state => state.setUser);
     const setCollections = collectionStore(state => state.setCollections);
-    const { fetchAsUser } = useFetch();
+    const { fetchAsUser, fetchJsonAsUser } = useFetch();
+
+    const fetchUser = async () => {
+        const data = await fetchJsonAsUser<userData>('/api/users/profile');
+        setUser(data);
+    };
 
     const logInUser = async (data: userLoginData) => {
         const res = await fetch('/api/users/login', {
@@ -34,16 +39,6 @@ export default function useCurrentUser(): {
         setCollections(null as any);
     };
 
-    const fetchUser = async () => {
-        const res = await fetchAsUser('/api/users/profile');
-        if (res.ok) {
-            const data = await res.json();
-            data.access_token && setAccessToken(data.access_token);
-            setUser(data);
-        } else {
-            removeAccessToken();
-        }
-    };
     return { fetchUser, logInUser, logOutUser };
 }
 

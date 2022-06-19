@@ -3,15 +3,15 @@ import userStore from '../stores/userStore';
 import useFetch from './useFetch';
 
 export default function useCollections(): {
-    collections: collection[];
     fetchCollections: () => void;
     addNewCollection: (collection_name: string) => void;
     removeCollection: (collection_name: string) => void;
     addToCollection: (collection_name: string, recipe: recipeMeta) => void;
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 } {
-    const { collections, setCollections } = collectionStore();
+    const setCollections = collectionStore(state => state.setCollections);
     const user = userStore(state => state.user);
+
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
 
     const fetchCollections = async () => {
@@ -25,6 +25,7 @@ export default function useCollections(): {
             } else console.log("couldn't fetch collections");
         }
     };
+
     const addToCollection = async (
         collection_name: string,
         recipe: recipeMeta
@@ -80,7 +81,6 @@ export default function useCollections(): {
     };
 
     return {
-        collections,
         fetchCollections,
         addNewCollection,
         removeCollection,

@@ -257,11 +257,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                         ) as HTMLDialogElement
                                     ).close();
                                     setNewCollection(null as any);
-                                    console.log(
-                                        document.getElementById(
-                                            'recipe-new-collection-dialog'
-                                        )
-                                    );
                                 }}
                             >
                                 Close
