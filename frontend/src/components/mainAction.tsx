@@ -4,7 +4,14 @@ import LoadingAnimation from './loadingAnimation';
 
 export default function MainAction() {
     return (
-        <dialog open={false} id='main-action-happening'>
+        <dialog
+            style={{
+                backgroundColor: 'transparent',
+                border: 'none'
+            }}
+            open={false}
+            id='main-action-happening'
+        >
             <LoadingAnimation />
         </dialog>
     );
