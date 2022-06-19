@@ -1,53 +1,17 @@
 import userStore from '../stores/userStore';
 import accessTokenStore from '../stores/accessTokenStore';
 import collectionStore from '../stores/collectionsStore';
+import useFetch from './useFetch';
 
 export default function useCurrentUser(): {
     fetchUser: () => void;
-    fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-    fetchJsonAsUser: <T>(input: RequestInfo, init?: RequestInit) => Promise<T>;
     logInUser: (data: userLoginData) => void;
     logOutUser: () => void;
 } {
-    const { accessToken, setAccessToken, removeAccessToken } =
-        accessTokenStore();
+    const { setAccessToken, removeAccessToken } = accessTokenStore();
     const setUser = userStore(state => state.setUser);
     const setCollections = collectionStore(state => state.setCollections);
-
-    const fetchAsUser = async (
-        input: RequestInfo,
-        init?: RequestInit
-    ): Promise<Response> => {
-        const res = await fetch(input, {
-            ...init,
-            headers: {
-                ...init?.headers,
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        return res;
-    };
-
-    const fetchJsonAsUser = async <T>(
-        input: RequestInfo,
-        init?: RequestInit
-    ): Promise<T> => {
-        const res = await fetch(input, {
-            ...init,
-            headers: {
-                ...init?.headers,
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        const data = await res.json();
-        let ans = data;
-        const token = data.access_token;
-        if (token) {
-            setAccessToken(token);
-            delete ans['access_token'];
-        }
-        return ans as T;
-    };
+    const { fetchAsUser } = useFetch();
 
     const logInUser = async (data: userLoginData) => {
         const res = await fetch('/api/users/login', {
@@ -80,6 +44,6 @@ export default function useCurrentUser(): {
             removeAccessToken();
         }
     };
-    return { fetchUser, fetchAsUser, fetchJsonAsUser, logInUser, logOutUser };
+    return { fetchUser, logInUser, logOutUser };
 }
 

@@ -1,6 +1,6 @@
 import collectionStore from '../stores/collectionsStore';
 import userStore from '../stores/userStore';
-import useCurrentUser from './useCurrentUser';
+import useFetch from './useFetch';
 
 export default function useCollections(): {
     collections: collection[];
@@ -12,7 +12,7 @@ export default function useCollections(): {
 } {
     const { collections, setCollections } = collectionStore();
     const user = userStore(state => state.user);
-    const { fetchAsUser, fetchJsonAsUser } = useCurrentUser();
+    const { fetchAsUser, fetchJsonAsUser } = useFetch();
 
     const fetchCollections = async () => {
         if (user) {
