@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 export default function useMainAction(): {
+    modal: HTMLDialogElement;
     startMainAction: () => void;
     endMainAction: () => void;
 } {
@@ -16,10 +17,5 @@ export default function useMainAction(): {
         modal.close();
     };
 
-    useEffect(() => {
-        console.log('setting up main-action-happening');
-        if (modal) modal.addEventListener('cancel', e => e.preventDefault());
-    }, []);
-
-    return { startMainAction, endMainAction };
+    return { modal, startMainAction, endMainAction };
 }

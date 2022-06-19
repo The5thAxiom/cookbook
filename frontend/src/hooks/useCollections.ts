@@ -1,6 +1,7 @@
 import collectionStore from '../stores/collectionsStore';
 import userStore from '../stores/userStore';
 import useFetch from './useFetch';
+import useMainAction from './useMainAction';
 
 export default function useCollections(): {
     fetchCollections: () => void;
@@ -13,6 +14,8 @@ export default function useCollections(): {
     const user = userStore(state => state.user);
 
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
+
+    const { startMainAction, endMainAction } = useMainAction();
 
     const fetchCollections = async () => {
         if (user) {
@@ -30,6 +33,7 @@ export default function useCollections(): {
         collection_name: string,
         recipe: recipeMeta
     ) => {
+        startMainAction();
         const res = await fetchAsUser(`/api/collections/${collection_name}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,12 +43,14 @@ export default function useCollections(): {
             window.alert(`${recipe.name} was added to ${collection_name}!`);
             fetchCollections();
         } else window.alert('try again:(');
+        endMainAction();
     };
 
     const removeFromCollection = async (
         collection_name: string,
         recipe: recipeMeta
     ) => {
+        startMainAction();
         const res = await fetchAsUser(`/api/collections/${collection_name}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -54,9 +60,11 @@ export default function useCollections(): {
             window.alert(`${recipe.name} was removed from ${collection_name}!`);
             fetchCollections();
         } else window.alert('try again:(');
+        endMainAction();
     };
 
     const addNewCollection = async (collection_name: string) => {
+        startMainAction();
         const res = await fetchAsUser(`api/collections`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -66,9 +74,11 @@ export default function useCollections(): {
             window.alert(`${collection_name} was added`);
             fetchCollections();
         } else window.alert(`try again`);
+        endMainAction();
     };
 
     const removeCollection = async (collection_name: string) => {
+        startMainAction();
         const res = await fetchAsUser(`api/collections`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -78,6 +88,7 @@ export default function useCollections(): {
             window.alert(`${collection_name} was deleted`);
             fetchCollections();
         } else window.alert(`try again`);
+        endMainAction();
     };
 
     return {
