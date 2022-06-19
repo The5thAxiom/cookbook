@@ -71,6 +71,10 @@ def refresh_expiring_jwts(response):
             if type(data) is dict:
                 data["access_token"] = access_token
                 response.data = json.dumps(data)
+            else:
+                response.data = json.dumps(
+                    {"access_token": access_token}
+                )
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original respone
