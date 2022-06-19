@@ -5,7 +5,8 @@ export default function useFetch(): {
     fetchJsonAsUser: <T>(input: RequestInfo, init?: RequestInit) => Promise<T>;
     fetchJson: <T>(input: RequestInfo, init?: RequestInit) => Promise<T>;
 } {
-    const { accessToken, setAccessToken } = accessTokenStore();
+    const { accessToken, setAccessToken, removeAccessToken } =
+        accessTokenStore();
 
     const fetchAsUser = async (
         input: RequestInfo,
@@ -18,9 +19,18 @@ export default function useFetch(): {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        const data = await res.json();
-        if (data && data.access_token) setAccessToken(data.access_token);
-        return res;
+        const response = res.clone();
+        if (res.status !== 401) {
+            try {
+                const data = await res.json();
+                if (data && data.access_token)
+                    setAccessToken(data.access_token);
+            } catch (e) {}
+            return response;
+        } else {
+            removeAccessToken();
+            return response;
+        }
     };
 
     const fetchJsonAsUser = async <T>(

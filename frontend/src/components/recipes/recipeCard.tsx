@@ -4,14 +4,21 @@ import { NavLink } from 'react-router-dom';
 import RecipeTags from './recipeTags';
 import LoadingAnimation from './../loadingAnimation';
 import RecipeActions from '../../components/recipes/recipeActions';
+import useFetch from '../../hooks/useFetch';
 
 export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
+    const { fetchJson } = useFetch();
+
+    const fetchRecipeTags = async () => {
+        const data = await fetchJson<{ tags: string[] }>(
+            `/api/recipes/${recipe.id}/tags`
+        );
+        setTags(data.tags);
+    };
 
     useEffect(() => {
-        fetch(`/api/recipes/${recipe.id}/tags`)
-            .then(res => (res.ok ? res.json() : null))
-            .then(data => setTags(data.tags));
+        fetchRecipeTags();
     }, [recipe.id]);
 
     return (
