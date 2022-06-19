@@ -1,5 +1,4 @@
 import React from 'react';
-import useMainAction from '../hooks/useMainAction';
 import LoadingAnimation from './loadingAnimation';
 
 export default function MainAction() {
@@ -16,3 +15,4 @@ export default function MainAction() {
         </dialog>
     );
 }
+

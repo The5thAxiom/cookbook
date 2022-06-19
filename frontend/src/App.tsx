@@ -40,7 +40,7 @@ export default function App() {
 
     useEffect(() => {
         if (accessToken !== '' && !user) fetchUser();
-    }, [accessToken, user]);
+    }, [accessToken, user, fetchUser]);
 
     useEffect(() => {
         if (user && !collections) fetchCollections();
@@ -51,7 +51,7 @@ export default function App() {
     useEffect(() => {
         // console.log('setting up main-action-happening');
         if (modal) modal.addEventListener('cancel', e => e.preventDefault());
-    }, []);
+    }, [modal]);
 
     return (
         <HashRouter basename=''>

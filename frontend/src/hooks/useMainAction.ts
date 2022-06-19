@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export default function useMainAction(): {
     modal: HTMLDialogElement;
     startMainAction: () => void;
@@ -19,3 +17,4 @@ export default function useMainAction(): {
 
     return { modal, startMainAction, endMainAction };
 }
+

@@ -15,31 +15,12 @@ export default function CheckRecipe() {
 
     const { fetchJson } = useFetch();
 
-    const fetchFullRecipe = async (id: number) => {
-        const data = await fetchJson<recipeFull>(`/api/recipes/${id}/full`);
-        setRecipe(data);
-    };
-
-    const fetchPrevRecipe = async () => {
-        if (recipe.prev_id !== 0) {
-            const pr = await fetchJson<recipeMeta>(
-                `api/recipes/${recipe.prev_id}`
-            );
-            setPrevRecipe(pr);
-        }
-    };
-
-    const fetchNextRecipe = async () => {
-        if (recipe.next_id !== 0) {
-            const nr = await fetchJson<recipeMeta>(
-                `api/recipes/${recipe.next_id}`
-            );
-            setNextRecipe(nr);
-        }
-    };
-
     useEffect(() => {
         setRecipe(null as any);
+        const fetchFullRecipe = async (id: number) => {
+            const data = await fetchJson<recipeFull>(`/api/recipes/${id}/full`);
+            setRecipe(data);
+        };
         const currentId = Number(params.id);
         if (currentId) {
             fetchFullRecipe(currentId);
@@ -49,6 +30,25 @@ export default function CheckRecipe() {
     useEffect(() => {
         setNextRecipe(null as any);
         setPrevRecipe(null as any);
+
+        const fetchPrevRecipe = async () => {
+            if (recipe.prev_id !== 0) {
+                const pr = await fetchJson<recipeMeta>(
+                    `api/recipes/${recipe.prev_id}`
+                );
+                setPrevRecipe(pr);
+            }
+        };
+
+        const fetchNextRecipe = async () => {
+            if (recipe.next_id !== 0) {
+                const nr = await fetchJson<recipeMeta>(
+                    `api/recipes/${recipe.next_id}`
+                );
+                setNextRecipe(nr);
+            }
+        };
+
         if (recipe) {
             fetchPrevRecipe();
             fetchNextRecipe();

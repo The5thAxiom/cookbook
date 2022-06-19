@@ -10,15 +10,14 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
     const { fetchJson } = useFetch();
 
-    const fetchRecipeTags = async () => {
-        const data = await fetchJson<{ tags: string[] }>(
-            `/api/recipes/${recipe.id}/tags`
-        );
-        setTags(data.tags);
-    };
-
     useEffect(() => {
-        fetchRecipeTags();
+        const fetchRecipeTags = async (id: number) => {
+            const data = await fetchJson<{ tags: string[] }>(
+                `/api/recipes/${id}/tags`
+            );
+            setTags(data.tags);
+        };
+        fetchRecipeTags(recipe.id);
     }, [recipe.id]);
 
     return (
