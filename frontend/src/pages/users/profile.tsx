@@ -16,11 +16,16 @@ export default function Profile({ user }: { user: userData }) {
 
     const [newCollection, setNewCollection] = useState<string>(null as any);
 
+    const fetchRecipes = async () => {
+        const res = await fetch(`/api/users/${user.username}/recipes`);
+        const data = await res.json();
+        setRecipes(data.recipes);
+    };
+
     useEffect(() => {
         setRecipes(null as any);
-        fetch(`/api/users/${user.username}/recipes`)
-            .then(res => res.json())
-            .then(data => setRecipes(data.recipes));
+
+        fetchRecipes();
     }, [user.username]);
 
     return (

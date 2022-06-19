@@ -5,24 +5,23 @@ import RecipeCards from '../../components/recipes/recipeCards';
 export default function BrowseRecipes() {
     const [searchParams] = useSearchParams();
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
-
-    useEffect(() => {
+    const fetchRecipes = async () => {
         const user = searchParams.get('only-user');
         const tag = searchParams.get('only-tag');
         setRecipes(null as any);
-        if (user !== null)
-            fetch(`/api/users/${user}/recipes`)
-                .then(res => (res.ok ? res.json() : { recipes: [] }))
-                .then(data => setRecipes(data.recipes));
-        else if (tag !== null)
-            fetch(`/api/recipes/bytag/${tag}`)
-                .then(res => (res.ok ? res.json() : { recipes: [] }))
-                .then(data => setRecipes(data.recipes));
-        else
-            fetch('/api/recipes/all')
-                .then(res => (res.ok ? res.json() : { recipes: [] }))
-                .then(data => setRecipes(data.recipes))
-                .catch(e => setRecipes([]));
+        let res;
+        if (user !== null) res = await fetch(`/api/users/${user}/recipes`);
+        else if (tag !== null) res = await fetch(`/api/recipes/bytag/${tag}`);
+        else res = await fetch('/api/recipes/all');
+        if (res.ok) {
+            const data = await res.json();
+            setRecipes(data.recipes);
+        } else {
+            setRecipes([]);
+        }
+    };
+    useEffect(() => {
+        fetchRecipes();
     }, [searchParams]);
     return (
         <main>
