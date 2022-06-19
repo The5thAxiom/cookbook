@@ -5,34 +5,53 @@ import NextPreviousArrows from '../../components/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags';
 import RecipeActions from '../../components/recipes/recipeActions';
 
+import useFetch from '../../hooks/useFetch';
+
 export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const [nextRecipe, setNextRecipe] = useState<recipeMeta>(null as any);
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
     const params = useParams();
 
+    const { fetchJson } = useFetch();
+
     useEffect(() => {
         setRecipe(null as any);
-
+        const fetchFullRecipe = async (id: number) => {
+            const data = await fetchJson<recipeFull>(`/api/recipes/${id}/full`);
+            setRecipe(data);
+        };
         const currentId = Number(params.id);
-        if (currentId)
-            fetch(`/api/recipes/${currentId}/full`)
-                .then(r => r.json())
-                .then((r: recipeFull) => setRecipe(r));
+        if (currentId) {
+            fetchFullRecipe(currentId);
+        }
     }, [params.id]);
 
     useEffect(() => {
         setNextRecipe(null as any);
         setPrevRecipe(null as any);
+
+        const fetchPrevRecipe = async () => {
+            if (recipe.prev_id !== 0) {
+                const pr = await fetchJson<recipeMeta>(
+                    `api/recipes/${recipe.prev_id}`
+                );
+                setPrevRecipe(pr);
+            }
+        };
+
+        const fetchNextRecipe = async () => {
+            if (recipe.next_id !== 0) {
+                const nr = await fetchJson<recipeMeta>(
+                    `api/recipes/${recipe.next_id}`
+                );
+                setNextRecipe(nr);
+            }
+        };
+
         if (recipe) {
-            if (recipe.prev_id !== 0)
-                fetch(`/api/recipes/${recipe.prev_id}`)
-                    .then(res => res.json())
-                    .then(data => setPrevRecipe(data));
-            if (recipe.next_id !== 0)
-                fetch(`/api/recipes/${recipe.next_id}`)
-                    .then(res => res.json())
-                    .then(data => setNextRecipe(data));
+            fetchPrevRecipe();
+            fetchNextRecipe();
         }
     }, [recipe]);
 

@@ -1,10 +1,3 @@
-dialog {
-    z-index: 1;
-    background-color: var(--primary-bg);
-    border-color: var(--orange-main);
-    border-radius: 10px;
-}
-
 .nrf-tag {
     background-color: var(--orange-light);
     padding: 5px;
@@ -31,3 +24,4 @@ dialog {
 .nrf-tag-x:hover > svg {
     fill: var(--yellow-main);
 }
+
