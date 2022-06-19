@@ -66,7 +66,7 @@ export default function Profile({ user }: { user: userData }) {
                         onClick={() =>
                             (
                                 document.getElementById(
-                                    'new-collection-dialog'
+                                    'profile-new-collection-dialog'
                                 ) as HTMLDialogElement
                             ).showModal()
                         }
@@ -74,7 +74,7 @@ export default function Profile({ user }: { user: userData }) {
                         Add new collection
                     </div>
                 </div>
-                <dialog open={false} id='new-collection-dialog'>
+                <dialog open={false} id='profile-new-collection-dialog'>
                     <div className='cb-form'>
                         <div className='cb-form-field'>
                             Collection Name{' '}
@@ -87,7 +87,7 @@ export default function Profile({ user }: { user: userData }) {
                                         addNewCollection(newCollection);
                                         (
                                             document.getElementById(
-                                                'new-collection-dialog'
+                                                'profile-new-collection-dialog'
                                             ) as HTMLDialogElement
                                         ).close();
                                         setNewCollection(null as any);
@@ -103,7 +103,7 @@ export default function Profile({ user }: { user: userData }) {
                                         setNewCollection(null as any);
                                         (
                                             document.getElementById(
-                                                'new-collection-dialog'
+                                                'profile-new-collection-dialog'
                                             ) as HTMLDialogElement
                                         ).close();
                                     }}
@@ -116,7 +116,7 @@ export default function Profile({ user }: { user: userData }) {
                                     setNewCollection(null as any);
                                     (
                                         document.getElementById(
-                                            'new-collection-dialog'
+                                            'profile-new-collection-dialog'
                                         ) as HTMLDialogElement
                                     ).close();
                                 }}
