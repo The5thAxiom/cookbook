@@ -14,58 +14,53 @@ export default function useCurrentUser(): {
     const setUser = userStore(state => state.setUser);
     const setCollections = collectionStore(state => state.setCollections);
 
-    const fetchAsUser = (
+    const fetchAsUser = async (
         input: RequestInfo,
         init?: RequestInit
     ): Promise<Response> => {
-        return fetch(input, {
+        const res = await fetch(input, {
             ...init,
             headers: {
                 ...init?.headers,
                 Authorization: `Bearer ${accessToken}`
             }
         });
+        return res;
     };
 
-    function fetchJsonAsUser<T>(
+    const fetchJsonAsUser = async <T>(
         input: RequestInfo,
         init?: RequestInit
-    ): Promise<T> {
-        return fetch(input, {
+    ): Promise<T> => {
+        const res = await fetch(input, {
             ...init,
             headers: {
                 ...init?.headers,
                 Authorization: `Bearer ${accessToken}`
             }
-        })
-            .then(res => res.json())
-            .then(data => {
-                let ans = data;
-                const token = data.access_token;
-                if (token) {
-                    // console.log('token set!');
-                    setAccessToken(token);
-                    delete ans['access_token'];
-                }
-                return ans as T;
-            });
-    }
+        });
+        const data = await res.json();
+        let ans = data;
+        const token = data.access_token;
+        if (token) {
+            setAccessToken(token);
+            delete ans['access_token'];
+        }
+        return ans as T;
+    };
 
-    const logInUser = (data: userLoginData) => {
-        fetch('/api/users/login', {
+    const logInUser = async (data: userLoginData) => {
+        const res = await fetch('/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    window.alert('wrong login attempt');
-                    throw new Error();
-                }
-            })
-            .then(data => setAccessToken(data.access_token));
+        });
+        if (res.ok) {
+            const data = await res.json();
+            setAccessToken(data.access_token);
+        } else {
+            window.alert('wrong login attempt');
+        }
     };
 
     const logOutUser = () => {
@@ -75,21 +70,15 @@ export default function useCurrentUser(): {
         setCollections(null as any);
     };
 
-    const fetchUser = () => {
-        fetchAsUser('/api/users/profile')
-            .then(res => {
-                if (res.ok) return res.json();
-                else {
-                    removeAccessToken();
-                    throw new Error();
-                }
-            })
-            .then(data => {
-                data.access_token && setAccessToken(data.access_token);
-                setUser(data);
-                // console.log('fetched user');
-            })
-            .catch(e => {});
+    const fetchUser = async () => {
+        const res = await fetchAsUser('/api/users/profile');
+        if (res.ok) {
+            const data = await res.json();
+            data.access_token && setAccessToken(data.access_token);
+            setUser(data);
+        } else {
+            removeAccessToken();
+        }
     };
     return { fetchUser, fetchAsUser, fetchJsonAsUser, logInUser, logOutUser };
 }
