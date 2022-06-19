@@ -8,6 +8,7 @@ import './styles/utility.css';
 
 import Footer from './components/footer';
 import NavBar from './components/navBar';
+import MainAction from './components/mainAction';
 
 import Home from './pages/home';
 
@@ -22,6 +23,7 @@ import Signup from './pages/users/signup';
 
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
+
 import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
 import collectionStore from './stores/collectionsStore';
@@ -52,6 +54,7 @@ export default function App() {
                         <>
                             <NavBar />
                             <Outlet />
+                            <MainAction />
                             <Footer />
                         </>
                     }
