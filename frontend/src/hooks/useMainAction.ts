@@ -1,20 +1,25 @@
+import { useEffect } from 'react';
+
 export default function useMainAction(): {
-    modal: HTMLDialogElement;
     startMainAction: () => void;
     endMainAction: () => void;
 } {
-    const modal = document.getElementById(
-        'main-action-happening'
-    ) as HTMLDialogElement;
-
     const startMainAction = () => {
-        modal.showModal();
+        (
+            document.getElementById(
+                'main-action-happening'
+            ) as HTMLDialogElement
+        ).showModal();
     };
 
     const endMainAction = () => {
-        modal.close();
+        (
+            document.getElementById(
+                'main-action-happening'
+            ) as HTMLDialogElement
+        ).close();
     };
 
-    return { modal, startMainAction, endMainAction };
+    return { startMainAction, endMainAction };
 }
 

@@ -46,12 +46,21 @@ export default function App() {
         if (user && !collections) fetchCollections();
     }, [user, fetchCollections, collections]);
 
-    const { modal } = useMainAction();
-
     useEffect(() => {
         // console.log('setting up main-action-happening');
-        if (modal) modal.addEventListener('cancel', e => e.preventDefault());
-    }, [modal]);
+        (
+            document.getElementById(
+                'main-action-happening'
+            ) as HTMLDialogElement
+        ).addEventListener('cancel', e => e.preventDefault());
+        return () => {
+            (
+                document.getElementById(
+                    'main-action-happening'
+                ) as HTMLDialogElement
+            ).removeEventListener('cancel', e => e.preventDefault());
+        };
+    }, []);
 
     return (
         <HashRouter basename=''>
