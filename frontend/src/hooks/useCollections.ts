@@ -41,7 +41,7 @@ export default function useCollections(): {
         });
         if (res.ok) {
             window.alert(`${recipe.name} was added to ${collection_name}!`);
-            fetchCollections();
+            await fetchCollections();
         } else window.alert('try again:(');
         endMainAction();
     };
@@ -58,7 +58,7 @@ export default function useCollections(): {
         });
         if (res.ok) {
             window.alert(`${recipe.name} was removed from ${collection_name}!`);
-            fetchCollections();
+            await fetchCollections();
         } else window.alert('try again:(');
         endMainAction();
     };
@@ -72,7 +72,7 @@ export default function useCollections(): {
         });
         if (res.ok) {
             window.alert(`${collection_name} was added`);
-            fetchCollections();
+            await fetchCollections();
         } else window.alert(`try again`);
         endMainAction();
     };
@@ -86,7 +86,7 @@ export default function useCollections(): {
         });
         if (res.ok) {
             window.alert(`${collection_name} was deleted`);
-            fetchCollections();
+            await fetchCollections();
         } else window.alert(`try again`);
         endMainAction();
     };
