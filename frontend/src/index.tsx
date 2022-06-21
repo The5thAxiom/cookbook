@@ -1,7 +1,5 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -11,7 +9,8 @@ const root = ReactDOM.createRoot(
 // twice!, for debugging (checking the idempotency of some stuff, idk)
 // that is why the recipes are fetched twice
 root.render(
-    <App/>
+    <App />
     //   <React.StrictMode>
     //   </React.StrictMode>
 );
+

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CloseIcon from '../../../components/icons/closeIcon';
 
 export default function StepForm({
@@ -74,3 +72,4 @@ export default function StepForm({
         </fieldset>
     );
 }
+

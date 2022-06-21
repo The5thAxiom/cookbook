@@ -1,4 +1,6 @@
+import userStore from '../stores/userStore';
 import accessTokenStore from '../stores/accessTokenStore';
+import collectionStore from '../stores/collectionsStore';
 
 export default function useFetch(): {
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
@@ -7,6 +9,8 @@ export default function useFetch(): {
 } {
     const { accessToken, setAccessToken, removeAccessToken } =
         accessTokenStore();
+    const setUser = userStore(state => state.setUser);
+    const setCollections = collectionStore(state => state.setCollections);
 
     const fetchAsUser = async (
         input: RequestInfo,
@@ -26,11 +30,12 @@ export default function useFetch(): {
                 if (data && data.access_token)
                     setAccessToken(data.access_token);
             } catch (e) {}
-            return response;
         } else {
             removeAccessToken();
-            return response;
+            setUser(null as any);
+            setCollections(null as any);
         }
+        return response;
     };
 
     const fetchJsonAsUser = async <T>(
@@ -44,14 +49,21 @@ export default function useFetch(): {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        const data = await res.json();
-        let ans = data;
-        const token = data.access_token;
-        if (token) {
-            setAccessToken(token);
-            delete ans['access_token'];
+        if (res.status !== 401) {
+            const data = await res.json();
+            let ans = data;
+            const token = data.access_token;
+            if (token) {
+                setAccessToken(token);
+                delete ans['access_token'];
+            }
+            return ans as T;
+        } else {
+            removeAccessToken();
+            setUser(null as any);
+            setCollections(null as any);
+            return null as any;
         }
-        return ans as T;
     };
 
     const fetchJson = async <T>(
@@ -64,8 +76,9 @@ export default function useFetch(): {
     };
 
     return {
-        fetchAsUser /* : user ? fetchAsUser : fetch */,
-        fetchJsonAsUser /* : user ? fetchJsonAsUser : fetchJson */,
+        fetchAsUser,
+        fetchJsonAsUser,
         fetchJson
     };
 }
+

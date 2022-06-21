@@ -1,7 +1,3 @@
-import React from 'react';
-
-import './navIcons.css';
-
 export default function HomeIcon({ isActive }: navBarIcon) {
     if (isActive)
         return (

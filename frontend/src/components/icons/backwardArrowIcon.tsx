@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function BackwardArrowIcon(
     props: React.HTMLAttributes<HTMLDivElement>
 ) {
@@ -17,3 +15,4 @@ export default function BackwardArrowIcon(
         </svg>
     );
 }
+

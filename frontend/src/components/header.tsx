@@ -1,5 +1,3 @@
-import React from 'react';
-
 import icon from '../assets/food-bar-image.png';
 import { NavLink } from 'react-router-dom';
 

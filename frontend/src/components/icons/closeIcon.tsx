@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function CloseIcon(props: React.HTMLAttributes<HTMLDivElement>) {
     return (
         <svg
@@ -15,3 +13,4 @@ export default function CloseIcon(props: React.HTMLAttributes<HTMLDivElement>) {
         </svg>
     );
 }
+
