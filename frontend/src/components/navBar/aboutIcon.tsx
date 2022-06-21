@@ -1,5 +1,3 @@
-import './navIcons.css';
-
 export default function AboutIcon({ isActive }: navBarIcon) {
     if (isActive)
         return (

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-import HeartIcon from '../../components/icons/heartIcon';
-import BrokenHeartIcon from '../../components/icons/brokenHeartIcon';
-import BookmarkAddIcon from '../../components/icons/bookmarkAddIcon';
-import BookmarkIcon from '../../components/icons/bookmarkIcon';
-import BookmarkRemoveIcon from '../../components/icons/bookmarkRemoveIcon';
+import HeartIcon from '../icons/heartIcon';
+import BrokenHeartIcon from '../icons/brokenHeartIcon';
+import BookmarkAddIcon from '../icons/bookmarkAddIcon';
+import BookmarkIcon from '../icons/bookmarkIcon';
+import BookmarkRemoveIcon from '../icons/bookmarkRemoveIcon';
+
 import userStore from '../../stores/userStore';
 import collectionsStore from '../../stores/collectionsStore';
 import useCollections from '../../hooks/useCollections';
@@ -18,7 +19,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const [selectedCollection, setSelectedCollection] = useState<string>(
         null as any
     );
-
     const [newCollection, setNewCollection] = useState<string>(null as any);
 
     const addRecipeToNewCollection = async (collection_name: string) => {

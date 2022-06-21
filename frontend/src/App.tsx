@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-import './values/colors.css';
 import './styles/App.css';
 import './styles/forms.css';
 import './styles/utility.css';
 
 import Footer from './components/footer';
-import NavBar from './components/navBar';
+import NavBar from './components/navBar/navBar';
 import MainAction from './components/mainAction';
 
 import Home from './pages/home';
@@ -27,7 +26,6 @@ import useCollections from './hooks/useCollections';
 import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
 import collectionStore from './stores/collectionsStore';
-import useMainAction from './hooks/useMainAction';
 
 export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
