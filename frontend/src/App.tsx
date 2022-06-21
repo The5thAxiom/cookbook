@@ -75,11 +75,9 @@ export default function App() {
                     }
                 >
                     <Route index element={<Home />} />
-                    <Route path='home' element={<Home />} />
                     <Route path='recipes' element={<Outlet />}>
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
-                        <Route path='filter' element={<BrowseRecipes />} />
                         {user && <Route path='new' element={<NewRecipe />} />}
                     </Route>
                     <Route path='user' element={<Outlet />}>
