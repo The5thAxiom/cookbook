@@ -46,10 +46,6 @@ export default function Profile({ user }: { user: userData }) {
                 </div>
                 <RecipeCarousel recipes={recipes} reversed columns={2} />
             </section>
-            <section id='skills'>
-                {/* <li><NavLink end to='/skills/new'>add skill</NavLink></li>
-                <li><NavLink end to='/skills'>see your skills</NavLink></li> */}
-            </section>
             <section>
                 <h2>Your Favourites</h2>
                 {collections && (

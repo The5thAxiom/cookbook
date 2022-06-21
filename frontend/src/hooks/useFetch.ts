@@ -1,6 +1,4 @@
-import userStore from '../stores/userStore';
 import accessTokenStore from '../stores/accessTokenStore';
-import collectionStore from '../stores/collectionsStore';
 
 export default function useFetch(): {
     fetchAsUser: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
@@ -9,8 +7,6 @@ export default function useFetch(): {
 } {
     const { accessToken, setAccessToken, removeAccessToken } =
         accessTokenStore();
-    const setUser = userStore(state => state.setUser);
-    const setCollections = collectionStore(state => state.setCollections);
 
     const fetchAsUser = async (
         input: RequestInfo,
@@ -32,8 +28,6 @@ export default function useFetch(): {
             } catch (e) {}
         } else {
             removeAccessToken();
-            setUser(null as any);
-            setCollections(null as any);
         }
         return response;
     };
@@ -60,8 +54,6 @@ export default function useFetch(): {
             return ans as T;
         } else {
             removeAccessToken();
-            setUser(null as any);
-            setCollections(null as any);
             return null as any;
         }
     };

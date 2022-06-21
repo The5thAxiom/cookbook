@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
-export default function Login({
-    logInUser
-}: {
-    logInUser: (data: userLoginData) => void;
-}) {
+export default function Login() {
     const [userData, setUserData] = useState<userLoginData>(null as any);
+    const { logInUser } = useCurrentUser();
 
     return (
         <main>

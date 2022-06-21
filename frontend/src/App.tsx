@@ -31,18 +31,20 @@ export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
 
     const user = userStore(state => state.user);
-    const { logInUser, fetchUser } = useCurrentUser();
+    const { fetchUser, logOutUser } = useCurrentUser();
 
     const { fetchCollections } = useCollections();
-    const collections = collectionStore(state => state.collections);
+    const setColletions = collectionStore(state => state.setCollections);
 
     useEffect(() => {
-        if (accessToken !== '' && !user) fetchUser();
-    }, [accessToken, user, fetchUser]);
+        if (accessToken !== '') fetchUser();
+        else logOutUser();
+    }, [accessToken]);
 
     useEffect(() => {
-        if (user && !collections) fetchCollections();
-    }, [user, fetchCollections, collections]);
+        if (user) fetchCollections();
+        else setColletions(null as any);
+    }, [user]);
 
     useEffect(() => {
         // console.log('setting up main-action-happening');
@@ -86,10 +88,7 @@ export default function App() {
                             <Route index element={<Profile user={user} />} />
                         ) : (
                             <>
-                                <Route
-                                    index
-                                    element={<Login logInUser={logInUser} />}
-                                />
+                                <Route index element={<Login />} />
                                 <Route path='new' element={<Signup />} />
                             </>
                         )}
