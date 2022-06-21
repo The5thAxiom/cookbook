@@ -27,11 +27,11 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     };
 
     const [collectionsWithCurrentRecipe, setCollectionsWithCurrentRecipe] =
-        useState<collection[]>(null as any);
+        useState<collection[]>([]);
     const [
         collectionsWithoutCurrentRecipe,
         setCollectionsWithoutCurrentRecipe
-    ] = useState<collection[]>(null as any);
+    ] = useState<collection[]>([]);
 
     useEffect(() => {
         setCollectionsWithCurrentRecipe(
@@ -53,181 +53,168 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     if (user && collections) {
         return (
             <div className='util-row-flexend'>
-                {collections.filter(c => c.name !== 'favourites') && (
+                {collectionsWithCurrentRecipe.length > 0 && (
                     <>
-                        {collectionsWithCurrentRecipe.length > 0 && (
-                            <>
-                                <div
-                                    className='util-clickable'
-                                    onClick={() =>
-                                        (
-                                            document.getElementById(
-                                                'remove-dialog'
-                                            ) as HTMLDialogElement
-                                        ).showModal()
-                                    }
-                                >
-                                    <BookmarkRemoveIcon />
-                                </div>
-                                <dialog open={false} id='remove-dialog'>
-                                    <div className='cb-form'>
-                                        <div className='cb-form-field'>
-                                            Remove {recipe.name} from collection
-                                            <select
-                                                defaultValue='--select--'
-                                                onChange={e =>
-                                                    setSelectedCollection(
-                                                        e.target.value
-                                                    )
-                                                }
-                                            >
-                                                <option value=''>
-                                                    --select--
+                        <div
+                            className='util-clickable'
+                            onClick={() =>
+                                (
+                                    document.getElementById(
+                                        `${recipe.id}-recipe-dialog`
+                                    ) as HTMLDialogElement
+                                ).showModal()
+                            }
+                        >
+                            <BookmarkRemoveIcon />
+                        </div>
+                        <dialog open={false} id={`${recipe.id}-recipe-dialog`}>
+                            <div className='cb-form'>
+                                <div className='cb-form-field'>
+                                    Remove {recipe.name} from collection
+                                    <select
+                                        defaultValue='--select--'
+                                        onChange={e =>
+                                            setSelectedCollection(
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value=''>--select--</option>
+                                        {collectionsWithCurrentRecipe.map(
+                                            (c, i) => (
+                                                <option key={i} value={c.name}>
+                                                    {c.name}
                                                 </option>
-                                                {collectionsWithCurrentRecipe.map(
-                                                    (c, i) => (
-                                                        <option
-                                                            key={i}
-                                                            value={c.name}
-                                                        >
-                                                            {c.name}
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className='cb-form-end'>
-                                            {selectedCollection && (
-                                                <button
-                                                    onClick={() => {
-                                                        removeFromCollection(
-                                                            selectedCollection,
-                                                            recipe
-                                                        );
-                                                        setSelectedCollection(
-                                                            null as any
-                                                        );
-                                                        (
-                                                            document.getElementById(
-                                                                'remove-dialog'
-                                                            ) as HTMLDialogElement
-                                                        ).close();
-                                                    }}
-                                                >
-                                                    Remove
-                                                </button>
-                                            )}
-                                            <button
-                                                onClick={() =>
-                                                    (
-                                                        document.getElementById(
-                                                            'remove-dialog'
-                                                        ) as HTMLDialogElement
-                                                    ).close()
-                                                }
-                                            >
-                                                Close
-                                            </button>
-                                        </div>
-                                    </div>
-                                </dialog>
-                            </>
-                        )}
-                        {collectionsWithoutCurrentRecipe.length > 0 && (
-                            <>
-                                <div
-                                    className='util-clickable'
-                                    onClick={() => {
-                                        (
-                                            document.getElementById(
-                                                'add-dialog'
-                                            ) as HTMLDialogElement
-                                        ).showModal();
-                                        console.log(recipe.name);
-                                    }}
-                                >
-                                    <BookmarkAddIcon />
+                                            )
+                                        )}
+                                    </select>
                                 </div>
-                                <dialog open={false} id='add-dialog'>
-                                    <div className='cb-form'>
-                                        <div className='cb-form-field'>
-                                            Add {recipe.name} to collection
-                                            <select
-                                                defaultValue='--select--'
-                                                onChange={e =>
-                                                    setSelectedCollection(
-                                                        e.target.value
-                                                    )
-                                                }
-                                            >
-                                                <option value=''>
-                                                    --select--
-                                                </option>
-                                                {collectionsWithoutCurrentRecipe.map(
-                                                    (c, i) => (
-                                                        <option
-                                                            key={i}
-                                                            value={c.name}
-                                                        >
-                                                            {c.name}
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className='cb-form-end'>
-                                            {selectedCollection && (
-                                                <button
-                                                    onClick={() => {
-                                                        addToCollection(
-                                                            selectedCollection,
-                                                            recipe
-                                                        );
-                                                        setSelectedCollection(
-                                                            null as any
-                                                        );
-                                                        (
-                                                            document.getElementById(
-                                                                'add-dialog'
-                                                            ) as HTMLDialogElement
-                                                        ).close();
-                                                    }}
-                                                >
-                                                    Add
-                                                </button>
-                                            )}
-                                            <button
-                                                onClick={() =>
-                                                    (
-                                                        document.getElementById(
-                                                            'add-dialog'
-                                                        ) as HTMLDialogElement
-                                                    ).close()
-                                                }
-                                            >
-                                                Close
-                                            </button>
-                                        </div>
-                                    </div>
-                                </dialog>
-                            </>
-                        )}
+                                <div className='cb-form-end'>
+                                    {selectedCollection && (
+                                        <button
+                                            onClick={() => {
+                                                removeFromCollection(
+                                                    selectedCollection,
+                                                    recipe
+                                                );
+                                                setSelectedCollection(
+                                                    null as any
+                                                );
+                                                (
+                                                    document.getElementById(
+                                                        `${recipe.id}-recipe-dialog`
+                                                    ) as HTMLDialogElement
+                                                ).close();
+                                            }}
+                                        >
+                                            Remove
+                                        </button>
+                                    )}
+                                    <button
+                                        onClick={() =>
+                                            (
+                                                document.getElementById(
+                                                    `${recipe.id}-recipe-dialog`
+                                                ) as HTMLDialogElement
+                                            ).close()
+                                        }
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </dialog>
                     </>
                 )}
+
+                {collectionsWithoutCurrentRecipe.length > 0 && (
+                    <>
+                        <div
+                            className='util-clickable'
+                            onClick={() => {
+                                (
+                                    document.getElementById(
+                                        `${recipe.id}-add-dialog`
+                                    ) as HTMLDialogElement
+                                ).showModal();
+                            }}
+                        >
+                            <BookmarkAddIcon />
+                        </div>
+                        <dialog open={false} id={`${recipe.id}-add-dialog`}>
+                            <div className='cb-form'>
+                                <div className='cb-form-field'>
+                                    Add {recipe.name} to collection
+                                    <select
+                                        defaultValue='--select--'
+                                        onChange={e =>
+                                            setSelectedCollection(
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value=''>--select--</option>
+                                        {collectionsWithoutCurrentRecipe.map(
+                                            (c, i) => (
+                                                <option key={i} value={c.name}>
+                                                    {c.name}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </div>
+                                <div className='cb-form-end'>
+                                    {selectedCollection && (
+                                        <button
+                                            onClick={() => {
+                                                addToCollection(
+                                                    selectedCollection,
+                                                    recipe
+                                                );
+                                                setSelectedCollection(
+                                                    null as any
+                                                );
+                                                (
+                                                    document.getElementById(
+                                                        `${recipe.id}-add-dialog`
+                                                    ) as HTMLDialogElement
+                                                ).close();
+                                            }}
+                                        >
+                                            Add
+                                        </button>
+                                    )}
+                                    <button
+                                        onClick={() =>
+                                            (
+                                                document.getElementById(
+                                                    `${recipe.id}-add-dialog`
+                                                ) as HTMLDialogElement
+                                            ).close()
+                                        }
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </dialog>
+                    </>
+                )}
+
                 <div
                     className='util-clickable'
                     onClick={() => {
                         setNewCollection(null as any);
                         (
                             document.getElementById(
-                                'recipe-new-collection-dialog'
+                                `${recipe.id}-new-collection-dialog`
                             ) as HTMLDialogElement
                         ).showModal();
                     }}
                 >
                     <BookmarkIcon />
                 </div>
-                <dialog open={false} id='recipe-new-collection-dialog'>
+                <dialog open={false} id={`${recipe.id}-new-collection-dialog`}>
                     <div className='cb-form'>
                         <div className='cb-form-field'>
                             Add {recipe.name} to new collection{' '}
@@ -240,7 +227,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                         addRecipeToNewCollection(newCollection);
                                         (
                                             document.getElementById(
-                                                'recipe-new-collection-dialog'
+                                                `${recipe.id}-new-collection-dialog`
                                             ) as HTMLDialogElement
                                         ).close();
                                         setNewCollection(null as any);
@@ -256,7 +243,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                         setNewCollection(null as any);
                                         (
                                             document.getElementById(
-                                                'recipe-new-collection-dialog'
+                                                `${recipe.id}-new-collection-dialog`
                                             ) as HTMLDialogElement
                                         ).close();
                                     }}
@@ -268,7 +255,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                 onClick={() => {
                                     (
                                         document.getElementById(
-                                            'recipe-new-collection-dialog'
+                                            `${recipe.id}-new-collection-dialog`
                                         ) as HTMLDialogElement
                                     ).close();
                                     setNewCollection(null as any);
@@ -279,6 +266,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                         </div>
                     </div>
                 </dialog>
+
                 {collections
                     .filter(c => c.name === 'favourites')[0]
                     .recipes.filter(r => r.id === recipe.id).length === 1 ? (
