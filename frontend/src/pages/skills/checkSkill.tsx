@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function CheckSkill() {
     return (
         <main>
@@ -7,3 +5,4 @@ export default function CheckSkill() {
         </main>
     );
 }
+

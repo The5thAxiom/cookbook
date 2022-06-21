@@ -1,19 +1,16 @@
-import React from 'react';
-
 export default function NewSkill() {
     return (
         <main>
             <h1>Add New Recipe</h1>
             <form>
-                <label htmlFor="name">Recipe Name</label>
-                {" "}
+                <label htmlFor='name'>Recipe Name</label>{' '}
                 <input
                     type='text'
                     placeholder='Enter the name of the recipe'
-                    name="name"
+                    name='name'
                     required
                 />
             </form>
         </main>
-    )
+    );
 }

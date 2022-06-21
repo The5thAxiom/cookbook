@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ForwardArrowIcon(
     props: React.HTMLAttributes<HTMLDivElement>
 ) {
@@ -22,3 +20,4 @@ export default function ForwardArrowIcon(
         </svg>
     );
 }
+

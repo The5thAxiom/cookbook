@@ -1,4 +1,3 @@
-import React from 'react';
 import LoadingAnimation from './loadingAnimation';
 
 export default function MainAction() {

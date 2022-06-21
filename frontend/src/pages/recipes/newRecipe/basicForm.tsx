@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function BasicForm({
     recipe,
     setRecipe
@@ -136,3 +134,4 @@ export default function BasicForm({
         </fieldset>
     );
 }
+

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import LoadingAnimation from '../loadingAnimation';
 import RecipeCard from './recipeCard';
 import './recipeCards.css';
