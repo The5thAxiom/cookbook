@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export default function useMainAction(): {
     startMainAction: () => void;
     endMainAction: () => void;

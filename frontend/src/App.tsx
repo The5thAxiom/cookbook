@@ -27,7 +27,6 @@ import useCollections from './hooks/useCollections';
 import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
 import collectionStore from './stores/collectionsStore';
-import useMainAction from './hooks/useMainAction';
 
 export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
