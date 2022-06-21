@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import HeartIcon from '../icons/heartIcon';
 import BrokenHeartIcon from '../icons/brokenHeartIcon';
@@ -26,17 +26,31 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         await addToCollection(collection_name, recipe);
     };
 
+    const [collectionsWithCurrentRecipe, setCollectionsWithCurrentRecipe] =
+        useState<collection[]>(null as any);
+    const [
+        collectionsWithoutCurrentRecipe,
+        setCollectionsWithoutCurrentRecipe
+    ] = useState<collection[]>(null as any);
+
+    useEffect(() => {
+        setCollectionsWithCurrentRecipe(
+            collections
+                .filter(c => c.name !== 'favourites')
+                .filter(
+                    c => c.recipes.filter(r => r.id === recipe.id).length > 0
+                )
+        );
+        setCollectionsWithoutCurrentRecipe(
+            collections
+                .filter(c => c.name !== 'favourites')
+                .filter(
+                    c => c.recipes.filter(r => r.id === recipe.id).length === 0
+                )
+        );
+    }, [collections]);
+
     if (user && collections) {
-        const collectionsWithCurrentRecipe = collections
-            .filter(c => c.name !== 'favourites')
-            .filter(c => c.recipes.filter(r => r.id === recipe.id).length > 0);
-
-        const collectionsWithoutCurrentRecipe = collections
-            .filter(c => c.name !== 'favourites')
-            .filter(
-                c => c.recipes.filter(r => r.id === recipe.id).length === 0
-            );
-
         return (
             <div className='util-row-flexend'>
                 {collections.filter(c => c.name !== 'favourites') && (
@@ -123,13 +137,14 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                             <>
                                 <div
                                     className='util-clickable'
-                                    onClick={() =>
+                                    onClick={() => {
                                         (
                                             document.getElementById(
                                                 'add-dialog'
                                             ) as HTMLDialogElement
-                                        ).showModal()
-                                    }
+                                        ).showModal();
+                                        console.log(recipe.name);
+                                    }}
                                 >
                                     <BookmarkAddIcon />
                                 </div>
