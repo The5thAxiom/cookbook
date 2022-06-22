@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams /* Navigate */ } from 'react-router-dom';
 
-import IngredientForm from '../newRecipe/ingredientForm';
-import StepForm from '../newRecipe/stepForm';
-import TagForm from '../newRecipe/tagForm';
-import BasicForm from '../newRecipe/basicForm';
+// import IngredientForm from '../newRecipe/ingredientForm';
+// import StepForm from '../newRecipe/stepForm';
+// import TagForm from '../newRecipe/tagForm';
+// import BasicForm from '../newRecipe/basicForm';
 
 import '../newRecipe/newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
+import LoadingAnimation from '../../../components/loadingAnimation';
 
 export default function EditRecipe() {
-    const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
+    const [recipe, setRecipe] = useState<recipeFull>(null as any);
+    const params = useParams();
+
+    const { fetchJson } = useFetch();
+
+    useEffect(() => {
+        setRecipe(null as any);
+        const fetchFullRecipe = async (id: number) => {
+            const data = await fetchJson<recipeFull>(`/api/recipes/${id}/full`);
+            setRecipe(data);
+        };
+        const currentId = Number(params.id);
+        if (currentId) {
+            fetchFullRecipe(currentId);
+        }
+    }, [params.id]);
+
+    /* const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
         name: '',
@@ -133,14 +151,14 @@ export default function EditRecipe() {
         setTempStep('');
         setTags([]);
         setTempTag('');
-    };
+    }; */
 
-    return submitted ? (
-        <Navigate to='/user' />
-    ) : (
-        <main>
-            <h1>Edit recipe</h1>
-            {/* <form className='cb-forms'>
+    // if (submitted) return <Navigate to='/user' />; else
+    if (recipe)
+        return (
+            <main>
+                <h1>Edit {recipe.name}</h1>
+                {/* <form className='cb-forms'>
                 <div className='cb-form-end'>
                     <button onClick={saveRecipe} className='cb-form-button'>
                         Save Recipe
@@ -183,7 +201,13 @@ export default function EditRecipe() {
                     </button>
                 </div>
             </form> */}
-        </main>
-    );
+            </main>
+        );
+    else
+        return (
+            <main>
+                <LoadingAnimation />
+            </main>
+        );
 }
 
