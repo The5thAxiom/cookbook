@@ -46,22 +46,6 @@ export default function App() {
         else setColletions(null as any);
     }, [user]);
 
-    useEffect(() => {
-        // console.log('setting up main-action-happening');
-        (
-            document.getElementById(
-                'main-action-happening'
-            ) as HTMLDialogElement
-        ).addEventListener('cancel', e => e.preventDefault());
-        return () => {
-            (
-                document.getElementById(
-                    'main-action-happening'
-                ) as HTMLDialogElement
-            ).removeEventListener('cancel', e => e.preventDefault());
-        };
-    }, []);
-
     return (
         <HashRouter basename=''>
             <Routes>
