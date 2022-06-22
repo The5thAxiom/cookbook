@@ -247,13 +247,28 @@ def recipes():
         return Response(status=201)
 
 
-@app.route('/api/recipes/<int:num>')
+@app.route('/api/recipes/<int:num>', methods=['GET'])
 def recipes_n(num):
     r = getRecipeById(num)
     if r is None:
         abort(404)
     else:
         return jsonify(getRecipeMeta(r))
+
+
+@app.route('/api/recipes/<int:num>', methods=['PATCH', 'DELETE'])
+@jwt_required()
+def recipes_n_path_delete(num):
+    r = getRecipeById(num)
+    if r is None:
+        abort(404)
+    else:
+        if request.method == 'PATCH':
+            print(f'patching {r.name}')
+            return Response(status=200)
+        if request.method == 'DELETE':
+            print(f'deleting {r.name}')
+            return Response(status=200)
 
 
 @app.route('/api/recipes/<int:num>/tags')
