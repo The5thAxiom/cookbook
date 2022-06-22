@@ -13,6 +13,7 @@ import collectionsStore from '../../stores/collectionsStore';
 import useCollections from '../../hooks/useCollections';
 import useFetch from '../../hooks/useFetch';
 import useMainAction from '../../hooks/useMainAction';
+import { NavLink } from 'react-router-dom';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const collections = collectionsStore(state => state.collections);
@@ -40,13 +41,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         endMainAction();
     };
 
-    const editRecipe = async () => {
-        startMainAction();
-        console.log(`edit ${recipe.name}`);
-        await fetchAsUser(`/api/recipes/${recipe.id}`, { method: 'PATCH' });
-        endMainAction();
-    };
-
     if (user && collections) {
         const collectionsWithCurrentRecipe = collections
             .filter(c => c.name !== 'favourites')
@@ -59,9 +53,13 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         return (
             <div className='util-row-flexend'>
                 <div>
-                    <div className='util-clickable' onClick={editRecipe}>
+                    <NavLink
+                        to={`/recipes/edit/${recipe.id}`}
+                        className='util-clickable'
+                        onClick={() => console.log(`edit ${recipe.name}`)}
+                    >
                         <EditIcon />
-                    </div>
+                    </NavLink>
                 </div>
 
                 <div>
