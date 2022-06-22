@@ -74,16 +74,19 @@ class Recipe(db.Model):
     steps = db.relationship(
         'Recipe_Step',
         backref=db.backref('recipe', uselist=False),
+        cascade="all, delete",
         lazy=True
     )
     tags = db.relationship(
         'Tag',
         backref='recipes',
+        cascade="all, delete",
         lazy=True
     )
     ingredients = db.relationship(
         'Recipe_Ingredient',
         backref=db.backref('recipe', uselist=False),
+        cascade="all, delete",
         lazy=False
     )
 
