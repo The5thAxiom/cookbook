@@ -35,10 +35,14 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const { startMainAction, endMainAction } = useMainAction();
 
     const deleteRecipe = async () => {
-        startMainAction();
-        console.log(`delete ${recipe.name}`);
-        await fetchAsUser(`/api/recipes/${recipe.id}`, { method: 'DELETE' });
-        endMainAction();
+        if (window.confirm(`Are you sure you want to delete ${recipe.name}?`)) {
+            startMainAction();
+            console.log(`delete ${recipe.name}`);
+            await fetchAsUser(`/api/recipes/${recipe.id}`, {
+                method: 'DELETE'
+            });
+            endMainAction();
+        }
     };
 
     if (user && collections) {
