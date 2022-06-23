@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams /* Navigate */ } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 
-// import IngredientForm from '../newRecipe/ingredientForm';
-// import StepForm from '../newRecipe/stepForm';
-// import TagForm from '../newRecipe/tagForm';
-// import BasicForm from '../newRecipe/basicForm';
+import IngredientForm from '../../../components/recipeForm/ingredientForm';
+import StepForm from '../../../components/recipeForm/stepForm';
+import TagForm from '../../../components/recipeForm/tagForm';
+import BasicForm from '../../../components/recipeForm/basicForm';
 
 import '../newRecipe/newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
@@ -28,7 +28,7 @@ export default function EditRecipe() {
         }
     }, [params.id]);
 
-    /* const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
+    const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,
         description: '',
         name: '',
@@ -61,7 +61,7 @@ export default function EditRecipe() {
 
     const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        let recipe = {
+        let newRecipe = {
             description: recipeMeta.description,
             name: recipeMeta.name,
             prep_time: recipeMeta.prep_time,
@@ -70,137 +70,77 @@ export default function EditRecipe() {
             unit: recipeMeta.unit,
             vegetarian: recipeMeta.vegetarian,
             contributor_username: recipeMeta.contributor_username,
-            recipe_tags: tags.map(t => {
-                return {
-                    name: t
-                };
-            }),
+            recipe_tags: tags.map(t => ({ name: t })),
             recipe_ingredients: ingredients,
-            recipe_steps: steps.map((s, i) => {
-                return { serial_number: i + 1, instruction: s };
-            })
+            recipe_steps: steps.map((s, i) => ({
+                serial_number: i + 1,
+                instruction: s
+            }))
         };
         console.log(recipe);
-        fetchAsUser('/api/recipes', {
-            method: 'POST',
+        fetchAsUser(`/api/recipes/${recipe.id}`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(recipe)
+            body: JSON.stringify(newRecipe)
         }).then(res => {
             if (res.ok) setSubmitted(true);
         });
     };
 
-    const saveRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        localStorage.setItem('saved_recipe_info', JSON.stringify(recipeMeta));
-        localStorage.setItem(
-            'saved_recipe_ingredients',
-            JSON.stringify(ingredients)
-        );
-        localStorage.setItem('saved_recipe_steps', JSON.stringify(steps));
-        localStorage.setItem('saved_recipe_tags', JSON.stringify(tags));
-        if (recipeMeta.name)
-            window.alert(`${recipeMeta.name} was saved locally!`);
-    };
+    useEffect(() => {
+        if (recipe) {
+            if (recipeMeta.id === 0)
+                setRecipeMeta({
+                    id: recipe.id,
+                    description: recipe.description,
+                    name: recipe.name,
+                    prep_time: recipe.prep_time,
+                    difficulty: recipe.difficulty,
+                    quantity: recipe.quantity,
+                    unit: recipe.unit,
+                    vegetarian: recipe.vegetarian,
+                    contributor_username: recipe.contributor_username
+                });
+            if (ingredients.length === 0)
+                setIngredients(recipe.recipe_ingredients);
+            if (steps.length === 0) setSteps(recipe.recipe_steps);
+            if (tags.length === 0) setTags(recipe.recipe_tags);
+        }
+    }, [recipe]);
 
-    const loadRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        let info = localStorage.getItem('saved_recipe_info');
-        let ings = localStorage.getItem('saved_recipe_ingredients');
-        let steps = localStorage.getItem('saved_recipe_steps');
-        let tags = localStorage.getItem('saved_recipe_tags');
-
-        if (info) setRecipeMeta(JSON.parse(info));
-        if (ings) setIngredients(JSON.parse(ings));
-        if (steps) setSteps(JSON.parse(steps));
-        if (tags) setTags(JSON.parse(tags));
-    };
-
-    const clearSavedRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        localStorage.removeItem('saved_recipe_info');
-        localStorage.removeItem('saved_recipe_ingredients');
-        localStorage.removeItem('saved_recipe_steps');
-        localStorage.removeItem('saved_recipe_tags');
-    };
-
-    const clearRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setRecipeMeta({
-            id: 0,
-            description: '',
-            name: '',
-            prep_time: 0,
-            difficulty: 3,
-            quantity: 0,
-            unit: '',
-            vegetarian: false,
-            contributor_username: ''
-        });
-        setIngredients([]);
-        setTempIngredient({
-            english_name: '',
-            hindi_name_devnagari: '',
-            hindi_name_latin: '',
-            quantity: 0,
-            unit: ''
-        });
-        setSteps([]);
-        setTempStep('');
-        setTags([]);
-        setTempTag('');
-    }; */
-
-    // if (submitted) return <Navigate to='/user' />; else
-    if (recipe)
+    if (submitted) return <Navigate to='/user' />;
+    else if (recipe)
         return (
             <main>
                 <h1>Edit {recipe.name}</h1>
-                {/* <form className='cb-forms'>
-                <div className='cb-form-end'>
-                    <button onClick={saveRecipe} className='cb-form-button'>
-                        Save Recipe
-                    </button>
-                    <button onClick={loadRecipe} className='cb-form-button'>
-                        Load Saved Recipe
-                    </button>
-                    <button
-                        onClick={clearSavedRecipe}
-                        className='cb-form-button'
-                    >
-                        Clear Saved Recipe
-                    </button>
-                </div>
-                <BasicForm recipe={recipeMeta} setRecipe={setRecipeMeta} />
-                <IngredientForm
-                    ingredients={ingredients}
-                    setIngredients={setIngredients}
-                    tempIngredient={tempIngredient}
-                    setTempIngredient={setTempIngredient}
-                />
-                <StepForm
-                    steps={steps}
-                    setSteps={setSteps}
-                    tempStep={tempStep}
-                    setTempStep={setTempStep}
-                />
-                <TagForm
-                    tags={tags}
-                    setTags={setTags}
-                    tempTag={tempTag}
-                    setTempTag={setTempTag}
-                />
-                <div className='cb-form-end'>
-                    <button onClick={submitForm} className='cb-form-button'>
-                        Submit Recipe
-                    </button>
-                    <button onClick={clearRecipe} className='cb-form-button'>
-                        Clear Recipe
-                    </button>
-                </div>
-            </form> */}
+                <form className='cb-forms'>
+                    <BasicForm recipe={recipeMeta} setRecipe={setRecipeMeta} />
+                    <IngredientForm
+                        ingredients={ingredients}
+                        setIngredients={setIngredients}
+                        tempIngredient={tempIngredient}
+                        setTempIngredient={setTempIngredient}
+                    />
+                    <StepForm
+                        steps={steps}
+                        setSteps={setSteps}
+                        tempStep={tempStep}
+                        setTempStep={setTempStep}
+                    />
+                    <TagForm
+                        tags={tags}
+                        setTags={setTags}
+                        tempTag={tempTag}
+                        setTempTag={setTempTag}
+                    />
+                    <div className='cb-form-end'>
+                        <button onClick={submitForm} className='cb-form-button'>
+                            Save Recipe
+                        </button>
+                    </div>
+                </form>
             </main>
         );
     else
