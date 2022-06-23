@@ -268,6 +268,8 @@ def recipes_n_path_delete(num):
             return Response(status=200)
         if request.method == 'DELETE':
             print(f'deleting {r.name}')
+            db.session.delete(r)
+            db.session.commit()
             return Response(status=200)
 
 
