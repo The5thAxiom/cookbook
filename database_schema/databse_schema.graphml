@@ -43,7 +43,7 @@ ingredients -&gt; Recipe_Ingredient<y:LabelModel><y:ErdAttributesNodeLabelModel/
     <node id="n1">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="123.35000000000002" width="119.4666666666667" x="-44.9666666666665" y="1.2624999999999886"/>
+          <y:Geometry height="123.35000000000002" width="119.4666666666667" x="-7.333333333333314" y="31.86249999999984"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="31.3515625" x="44.05755208333335" xml:space="preserve" y="4.0">User</y:NodeLabel>
@@ -60,7 +60,7 @@ recipes -&gt; Recipe<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel
     <node id="n2">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="113.75" width="193.49999999999994" x="14.233333333333448" y="446.21875"/>
+          <y:Geometry height="113.75" width="193.49999999999994" x="-7.333333333333314" y="426.2187500000001"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="77.974609375" x="57.76269531249997" xml:space="preserve" y="4.0">Recipe_Step</y:NodeLabel>
@@ -78,7 +78,7 @@ instruction: text<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y
     <node id="n3">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="113.75" width="255.79999999999984" x="287.1333333333337" y="268.13125"/>
+          <y:Geometry height="113.75" width="255.79999999999984" x="259.3000000000001" y="233.840625"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="112.375" x="71.71249999999992" xml:space="preserve" y="4.0">Recipe_Ingredient</y:NodeLabel>
@@ -96,10 +96,10 @@ unit: string<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:Mode
     <node id="n4">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="113.75" width="227.49999999999994" x="295.6833333333336" y="426.2187500000001"/>
+          <y:Geometry height="113.75" width="255.79999999999973" x="259.3000000000001" y="377.590625"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="65.72265625" x="80.888671875" xml:space="preserve" y="4.0">Ingredient</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="65.72265625" x="95.03867187499986" xml:space="preserve" y="4.0">Ingredient</y:NodeLabel>
           <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="73.84375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="182.130859375" x="2.0" xml:space="preserve" y="29.96875">id: integer [PK]
 english_name: string
 hindi_name_latin: string
@@ -114,7 +114,7 @@ recipes -&gt; Recipe_Ingredient<y:LabelModel><y:ErdAttributesNodeLabelModel/></y
     <node id="n5">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="93.35000000000002" width="125.39999999999998" x="330.8666666666669" y="144.78125"/>
+          <y:Geometry height="93.35000000000002" width="125.39999999999998" x="389.6999999999999" y="125.21249999999986"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.30078125" x="49.54960937499999" xml:space="preserve" y="4.0">Tag</y:NodeLabel>
@@ -130,7 +130,7 @@ recipes -&gt; Recipe<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel
     <node id="n6">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="93.35000000000002" width="220.39999999999998" x="210.33333333333377" y="16.26249999999999"/>
+          <y:Geometry height="93.35000000000002" width="220.39999999999998" x="142.13333333333338" y="31.86249999999984"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="72.953125" x="73.72343749999999" xml:space="preserve" y="4.0">Recipe_Tag</y:NodeLabel>

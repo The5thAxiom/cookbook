@@ -25,11 +25,19 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
     db.session.commit()
 
     for tag in newRecipeFull["recipe_tags"]:
-        db.session.add(Tag(**{
-            "recipe_id": newRecipe.id,
-            "name": tag["name"]
-        }))
-    db.session.commit()
+        newTag = Tag.query.filter_by(name=tag["name"]).first()
+        if newTag is None:
+            newTag = Tag(**{
+                "name": tag["name"]
+            })
+            db.session.add(newTag)
+            db.session.commit()
+        db.engine.execute(
+            Recipe_Tag.insert().values(**{
+                'tag_id': newTag.id,
+                'recipe_id': newRecipe.id
+            })
+        )
 
     # add all the ingredients (if they don't exist already)
     for ingredient in newRecipeFull["recipe_ingredients"]:
