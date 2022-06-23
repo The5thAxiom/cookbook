@@ -2,8 +2,6 @@ from backend import db
 
 # adding images still needs to be workshopped
 
-# The database
-
 
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,12 +31,6 @@ class User(db.Model):
     bio = db.Column(db.Text, nullable=True, unique=False)
     recipes = db.relationship(
         'Recipe',
-        backref=db.backref('contributor', uselist=False),
-        cascade="all, delete",
-        lazy=True
-    )
-    skills = db.relationship(
-        'Skill',
         backref=db.backref('contributor', uselist=False),
         cascade="all, delete",
         lazy=True
@@ -140,35 +132,6 @@ class Recipe_Ingredient(db.Model):
     )
     quantity = db.Column(db.Float, nullable=False)
     unit = db.Column(db.String(64), nullable=False)
-
-
-class Skill(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), nullable=False, unique=True)
-    #header_image = db.Column(db.LargeBinary, nullable = False)
-    description = db.Column(db.Text, nullable=False)
-    difficulty = db.Column(db.Integer, nullable=False)
-    contributor_id = db.Column(
-        db.Integer,
-        db.ForeignKey("user.id"),
-        nullable=False
-    )
-    steps = db.relationship(
-        'Skill_Step',
-        backref=db.backref('skill', uselist=False),
-        lazy=True
-    )
-
-
-class Skill_Step(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey("skill.id"),
-        nullable=False
-    )
-    serial_number = db.Column(db.Integer, nullable=False)
-    instruction = db.Column(db.Text, nullable=False)
 
 
 class Tag(db.Model):
