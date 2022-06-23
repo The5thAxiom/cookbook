@@ -34,16 +34,19 @@ class User(db.Model):
     recipes = db.relationship(
         'Recipe',
         backref=db.backref('contributor', uselist=False),
+        cascade="all, delete",
         lazy=True
     )
     skills = db.relationship(
         'Skill',
         backref=db.backref('contributor', uselist=False),
+        cascade="all, delete",
         lazy=True
     )
     collections = db.relationship(
         'Collection',
         backref=db.backref('user', uselist=False),
+        cascade="all, delete",
         lazy=True
     )
 
@@ -54,6 +57,22 @@ class User(db.Model):
             "username": self.username,
             "bio": self.bio
         }
+
+
+Recipe_Tag = db.Table('recipe__tag',
+                      db.Column('id', db.Integer, primary_key=True),
+                      db.Column(
+                          'tag_id',
+                          db.Integer,
+                          db.ForeignKey('tag.id'),
+                          nullable=False
+                      ),
+                      db.Column(
+                          'recipe_id',
+                          db.Integer,
+                          db.ForeignKey('recipe.id'),
+                          nullable=False
+                      ))
 
 
 class Recipe(db.Model):
@@ -80,6 +99,7 @@ class Recipe(db.Model):
     tags = db.relationship(
         'Tag',
         backref='recipes',
+        secondary=Recipe_Tag,
         cascade="all, delete",
         lazy=True
     )
@@ -153,16 +173,6 @@ class Skill_Step(db.Model):
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey("recipe.id"),
-        nullable=True
-    )
-    skill_id = db.Column(
-        db.Integer,
-        db.ForeignKey("skill.id"),
-        nullable=True
-    )
     name = db.Column(db.String(64), nullable=False)
 
 
