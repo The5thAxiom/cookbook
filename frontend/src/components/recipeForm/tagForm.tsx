@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import CloseIcon from '../../../components/icons/closeIcon';
+import CloseIcon from '../icons/closeIcon';
 
 export default function TagForm({
     tags,

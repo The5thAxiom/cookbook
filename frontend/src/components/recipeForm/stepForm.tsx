@@ -1,5 +1,5 @@
-import EditIcon from '../../../components/icons/editIcon';
-import DeleteIcon from '../../../components/icons/deleteIcon';
+import EditIcon from '../icons/editIcon';
+import DeleteIcon from '../icons/deleteIcon';
 
 export default function StepForm({
     steps,

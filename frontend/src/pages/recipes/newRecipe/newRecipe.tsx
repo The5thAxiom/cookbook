@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import IngredientForm from './ingredientForm';
-import StepForm from './stepForm';
-import TagForm from './tagForm';
-import BasicForm from './basicForm';
+import IngredientForm from '../../../components/recipeForm/ingredientForm';
+import StepForm from '../../../components/recipeForm/stepForm';
+import TagForm from '../../../components/recipeForm/tagForm';
+import BasicForm from '../../../components/recipeForm/basicForm';
 
 import './newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
