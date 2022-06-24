@@ -1,4 +1,4 @@
-.recipe-cards-carousel-container {
+/* .recipe-cards-carousel-container {
     display: flex;
     align-items: stretch;
 }
@@ -31,12 +31,6 @@
     margin-left: 10px;
 }
 
-/* .recipe-cards-carousel {
-    display: grid;
-    gap: 10px;
-    width: 100%;
-} */
-
 .recipe-cards-carousel {
     display: flex;
     gap: 10px;
@@ -55,4 +49,5 @@
         width: auto;
     }
 }
+ */
 

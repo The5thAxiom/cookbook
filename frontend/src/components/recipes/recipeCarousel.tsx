@@ -34,12 +34,7 @@ export default function RecipeCarousel({
                         <BackwardArrowIcon />
                     </div>
                 )}
-                <div
-                    className='recipe-cards-carousel'
-                    // style={{
-                    //     gridTemplateColumns: '1fr '.repeat(columns)
-                    // }}
-                >
+                <div className='recipe-cards-carousel'>
                     {(reversed ? recipes.slice().reverse() : recipes)
                         .slice(step, step + columns)
                         .map(r => (
