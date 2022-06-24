@@ -260,14 +260,16 @@ def recipes_n(num):
 @jwt_required()
 def recipes_n_path_delete(num):
     r = getRecipeById(num)
-    if r is None:
+    username = get_jwt_identity()
+    user = User.query.filter(User.username == username).first()
+    if r is None or user is None or user.username != r.contributor.username:
         abort(404)
     else:
         if request.method == 'PATCH':
-            print(f'patching {r.name}')
+            newRecipeFull = request.get_json(force=True)
+            editRecipe(newRecipeFull, r)
             return Response(status=200)
         if request.method == 'DELETE':
-            print(f'deleting {r.name}')
             db.session.delete(r)
             db.session.commit()
             return Response(status=200)

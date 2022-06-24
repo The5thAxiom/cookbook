@@ -61,6 +61,10 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
     db.session.commit()
 
 
+def editRecipe(newRecipeFull, recipeById: Recipe):
+    pass
+
+
 def addNewUser(newUser: dict):
     newUser['password'] = bcrypt.generate_password_hash(
         newUser['password'].encode('utf-8'))
