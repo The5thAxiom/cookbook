@@ -40,7 +40,11 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                 </div>
                 <div>difficulty:{'★'.repeat(recipe.difficulty)}</div>
             </div>
-            <div className='recipe-card-description'>{recipe.description}</div>
+            <div className='recipe-card-description'>
+                {recipe.description.length > 100
+                    ? recipe.description.slice(0, 97) + '...'
+                    : recipe.description.padEnd(100, ' ')}
+            </div>
             {tags ? <RecipeTags tags={tags} /> : <LoadingAnimation />}
         </div>
     );

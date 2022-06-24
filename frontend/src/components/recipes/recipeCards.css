@@ -34,15 +34,15 @@
 }
 
 .recipe-card-name {
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: center;
 }
 
 .recipe-card-byline {
-    font-size: larger;
     text-align: center;
 }
 
 .recipe-card-description {
     text-align: center;
 }
+
