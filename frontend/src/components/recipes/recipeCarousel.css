@@ -1,4 +1,4 @@
-/* .recipe-cards-carousel-container {
+.recipe-cards-carousel-container {
     display: flex;
     align-items: stretch;
 }
@@ -32,22 +32,18 @@
 }
 
 .recipe-cards-carousel {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     gap: 10px;
-    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+
+    scroll-snap-type: inline mandatory;
 }
 
 .recipe-cards-carousel > * {
-    width: 100%;
+    scroll-snap-align: start;
 }
-
-@media only screen and (max-width: 700px) {
-    .recipe-cards-carousel {
-        flex-direction: column;
-    }
-    .recipe-cards-carousel > * {
-        width: auto;
-    }
-}
- */
 
