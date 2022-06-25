@@ -14,8 +14,7 @@
 }
 
 .recipe-card:hover {
-    filter: brightness(99%);
-    transform: scale(1.01);
+    filter: brightness(90%);
 }
 
 .recipe-card-stats {

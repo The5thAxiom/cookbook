@@ -1,6 +1,7 @@
 .recipe-cards-carousel-container {
     display: flex;
-    align-items: stretch;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .recipe-cards-carousel-container > .arrow {
@@ -45,5 +46,6 @@
 
 .recipe-cards-carousel > * {
     scroll-snap-align: start;
+    margin-bottom: 10px;
 }
 
