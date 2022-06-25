@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import BackwardArrowIcon from '../icons/backwardArrowIcon';
 import ForwardArrowIcon from '../icons/forwardArrowIcon';
@@ -15,37 +15,37 @@ export default function RecipeCarousel({
     columns: number;
     reversed?: boolean;
 }) {
-    const [step, setStep] = useState<number>(0);
+    const carousel = useRef<HTMLDivElement>(null);
 
     if (recipes === null) return <LoadingAnimation />;
     else if (recipes.length === 0)
         return <div className='util-centered'>No recipes found :(</div>;
     else {
-        const carouselNext = () => {
-            setStep(step + columns);
+        const goLeft = (e: React.MouseEvent<HTMLDivElement>) => {
+            if (carousel.current?.scrollLeft) {
+                carousel.current.scrollLeft -= 400;
+            }
         };
-        const carouselPrev = () => {
-            setStep(step - columns);
+        const goRight = (e: React.MouseEvent<HTMLDivElement>) => {
+            if (carousel.current) {
+                if (!carousel.current.scrollLeft)
+                    carousel.current.scrollLeft = 0;
+                carousel.current.scrollLeft += 400;
+            }
         };
         return (
             <div className='recipe-cards-carousel-container'>
-                {step !== 0 && (
-                    <div className='arrow prev' onClick={carouselPrev}>
-                        <BackwardArrowIcon />
-                    </div>
-                )}
-                <div className='recipe-cards-carousel'>
-                    {(reversed ? recipes.slice().reverse() : recipes)
-                        .slice(step, step + columns)
-                        .map(r => (
-                            <RecipeCard key={r.id} recipe={r} />
-                        ))}
+                <div className='arrow prev util-noselect' onClick={goLeft}>
+                    <BackwardArrowIcon />
                 </div>
-                {step + columns < recipes.length && (
-                    <div className='arrow next' onClick={carouselNext}>
-                        <ForwardArrowIcon />
-                    </div>
-                )}
+                <div ref={carousel} className='recipe-cards-carousel'>
+                    {(reversed ? recipes.slice().reverse() : recipes).map(r => (
+                        <RecipeCard key={r.id} recipe={r} />
+                    ))}
+                </div>
+                <div className='arrow next util-noselect' onClick={goRight}>
+                    <ForwardArrowIcon />
+                </div>
             </div>
         );
     }
