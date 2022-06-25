@@ -267,7 +267,7 @@ def recipes_n_path_delete(num):
     else:
         if request.method == 'PATCH':
             newRecipeFull = request.get_json(force=True)
-            editRecipe(newRecipeFull, r)
+            editRecipe(newRecipeFull, r, user)
             return Response(status=200)
         if request.method == 'DELETE':
             db.session.delete(r)

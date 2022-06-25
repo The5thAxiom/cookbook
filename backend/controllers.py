@@ -2,23 +2,38 @@ from backend import db, bcrypt
 from backend.models import *
 
 
-def addFullRecipe(newRecipeFull: str, contributor_id: int):
-    newRecipe = Recipe(**{
-        "name": newRecipeFull["name"],
-        "prep_time": newRecipeFull["prep_time"],
-        "description": newRecipeFull["description"],
-        "difficulty": newRecipeFull["difficulty"],
-        "contributor_id": contributor_id,
-        "vegetarian": newRecipeFull["vegetarian"],
-        "quantity": newRecipeFull["quantity"],
-        "unit": newRecipeFull["unit"]
-    })
-    db.session.add(newRecipe)
-    db.session.commit()
+def addFullRecipe(newRecipeFull: str, contributor_id: int, id=None):
+    if id is None:
+        newRecipe = Recipe(**{
+            "name": newRecipeFull["name"],
+            "prep_time": newRecipeFull["prep_time"],
+            "description": newRecipeFull["description"],
+            "difficulty": newRecipeFull["difficulty"],
+            "contributor_id": contributor_id,
+            "vegetarian": newRecipeFull["vegetarian"],
+            "quantity": newRecipeFull["quantity"],
+            "unit": newRecipeFull["unit"]
+        })
+        db.session.add(newRecipe)
+        db.session.commit()
+        id = newRecipe.id
+    else:
+        db.session.add(Recipe(**{
+            "id": id,
+            "name": newRecipeFull["name"],
+            "prep_time": newRecipeFull["prep_time"],
+            "description": newRecipeFull["description"],
+            "difficulty": newRecipeFull["difficulty"],
+            "contributor_id": contributor_id,
+            "vegetarian": newRecipeFull["vegetarian"],
+            "quantity": newRecipeFull["quantity"],
+            "unit": newRecipeFull["unit"]
+        }))
+        db.session.commit()
 
     for step in newRecipeFull["recipe_steps"]:
         db.session.add(Recipe_Step(**{
-            "recipe_id": newRecipe.id,
+            "recipe_id": id,
             "serial_number": step["serial_number"],
             "instruction": step["instruction"]
         }))
@@ -35,7 +50,7 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
         db.engine.execute(
             Recipe_Tag.insert().values(**{
                 'tag_id': newTag.id,
-                'recipe_id': newRecipe.id
+                'recipe_id': id
             })
         )
 
@@ -53,7 +68,7 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
             db.session.commit()
 
         db.session.add(Recipe_Ingredient(**{
-            "recipe_id": newRecipe.id,
+            "recipe_id": id,
             "ingredient_id": newIngredient.id,
             "quantity": ingredient["quantity"],
             "unit": ingredient["unit"]
@@ -61,8 +76,13 @@ def addFullRecipe(newRecipeFull: str, contributor_id: int):
     db.session.commit()
 
 
-def editRecipe(newRecipeFull, recipeById: Recipe):
-    pass
+# TODO: create a proper function to edit recipes which compares it to the existing one
+# the existing method just deletes the old one and creates a new one in its place
+def editRecipe(newRecipeFull, recipe: Recipe, user: User):
+    id = recipe.id
+    db.session.delete(recipe)
+    db.session.commit()
+    addFullRecipe(newRecipeFull, user.id, id)
 
 
 def addNewUser(newUser: dict):
