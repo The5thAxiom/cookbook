@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import icon from '../../assets/food-bar-image.png';
 
 import LogoutIcon from './logoutIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
@@ -19,7 +20,12 @@ export default function NavBar() {
     const { logOutUser } = useCurrentUser();
 
     return (
-        <nav id='nav-bar'>
+        <nav id='navbar'>
+            <NavLink to='/' className='navbar-logo'>
+                <img src={icon} />
+                Cookbook
+            </NavLink>
+
             {navBarLinks.map((link: navBarLink, index) => (
                 <NavLink
                     end
