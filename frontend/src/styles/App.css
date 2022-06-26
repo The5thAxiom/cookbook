@@ -35,19 +35,23 @@ div#root {
     flex-direction: column;
 }
 
-main {
-    flex: auto;
-}
-
 footer {
     flex: none;
 }
 
 main {
-    padding: 10px;
+    padding-inline: 10vw;
+    padding-top: 0;
+    padding-bottom: 5vh;
     background: var(--primary-bg);
     margin-top: var(--navbar-height);
     flex: auto;
+}
+
+@media only screen and (max-width: 800px) {
+    main {
+        padding-inline: 10px;
+    }
 }
 
 footer {
@@ -120,9 +124,9 @@ a:visited:active {
 
 /*** scrollbar ***/
 
-/* html {
-    overflow-y: overlay;
-} */
+body::-webkit-scrollbar-track {
+    margin-top: var(--navbar-height);
+}
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -132,7 +136,6 @@ a:visited:active {
 ::-webkit-scrollbar-track {
     background: var(--primary-bg);
     width: 10px;
-    margin-top: var(--navbar-height);
 }
 
 ::-webkit-scrollbar-thumb {
