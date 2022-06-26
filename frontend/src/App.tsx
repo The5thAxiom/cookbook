@@ -6,7 +6,7 @@ import './styles/forms.css';
 import './styles/utility.css';
 
 import Footer from './components/footer';
-import NavBar from './components/navBar/navBar';
+import Navbar from './components/navbar/navbar';
 import MainAction from './components/mainAction';
 
 import Home from './pages/home';
@@ -54,7 +54,7 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar />
+                            <Navbar />
                             <Outlet />
                             <MainAction />
                             <Footer />

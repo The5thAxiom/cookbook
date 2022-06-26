@@ -12,15 +12,15 @@ import SearchIcon from './searchIcon';
 import { useRef, useState } from 'react';
 import CloseIcon from '../icons/closeIcon';
 
-import './navBar.css';
+import './navbar.css';
 
-const navBarLinks: navBarLink[] = [
+const navbarLinks: navbarLink[] = [
     { to: '/', icon: HomeIcon },
     { to: '/recipes', icon: BrowseIcon },
     { to: '/user', icon: AboutIcon }
 ];
 
-export default function NavBar() {
+export default function Navbar() {
     const user = userStore(state => state.user);
     const { logOutUser } = useCurrentUser();
 
@@ -47,7 +47,7 @@ export default function NavBar() {
     return (
         <nav id='navbar' className='util-noselect'>
             <NavLink to='/' className='navbar-logo'>
-                <img src={icon} />
+                <img alt='' src={icon} />
                 <div>Cookbook</div>
             </NavLink>
             <div className='navbar-search'>
@@ -75,7 +75,7 @@ export default function NavBar() {
                 </div>
             </div>
 
-            {navBarLinks.map((link: navBarLink, index) => (
+            {navbarLinks.map((link: navbarLink, index) => (
                 <NavLink
                     end
                     className={({ isActive }) =>

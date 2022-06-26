@@ -1,4 +1,4 @@
-export default function AboutIcon({ isActive }: navBarIcon) {
+export default function AboutIcon({ isActive }: navbarIcon) {
     if (isActive)
         return (
             <svg

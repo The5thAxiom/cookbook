@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import BackwardArrowIcon from '../icons/backwardArrowIcon';
 import ForwardArrowIcon from '../icons/forwardArrowIcon';

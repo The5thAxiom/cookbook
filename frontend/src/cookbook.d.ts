@@ -1,12 +1,12 @@
 declare module '*.png';
 declare module '*.svg';
 
-declare type navBarLink = {
+declare type navbarLink = {
     to: string;
-    icon: (props: navBarIcon) => JSX.Element;
+    icon: (props: navbarIcon) => JSX.Element;
 };
 
-declare type navBarIcon = {
+declare type navbarIcon = {
     isActive: boolean;
 };
 
