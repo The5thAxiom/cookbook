@@ -1,27 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCards from '../../components/recipes/recipeCards';
+import useFetch from '../../hooks/useFetch';
 
 export default function BrowseRecipes() {
     const [searchParams] = useSearchParams();
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
+    const { fetchJson } = useFetch();
 
     useEffect(() => {
         const fetchRecipes = async () => {
             const user = searchParams.get('only-user');
             const tag = searchParams.get('only-tag');
-            setRecipes(null as any);
-            let res;
-            if (user !== null) res = await fetch(`/api/users/${user}/recipes`);
+            const q = searchParams.get('q');
+            setRecipes([]);
+
+            let data;
+            if (user !== null)
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    `/api/users/${user}/recipes`
+                );
             else if (tag !== null)
-                res = await fetch(`/api/recipes/bytag/${tag}`);
-            else res = await fetch('/api/recipes/all');
-            if (res.ok) {
-                const data = await res.json();
-                setRecipes(data.recipes);
-            } else {
-                setRecipes([]);
-            }
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    `/api/recipes/bytag/${tag}`
+                );
+            else
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    '/api/recipes/all'
+                );
+            if (q)
+                setRecipes(
+                    data.recipes.filter((r: recipeMeta) =>
+                        r.name.toLowerCase().includes(q.toLowerCase())
+                    )
+                );
+            else setRecipes(data.recipes);
         };
         fetchRecipes();
     }, [searchParams]);
