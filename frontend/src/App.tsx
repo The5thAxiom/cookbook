@@ -8,6 +8,7 @@ import './styles/utility.css';
 import Footer from './components/footer';
 import Navbar from './components/navbar/navbar';
 import MainAction from './components/mainAction';
+import GoToTopButton from './components/goToTopButton';
 
 import Home from './pages/home';
 
@@ -57,6 +58,7 @@ export default function App() {
                             <Navbar />
                             <Outlet />
                             <MainAction />
+                            <GoToTopButton />
                             <Footer />
                         </>
                     }
