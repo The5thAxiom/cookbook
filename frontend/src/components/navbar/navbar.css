@@ -72,7 +72,7 @@ nav#navbar {
     text-align: center;
     padding: 10px;
     background: var(--green-light);
-    min-width: 2vw;
+    min-width: 2.5vw;
 }
 
 .navbar-link:hover {

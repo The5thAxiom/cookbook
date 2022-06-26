@@ -9,15 +9,13 @@
     height: 24px;
     width: 24px;
     cursor: pointer;
-
-    /* box-shadow: 0 0 0 3px var(--green-main); */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 0, 0, 0.1),
         0 0 20px rgba(0, 0, 0, 0.05), 0 0 30px rgba(0, 0, 0, 0.042),
         0 0 40px rgba(0, 0, 0, 0.03), 0 0 80px rgba(0, 0, 0, 0.02);
 }
 
-.top-top:hover {
-    filter: brightness(90%);
+.to-top:hover {
+    filter: brightness(85%);
 }
 
 .to-top > svg {

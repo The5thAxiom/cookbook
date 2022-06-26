@@ -41,7 +41,7 @@ footer {
 
 main {
     padding-inline: 10vw;
-    padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 5vh;
     background: var(--primary-bg);
     margin-top: var(--navbar-height);
