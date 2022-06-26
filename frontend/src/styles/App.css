@@ -71,6 +71,13 @@ nav#navbar {
     width: 2.5rem;
 }
 
+.navbar-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    margin-inline: auto;
+}
+
 .navbar-link {
     display: block;
     text-align: center;
