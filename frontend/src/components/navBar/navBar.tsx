@@ -5,10 +5,12 @@ import LogoutIcon from './logoutIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import userStore from '../../stores/userStore';
 
-import HomeIcon from '../navBar/homeIcon';
-import BrowseIcon from '../navBar/browseIcon';
-import AboutIcon from '../navBar/aboutIcon';
+import HomeIcon from './homeIcon';
+import BrowseIcon from './browseIcon';
+import AboutIcon from './aboutIcon';
+import SearchIcon from './searchIcon';
 import { useRef, useState } from 'react';
+import CloseIcon from '../icons/closeIcon';
 
 const navBarLinks: navBarLink[] = [
     { to: '/', icon: HomeIcon },
@@ -24,30 +26,50 @@ export default function NavBar() {
     const searchBar = useRef<HTMLInputElement>(null);
 
     const [searchString, setSearchString] = useState<string>('');
-    const search = () => {
-        navigate(`/recipes?q=${searchString}`);
-        setSearchString('');
+
+    const unfocusSearchBar = () => {
         if (searchBar && searchBar.current) {
             searchBar.current.blur();
         }
+    };
+
+    const clearSearchBar = () => setSearchString('');
+
+    const search = () => {
+        navigate(`/recipes?q=${searchString}`);
+        setSearchString('');
+        unfocusSearchBar();
     };
 
     return (
         <nav id='navbar'>
             <NavLink to='/' className='navbar-logo'>
                 <img src={icon} />
-                Cookbook
+                <div>Cookbook</div>
             </NavLink>
             <div className='navbar-search'>
-                <div onClick={search}>Search</div>
-
                 <input
                     ref={searchBar}
+                    placeholder='Search for you favourite recipes!'
                     type='text'
                     value={searchString || ''}
                     onChange={e => setSearchString(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && search()}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter') search();
+                        else if (e.key === 'Escape') {
+                            clearSearchBar();
+                            unfocusSearchBar();
+                        }
+                    }}
                 />
+                {searchString.length > 0 && (
+                    <div onClick={clearSearchBar}>
+                        <CloseIcon />
+                    </div>
+                )}
+                <div onClick={search}>
+                    <SearchIcon />
+                </div>
             </div>
 
             {navBarLinks.map((link: navBarLink, index) => (
