@@ -37,7 +37,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const deleteRecipe = async () => {
         if (window.confirm(`Are you sure you want to delete ${recipe.name}?`)) {
             startMainAction();
-            console.log(`delete ${recipe.name}`);
             await fetchAsUser(`/api/recipes/${recipe.id}`, {
                 method: 'DELETE'
             });
@@ -60,7 +59,6 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                     <NavLink
                         to={`/recipes/edit/${recipe.id}`}
                         className='util-clickable'
-                        onClick={() => console.log(`edit ${recipe.name}`)}
                     >
                         <EditIcon />
                     </NavLink>

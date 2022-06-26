@@ -9,12 +9,15 @@ import BasicForm from '../../../components/recipeForm/basicForm';
 import '../newRecipe/newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
 import LoadingAnimation from '../../../components/loadingAnimation';
+import useMainAction from '../../../hooks/useMainAction';
 
 export default function EditRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const params = useParams();
 
     const { fetchJson } = useFetch();
+
+    const { startMainAction, endMainAction } = useMainAction();
 
     useEffect(() => {
         setRecipe(null as any);
@@ -59,8 +62,9 @@ export default function EditRecipe() {
 
     const [submitted, setSubmitted] = useState<boolean>(false);
 
-    const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        startMainAction();
         let newRecipe = {
             description: recipeMeta.description,
             name: recipeMeta.name,
@@ -77,8 +81,7 @@ export default function EditRecipe() {
                 instruction: s
             }))
         };
-        console.log(recipe);
-        fetchAsUser(`/api/recipes/${recipe.id}`, {
+        await fetchAsUser(`/api/recipes/${recipe.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -87,6 +90,7 @@ export default function EditRecipe() {
         }).then(res => {
             if (res.ok) setSubmitted(true);
         });
+        endMainAction();
     };
 
     useEffect(() => {

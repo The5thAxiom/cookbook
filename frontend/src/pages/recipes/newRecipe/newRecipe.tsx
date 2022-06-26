@@ -8,6 +8,7 @@ import BasicForm from '../../../components/recipeForm/basicForm';
 
 import './newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
+import useMainAction from '../../../hooks/useMainAction';
 
 export default function NewRecipe() {
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
@@ -23,6 +24,8 @@ export default function NewRecipe() {
     });
 
     const { fetchAsUser } = useFetch();
+
+    const { startMainAction, endMainAction } = useMainAction();
 
     const [ingredients, setIngredients] = useState<recipeIngredient[]>([]);
     const [tempIngredient, setTempIngredient] = useState<recipeIngredient>({
@@ -41,8 +44,9 @@ export default function NewRecipe() {
 
     const [submitted, setSubmitted] = useState<boolean>(false);
 
-    const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        startMainAction();
         let recipe = {
             description: recipeMeta.description,
             name: recipeMeta.name,
@@ -63,7 +67,7 @@ export default function NewRecipe() {
             })
         };
         console.log(recipe);
-        fetchAsUser('/api/recipes', {
+        await fetchAsUser('/api/recipes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -72,6 +76,7 @@ export default function NewRecipe() {
         }).then(res => {
             if (res.ok) setSubmitted(true);
         });
+        endMainAction();
     };
 
     const saveRecipe = (e: React.MouseEvent<HTMLButtonElement>) => {
