@@ -42,6 +42,7 @@
     overscroll-behavior-inline: contain;
 
     scroll-snap-type: inline mandatory;
+    scroll-padding-inline: 20px;
 }
 
 .recipe-cards-carousel > * {
