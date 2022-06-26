@@ -46,7 +46,7 @@ footer {
 nav#navbar {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     top: 0;
     position: fixed;
@@ -59,7 +59,6 @@ nav#navbar {
 
 .navbar-logo {
     margin-inline-start: 1vw;
-    margin-inline-end: auto;
     font-size: 2rem;
     display: flex;
     align-items: center;
@@ -74,8 +73,39 @@ nav#navbar {
 .navbar-search {
     display: flex;
     align-items: center;
-    gap: 0.5vw;
     margin-inline: auto;
+    border-radius: 100vmax;
+    background-color: var(--primary-bg);
+    color: var(--green-main);
+}
+
+.navbar-search > input {
+    width: 20rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    padding-inline-start: 2rem;
+    padding-inline-end: 0.5rem;
+}
+
+@media only screen and (max-width: 800px) {
+    .navbar-search {
+        margin-inline: auto 0;
+    }
+    .navbar-search > input {
+        width: 2.7rem;
+    }
+}
+
+.navbar-search > div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-inline-end: 0.5rem;
+}
+
+.navbar-search svg {
+    fill: var(--orange-main);
 }
 
 .navbar-link {
@@ -83,7 +113,7 @@ nav#navbar {
     text-align: center;
     padding: 10px;
     background: var(--green-light);
-    min-width: 5vw;
+    min-width: 2vw;
 }
 
 .navbar-link:hover {
