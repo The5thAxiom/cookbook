@@ -7,6 +7,7 @@ export default function BrowseRecipes() {
     const [searchParams] = useSearchParams();
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
     const { fetchJson } = useFetch();
+    const [heading, setHeading] = useState<string>('Recipes');
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -14,33 +15,38 @@ export default function BrowseRecipes() {
             const tag = searchParams.get('only-tag');
             const q = searchParams.get('q');
             setRecipes([]);
+            setHeading('Recipes');
 
             let data;
-            if (user !== null)
+            if (user !== null) {
                 data = await fetchJson<{ recipes: recipeMeta[] }>(
                     `/api/users/${user}/recipes`
                 );
-            else if (tag !== null)
+                setHeading(`Recipes by @${user}`);
+            } else if (tag !== null) {
                 data = await fetchJson<{ recipes: recipeMeta[] }>(
                     `/api/recipes/bytag/${tag}`
                 );
-            else
+                setHeading(`Recipes with #${tag}`);
+            } else {
                 data = await fetchJson<{ recipes: recipeMeta[] }>(
                     '/api/recipes/all'
                 );
-            if (q)
+            }
+            if (q) {
                 setRecipes(
                     data.recipes.filter((r: recipeMeta) =>
                         r.name.toLowerCase().includes(q.toLowerCase())
                     )
                 );
-            else setRecipes(data.recipes);
+                setHeading(`Search results for ${q}`);
+            } else setRecipes(data.recipes);
         };
         fetchRecipes();
     }, [searchParams]);
     return (
         <main>
-            <h1>Recipes</h1>
+            <h1>{heading}</h1>
             {<RecipeCards recipes={recipes} />}
         </main>
     );
