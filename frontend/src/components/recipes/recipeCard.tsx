@@ -6,6 +6,9 @@ import LoadingAnimation from './../loadingAnimation';
 import RecipeActions from '../../components/recipes/recipeActions';
 import useFetch from '../../hooks/useFetch';
 
+const fitToLength = (text: string, length: number): string =>
+    text.length > length ? text.slice(0, length - 3) + '...' : text.padEnd(30);
+
 export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
     const [tags, setTags] = useState<string[]>(null as any);
     const { fetchJson } = useFetch();
@@ -24,7 +27,9 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
         <div className='recipe-card' id={`${recipe.id}`}>
             <RecipeActions recipe={recipe} />
             <div className='recipe-card-name'>
-                <NavLink to={`/recipes/${recipe.id}`}>{recipe.name}</NavLink>
+                <NavLink to={`/recipes/${recipe.id}`}>
+                    {fitToLength(recipe.name, 40)}
+                </NavLink>
             </div>
             <div className='recipe-card-byline'>
                 by{' '}
@@ -40,7 +45,9 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
                 </div>
                 <div>difficulty:{'★'.repeat(recipe.difficulty)}</div>
             </div>
-            <div className='recipe-card-description'>{recipe.description}</div>
+            <div className='recipe-card-description'>
+                {fitToLength(recipe.description, 100)}
+            </div>
             {tags ? <RecipeTags tags={tags} /> : <LoadingAnimation />}
         </div>
     );

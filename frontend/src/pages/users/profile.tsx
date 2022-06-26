@@ -44,7 +44,7 @@ export default function Profile({ user }: { user: userData }) {
                         All recipes
                     </NavLink>
                 </div>
-                <RecipeCarousel recipes={recipes} reversed columns={2} />
+                <RecipeCarousel recipes={recipes} reversed />
             </section>
             <section>
                 <h2>Your Favourites</h2>
@@ -54,7 +54,6 @@ export default function Profile({ user }: { user: userData }) {
                             collections.filter(c => c.name === 'favourites')[0]
                                 .recipes
                         }
-                        columns={2}
                     />
                 )}
             </section>
@@ -139,10 +138,7 @@ export default function Profile({ user }: { user: userData }) {
                                         <CloseIcon />
                                     </span>
                                 </h3>
-                                <RecipeCarousel
-                                    recipes={c.recipes}
-                                    columns={2}
-                                />
+                                <RecipeCarousel recipes={c.recipes} />
                             </div>
                         ))
                 ) : (

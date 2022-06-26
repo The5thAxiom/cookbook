@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import CloseIcon from '../../../components/icons/closeIcon';
+import EditIcon from '../icons/editIcon';
+import DeleteIcon from '../icons/deleteIcon';
 
 export default function IngredientForm({
     ingredients,
@@ -72,6 +73,14 @@ export default function IngredientForm({
                                 {ing.quantity} {ing.unit} of {ing.english_name}{' '}
                                 ({ing.hindi_name_latin} |{' '}
                                 {ing.hindi_name_devnagari}){' '}
+                                {/* <button
+                                    onClick={e => {
+                                        e.preventDefault();
+                                    }}
+                                    className='inline-button'
+                                >
+                                    <EditIcon />
+                                </button> */}
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
@@ -81,13 +90,9 @@ export default function IngredientForm({
                                             )
                                         );
                                     }}
+                                    className='inline-button'
                                 >
-                                    <CloseIcon
-                                        style={{
-                                            height: '1em',
-                                            width: '1em'
-                                        }}
-                                    />
+                                    <DeleteIcon />
                                 </button>
                             </li>
                         ))}

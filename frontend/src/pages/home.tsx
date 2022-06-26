@@ -1,11 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import Header from '../components/header';
 
 export default function Home() {
     return (
         <>
-            <Header />
-            <main className='below-header'>
+            <main>
                 <h1>Welcome!</h1>
                 <p>
                     I am samridh (

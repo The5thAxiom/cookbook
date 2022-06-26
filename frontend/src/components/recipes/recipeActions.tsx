@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import EditIcon from '../icons/editIcon';
+import DeleteIcon from '../icons/deleteIcon';
 import HeartIcon from '../icons/heartIcon';
 import BrokenHeartIcon from '../icons/brokenHeartIcon';
 import BookmarkAddIcon from '../icons/bookmarkAddIcon';
@@ -9,6 +11,9 @@ import BookmarkRemoveIcon from '../icons/bookmarkRemoveIcon';
 import userStore from '../../stores/userStore';
 import collectionsStore from '../../stores/collectionsStore';
 import useCollections from '../../hooks/useCollections';
+import useFetch from '../../hooks/useFetch';
+import useMainAction from '../../hooks/useMainAction';
+import { NavLink } from 'react-router-dom';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const collections = collectionsStore(state => state.collections);
@@ -26,6 +31,19 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
         await addToCollection(collection_name, recipe);
     };
 
+    const { fetchAsUser } = useFetch();
+    const { startMainAction, endMainAction } = useMainAction();
+
+    const deleteRecipe = async () => {
+        if (window.confirm(`Are you sure you want to delete ${recipe.name}?`)) {
+            startMainAction();
+            await fetchAsUser(`/api/recipes/${recipe.id}`, {
+                method: 'DELETE'
+            });
+            endMainAction();
+        }
+    };
+
     if (user && collections) {
         const collectionsWithCurrentRecipe = collections
             .filter(c => c.name !== 'favourites')
@@ -37,6 +55,21 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
             );
         return (
             <div className='util-row-flexend'>
+                <div>
+                    <NavLink
+                        to={`/recipes/edit/${recipe.id}`}
+                        className='util-clickable'
+                    >
+                        <EditIcon />
+                    </NavLink>
+                </div>
+
+                <div>
+                    <div className='util-clickable' onClick={deleteRecipe}>
+                        <DeleteIcon />
+                    </div>
+                </div>
+
                 {collectionsWithCurrentRecipe.length > 0 && (
                     <>
                         <div

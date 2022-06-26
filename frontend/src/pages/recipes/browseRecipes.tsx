@@ -1,33 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCards from '../../components/recipes/recipeCards';
+import useFetch from '../../hooks/useFetch';
 
 export default function BrowseRecipes() {
     const [searchParams] = useSearchParams();
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
+    const { fetchJson } = useFetch();
+    const [heading, setHeading] = useState<string>('Recipes');
 
     useEffect(() => {
         const fetchRecipes = async () => {
             const user = searchParams.get('only-user');
             const tag = searchParams.get('only-tag');
+            const q = searchParams.get('q');
             setRecipes(null as any);
-            let res;
-            if (user !== null) res = await fetch(`/api/users/${user}/recipes`);
-            else if (tag !== null)
-                res = await fetch(`/api/recipes/bytag/${tag}`);
-            else res = await fetch('/api/recipes/all');
-            if (res.ok) {
-                const data = await res.json();
-                setRecipes(data.recipes);
+            setHeading('Recipes');
+
+            let data;
+            if (user !== null) {
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    `/api/users/${user}/recipes`
+                );
+                setHeading(`Recipes by @${user}`);
+            } else if (tag !== null) {
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    `/api/recipes/bytag/${tag}`
+                );
+                setHeading(`Recipes with #${tag}`);
             } else {
-                setRecipes([]);
+                data = await fetchJson<{ recipes: recipeMeta[] }>(
+                    '/api/recipes/all'
+                );
             }
+            if (q) {
+                setRecipes(
+                    data.recipes.filter((r: recipeMeta) =>
+                        r.name.toLowerCase().includes(q.toLowerCase())
+                    )
+                );
+                setHeading(`Search results for ${q}`);
+            } else setRecipes(data.recipes);
         };
         fetchRecipes();
     }, [searchParams]);
     return (
         <main>
-            <h1>Recipes</h1>
+            <h1>{heading}</h1>
             {<RecipeCards recipes={recipes} />}
         </main>
     );

@@ -20,3 +20,9 @@
     transform: scale(1.2);
 }
 
+.util-noselect {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

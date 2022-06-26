@@ -6,13 +6,15 @@ import './styles/forms.css';
 import './styles/utility.css';
 
 import Footer from './components/footer';
-import NavBar from './components/navBar/navBar';
+import Navbar from './components/navbar/navbar';
 import MainAction from './components/mainAction';
+import GoToTopButton from './components/goToTopButton';
 
 import Home from './pages/home';
 
 import CheckRecipe from './pages/recipes/checkRecipe';
 import NewRecipe from './pages/recipes/newRecipe/newRecipe';
+import EditRecipe from './pages/recipes/editRecipe/editRecipe';
 import BrowseRecipes from './pages/recipes/browseRecipes';
 
 import User from './pages/users/user';
@@ -53,9 +55,10 @@ export default function App() {
                     path='/'
                     element={
                         <>
-                            <NavBar />
+                            <Navbar />
                             <Outlet />
                             <MainAction />
+                            <GoToTopButton />
                             <Footer />
                         </>
                     }
@@ -64,7 +67,17 @@ export default function App() {
                     <Route path='recipes' element={<Outlet />}>
                         <Route index element={<BrowseRecipes />} />
                         <Route path=':id' element={<CheckRecipe />} />
-                        {user && <Route path='new' element={<NewRecipe />} />}
+                        {user && (
+                            <>
+                                <Route path='new' element={<NewRecipe />} />
+                                <Route path='edit' element={<Outlet />}>
+                                    <Route
+                                        path=':id'
+                                        element={<EditRecipe />}
+                                    />
+                                </Route>
+                            </>
+                        )}
                     </Route>
                     <Route path='user' element={<Outlet />}>
                         {/* if the doesn't exist, /user is the login page, if it does, /user is the profile page */}

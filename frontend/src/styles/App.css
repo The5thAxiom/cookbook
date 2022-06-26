@@ -35,56 +35,23 @@ div#root {
     flex-direction: column;
 }
 
-main {
-    flex: auto;
-}
-
 footer {
     flex: none;
 }
 
-nav#nav-bar {
-    display: flex;
-    flex-direction: row;
-    top: 0;
-    position: fixed;
-    width: 100%;
-    min-width: 320px;
-    height: var(--navbar-height);
-    z-index: 1;
-}
-
-.navbar-link {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    background: var(--green-light);
-}
-
-.navbar-link:hover {
-    filter: brightness(90%);
-    color: var(--yellow-main);
-    text-shadow: none;
-}
-
-.navbar-icon {
-    fill: var(--orange-main);
-}
-
-a.navbar-link-active .navbar-icon {
-    fill: var(--orange-main);
-}
-
 main {
-    padding: 10px;
+    padding-inline: 10vw;
+    padding-top: 10px;
+    padding-bottom: 5vh;
     background: var(--primary-bg);
     margin-top: var(--navbar-height);
     flex: auto;
 }
 
-main.below-header {
-    margin-top: 0;
+@media only screen and (max-width: 800px) {
+    main {
+        padding-inline: 10px;
+    }
 }
 
 footer {
@@ -157,9 +124,9 @@ a:visited:active {
 
 /*** scrollbar ***/
 
-/* html {
-    overflow-y: overlay;
-} */
+body::-webkit-scrollbar-track {
+    margin-top: var(--navbar-height);
+}
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -169,7 +136,6 @@ a:visited:active {
 ::-webkit-scrollbar-track {
     background: var(--primary-bg);
     width: 10px;
-    margin-top: var(--navbar-height);
 }
 
 ::-webkit-scrollbar-thumb {

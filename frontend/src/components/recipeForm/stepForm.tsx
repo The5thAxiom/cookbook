@@ -1,4 +1,5 @@
-import CloseIcon from '../../../components/icons/closeIcon';
+import EditIcon from '../icons/editIcon';
+import DeleteIcon from '../icons/deleteIcon';
 
 export default function StepForm({
     steps,
@@ -25,6 +26,14 @@ export default function StepForm({
                         {steps.map((step, index) => (
                             <li key={index}>
                                 {step}{' '}
+                                {/* <button
+                                    onClick={e => {
+                                        e.preventDefault();
+                                    }}
+                                    className='inline-button'
+                                >
+                                    <EditIcon />
+                                </button> */}
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
@@ -32,13 +41,9 @@ export default function StepForm({
                                             steps.filter((s, i) => i !== index)
                                         );
                                     }}
+                                    className='inline-button'
                                 >
-                                    <CloseIcon
-                                        style={{
-                                            height: '1em',
-                                            width: '1em'
-                                        }}
-                                    />
+                                    <DeleteIcon />
                                 </button>
                             </li>
                         ))}
