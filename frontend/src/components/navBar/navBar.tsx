@@ -12,6 +12,8 @@ import SearchIcon from './searchIcon';
 import { useRef, useState } from 'react';
 import CloseIcon from '../icons/closeIcon';
 
+import './navBar.css';
+
 const navBarLinks: navBarLink[] = [
     { to: '/', icon: HomeIcon },
     { to: '/recipes', icon: BrowseIcon },
@@ -36,13 +38,14 @@ export default function NavBar() {
     const clearSearchBar = () => setSearchString('');
 
     const search = () => {
-        navigate(`/recipes?q=${searchString}`);
+        if (searchString.trim() !== '')
+            navigate(`/recipes?q=${searchString.trim()}`);
         setSearchString('');
         unfocusSearchBar();
     };
 
     return (
-        <nav id='navbar'>
+        <nav id='navbar' className='util-noselect'>
             <NavLink to='/' className='navbar-logo'>
                 <img src={icon} />
                 <div>Cookbook</div>
@@ -62,7 +65,7 @@ export default function NavBar() {
                         }
                     }}
                 />
-                {searchString.length > 0 && (
+                {searchString.trim().length > 0 && (
                     <div onClick={clearSearchBar}>
                         <CloseIcon />
                     </div>
