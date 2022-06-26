@@ -14,7 +14,7 @@ export default function BrowseRecipes() {
             const user = searchParams.get('only-user');
             const tag = searchParams.get('only-tag');
             const q = searchParams.get('q');
-            setRecipes([]);
+            setRecipes(null as any);
             setHeading('Recipes');
 
             let data;
