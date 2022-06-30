@@ -1,7 +1,7 @@
 from datetime import timedelta
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -56,6 +56,11 @@ from backend.endpoints import *
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+
+@app.route('/api')
+def documentation():
+    return render_template('documentation.html')
 
 # @app.errorhandler(404)
 # def not_found(e):
