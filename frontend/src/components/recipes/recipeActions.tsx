@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import EditIcon from '../icons/editIcon';
 import DeleteIcon from '../icons/deleteIcon';
@@ -8,7 +8,6 @@ import BookmarkAddIcon from '../icons/bookmarkAddIcon';
 import BookmarkIcon from '../icons/bookmarkIcon';
 import BookmarkRemoveIcon from '../icons/bookmarkRemoveIcon';
 
-import collectionsStore from '../../stores/collectionsStore';
 import useCollections from '../../hooks/useCollections';
 import useFetch from '../../hooks/useFetch';
 import useMainAction from '../../hooks/useMainAction';
@@ -16,9 +15,12 @@ import { NavLink } from 'react-router-dom';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
-    const collections = collectionsStore(state => state.collections);
-    const { addToCollection, removeFromCollection, addNewCollection } =
-        useCollections();
+    const {
+        collections,
+        addToCollection,
+        removeFromCollection,
+        addNewCollection
+    } = useCollections();
     const { user } = useCurrentUser();
 
     const [selectedCollection, setSelectedCollection] = useState<string>(

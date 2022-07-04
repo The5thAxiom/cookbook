@@ -26,15 +26,13 @@ import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 
 import accessTokenStore from './stores/accessTokenStore';
-import collectionStore from './stores/collectionsStore';
 
 export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
 
     const { user, fetchUser, logOutUser } = useCurrentUser();
 
-    const { fetchCollections } = useCollections();
-    const setColletions = collectionStore(state => state.setCollections);
+    const { setCollections, fetchCollections } = useCollections();
 
     useEffect(() => {
         if (accessToken !== '') fetchUser();
@@ -43,7 +41,7 @@ export default function App() {
 
     useEffect(() => {
         if (user) fetchCollections();
-        else setColletions(null as any);
+        else setCollections(null as any);
     }, [user]);
 
     return (
