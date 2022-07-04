@@ -25,15 +25,13 @@ import Signup from './pages/users/signup';
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 
-import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
 import collectionStore from './stores/collectionsStore';
 
 export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
 
-    const user = userStore(state => state.user);
-    const { fetchUser, logOutUser } = useCurrentUser();
+    const { user, fetchUser, logOutUser } = useCurrentUser();
 
     const { fetchCollections } = useCollections();
     const setColletions = collectionStore(state => state.setCollections);

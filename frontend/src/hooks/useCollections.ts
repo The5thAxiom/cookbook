@@ -1,5 +1,5 @@
 import collectionStore from '../stores/collectionsStore';
-import userStore from '../stores/userStore';
+import useCurrentUser from './useCurrentUser';
 import useFetch from './useFetch';
 import useMainAction from './useMainAction';
 
@@ -11,7 +11,7 @@ export default function useCollections(): {
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 } {
     const setCollections = collectionStore(state => state.setCollections);
-    const user = userStore(state => state.user);
+    const user = useCurrentUser();
 
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
 

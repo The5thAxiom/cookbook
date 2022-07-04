@@ -8,18 +8,18 @@ import BookmarkAddIcon from '../icons/bookmarkAddIcon';
 import BookmarkIcon from '../icons/bookmarkIcon';
 import BookmarkRemoveIcon from '../icons/bookmarkRemoveIcon';
 
-import userStore from '../../stores/userStore';
 import collectionsStore from '../../stores/collectionsStore';
 import useCollections from '../../hooks/useCollections';
 import useFetch from '../../hooks/useFetch';
 import useMainAction from '../../hooks/useMainAction';
 import { NavLink } from 'react-router-dom';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const collections = collectionsStore(state => state.collections);
     const { addToCollection, removeFromCollection, addNewCollection } =
         useCollections();
-    const user = userStore(state => state.user);
+    const { user } = useCurrentUser();
 
     const [selectedCollection, setSelectedCollection] = useState<string>(
         null as any

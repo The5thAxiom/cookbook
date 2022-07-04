@@ -3,7 +3,6 @@ import icon from '../../assets/food-bar-image.png';
 
 import LogoutIcon from './logoutIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import userStore from '../../stores/userStore';
 
 import HomeIcon from './homeIcon';
 import BrowseIcon from './browseIcon';
@@ -21,8 +20,7 @@ const navbarLinks: navbarLink[] = [
 ];
 
 export default function Navbar() {
-    const user = userStore(state => state.user);
-    const { logOutUser } = useCurrentUser();
+    const { user, logOutUser } = useCurrentUser();
 
     const navigate = useNavigate();
     const searchBar = useRef<HTMLInputElement>(null);
