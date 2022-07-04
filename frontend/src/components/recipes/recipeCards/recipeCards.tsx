@@ -1,5 +1,5 @@
-import LoadingAnimation from '../loadingAnimation';
-import RecipeCard from './recipeCard';
+import LoadingAnimation from '../../loadingAnimation/loadingAnimation';
+import RecipeCard from '../recipeCard/recipeCard';
 import './recipeCards.css';
 
 export default function RecipeCards({ recipes }: { recipes: recipeMeta[] }) {

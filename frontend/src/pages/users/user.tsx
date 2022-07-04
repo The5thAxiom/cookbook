@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import LoadingAnimation from '../../components/loadingAnimation';
+import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation';
 
 export default function User() {
     const [user, setUser] = useState<userData>(null as any);

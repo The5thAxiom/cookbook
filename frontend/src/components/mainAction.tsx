@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import LoadingAnimation from './loadingAnimation';
+import LoadingAnimation from './loadingAnimation/loadingAnimation';
 
 export default function MainAction() {
     const ref = useRef<HTMLDialogElement>(null);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
-import LoadingAnimation from '../../components/loadingAnimation';
-import RecipeCarousel from '../../components/recipes/recipeCarousel';
+import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation';
+import RecipeCarousel from '../../components/recipes/recipeCarousel/recipeCarousel';
 import useCollections from '../../hooks/useCollections';
 
 import collectionsStore from '../../stores/collectionsStore';

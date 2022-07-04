@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
-import BackwardArrowIcon from './icons/backwardArrowIcon';
-import ForwardArrowIcon from './icons/forwardArrowIcon';
+import BackwardArrowIcon from '../icons/backwardArrowIcon';
+import ForwardArrowIcon from '../icons/forwardArrowIcon';
 import './nextPreviousArrows.css';
 
 export default function NextPreviousArrows({

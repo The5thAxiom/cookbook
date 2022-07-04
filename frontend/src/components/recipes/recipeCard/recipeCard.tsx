@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { NavLink } from 'react-router-dom';
-import RecipeTags from './recipeTags';
-import LoadingAnimation from './../loadingAnimation';
-import RecipeActions from '../../components/recipes/recipeActions';
-import useFetch from '../../hooks/useFetch';
+import RecipeTags from '../recipeTags/recipeTags';
+import LoadingAnimation from '../../loadingAnimation/loadingAnimation';
+import RecipeActions from '../recipeActions';
+import useFetch from '../../../hooks/useFetch';
 
 const fitToLength = (text: string, length: number): string =>
     text.length > length ? text.slice(0, length - 3) + '...' : text.padEnd(30);

@@ -8,7 +8,7 @@ import BasicForm from '../../../components/recipeForm/basicForm';
 
 import '../newRecipe/newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
-import LoadingAnimation from '../../../components/loadingAnimation';
+import LoadingAnimation from '../../../components/loadingAnimation/loadingAnimation';
 import useMainAction from '../../../hooks/useMainAction';
 
 export default function EditRecipe() {
