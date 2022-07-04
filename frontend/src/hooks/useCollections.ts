@@ -35,7 +35,7 @@ export default function useCollections(): {
             );
             if (data) {
                 setCollections(data.collections);
-                // console.log('fetched collections');
+                console.log('fetched collections');
             } else console.log("couldn't fetch collections");
         }
     };
