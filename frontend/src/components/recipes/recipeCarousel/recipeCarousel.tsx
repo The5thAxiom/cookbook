@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 
-import BackwardArrowIcon from '../icons/backwardArrowIcon';
-import ForwardArrowIcon from '../icons/forwardArrowIcon';
-import LoadingAnimation from '../loadingAnimation';
-import RecipeCard from './recipeCard';
+import BackwardArrowIcon from '../../icons/backwardArrowIcon';
+import ForwardArrowIcon from '../../icons/forwardArrowIcon';
+import LoadingAnimation from '../../loadingAnimation/loadingAnimation';
+import RecipeCard from '../recipeCard/recipeCard';
 import './recipeCarousel.css';
 
 export default function RecipeCarousel({

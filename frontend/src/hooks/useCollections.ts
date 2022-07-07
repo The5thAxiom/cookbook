@@ -1,17 +1,27 @@
-import collectionStore from '../stores/collectionsStore';
-import userStore from '../stores/userStore';
+import useCurrentUser from './useCurrentUser';
 import useFetch from './useFetch';
 import useMainAction from './useMainAction';
+import create from 'zustand';
+
+const collectionStore = create<{
+    collections: collection[];
+    setCollections: (collections: collection[]) => void;
+}>(set => ({
+    collections: null as any,
+    setCollections: (collections: collection[]) => set({ collections })
+}));
 
 export default function useCollections(): {
+    collections: collection[];
+    setCollections: (collections: collection[]) => void;
     fetchCollections: () => void;
     addNewCollection: (collection_name: string) => void;
     removeCollection: (collection_name: string) => void;
     addToCollection: (collection_name: string, recipe: recipeMeta) => void;
     removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
 } {
-    const setCollections = collectionStore(state => state.setCollections);
-    const user = userStore(state => state.user);
+    const { collections, setCollections } = collectionStore();
+    const { user } = useCurrentUser();
 
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
 
@@ -92,6 +102,8 @@ export default function useCollections(): {
     };
 
     return {
+        collections,
+        setCollections,
         fetchCollections,
         addNewCollection,
         removeCollection,

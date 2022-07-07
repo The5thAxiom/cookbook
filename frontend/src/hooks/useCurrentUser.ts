@@ -1,22 +1,30 @@
-import userStore from '../stores/userStore';
 import accessTokenStore from '../stores/accessTokenStore';
-import collectionStore from '../stores/collectionsStore';
 import useFetch from './useFetch';
 import useMainAction from './useMainAction';
+import create from 'zustand';
+
+const userStore = create<{
+    user: userData;
+    setUser: (user: userData) => void;
+}>(set => ({
+    user: null as any,
+    setUser: (user: userData) => set({ user })
+}));
 
 export default function useCurrentUser(): {
+    user: userData;
     fetchUser: () => void;
     logInUser: (data: userLoginData) => void;
     logOutUser: () => void;
 } {
     const { setAccessToken, removeAccessToken } = accessTokenStore();
-    const setUser = userStore(state => state.setUser);
-    const setCollections = collectionStore(state => state.setCollections);
+    const { user, setUser } = userStore();
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
     const { startMainAction, endMainAction } = useMainAction();
 
     const fetchUser = async () => {
         const data = await fetchJsonAsUser<userData>('/api/users/profile');
+        // console.log('fetched user');
         setUser(data);
     };
 
@@ -41,10 +49,9 @@ export default function useCurrentUser(): {
         fetchAsUser('/api/users/logout');
         removeAccessToken();
         setUser(null as any);
-        setCollections(null as any);
         endMainAction();
     };
 
-    return { fetchUser, logInUser, logOutUser };
+    return { user, fetchUser, logInUser, logOutUser };
 }
 

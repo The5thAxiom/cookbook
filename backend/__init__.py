@@ -1,7 +1,7 @@
 from datetime import timedelta
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -27,16 +27,9 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql+mysqlconnector://{
-    os.environ.get('MYSQL_USERNAME')
-}:{
-    os.environ.get('MYSQL_PASSWORD')
-}@{
-    os.environ.get('MYSQL_SERVER')
-}/{
-    os.environ.get('MYSQL_DB')
-}"""
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # we don't need real time updates as this is a REST based api
+app.config['SQLALCHEMY_DATABASE_URI'] = f"{os.environ.get('DB_URL')}"
+# we don't need real time updates as this is a REST based api
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -56,6 +49,11 @@ from backend.endpoints import *
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+
+@app.route('/api')
+def documentation():
+    return render_template('documentation.html')
 
 # @app.errorhandler(404)
 # def not_found(e):

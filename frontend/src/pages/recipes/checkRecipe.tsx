@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import LoadingAnimation from '../../components/loadingAnimation';
-import NextPreviousArrows from '../../components/nextPreviousArrows';
-import RecipeTags from '../../components/recipes/recipeTags';
+import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation';
+import NextPreviousArrows from '../../components/nextPreviousArrows/nextPreviousArrows';
+import RecipeTags from '../../components/recipes/recipeTags/recipeTags';
 import RecipeActions from '../../components/recipes/recipeActions';
 
 import useFetch from '../../hooks/useFetch';

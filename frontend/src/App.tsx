@@ -8,7 +8,7 @@ import './styles/utility.css';
 import Footer from './components/footer';
 import Navbar from './components/navbar/navbar';
 import MainAction from './components/mainAction';
-import GoToTopButton from './components/goToTopButton';
+import GoToTopButton from './components/gotToTopButton/goToTopButton';
 
 import Home from './pages/home';
 
@@ -25,18 +25,14 @@ import Signup from './pages/users/signup';
 import useCurrentUser from './hooks/useCurrentUser';
 import useCollections from './hooks/useCollections';
 
-import userStore from './stores/userStore';
 import accessTokenStore from './stores/accessTokenStore';
-import collectionStore from './stores/collectionsStore';
 
 export default function App() {
     const accessToken = accessTokenStore(state => state.accessToken);
 
-    const user = userStore(state => state.user);
-    const { fetchUser, logOutUser } = useCurrentUser();
+    const { user, fetchUser, logOutUser } = useCurrentUser();
 
-    const { fetchCollections } = useCollections();
-    const setColletions = collectionStore(state => state.setCollections);
+    const { setCollections, fetchCollections } = useCollections();
 
     useEffect(() => {
         if (accessToken !== '') fetchUser();
@@ -45,7 +41,7 @@ export default function App() {
 
     useEffect(() => {
         if (user) fetchCollections();
-        else setColletions(null as any);
+        else setCollections(null as any);
     }, [user]);
 
     return (

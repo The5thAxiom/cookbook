@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cookbook API</title>
+    </head>
+    <style>
+        body {
+            margin: 0;
+        }
+        section {
+            background-color: lightgreen;
+            padding-inline: 1em;
+        }
+    </style>
+    <body>
+        <h1>Welcome to the cookbook API</h1>
+        <section id="Users">
+            <h2>Users</h2>
+
+            <h3><code>/api/users</code></h3>
+            <h4><code>GET</code></h4>
+            <h4><code>POST</code></h4>
+
+            <h3><code>/api/users/[username]</code></h3>
+            <h4><code>GET</code></h4>
+        </section>
+        <section id="Current-User">
+            <h2>Current User</h2>
+
+            <h3><code>/api/login</code></h3>
+            <h4><code>POST</code></h4>
+
+            <h3><code>/api/logout</code></h3>
+            <h4>🔒<code>GET</code></h4>
+
+            <h3><code>/api/profile</code></h3>
+            <h4>🔒<code>GET</code></h4>
+        </section>
+        <section id="Recipes">
+            <h2>Recipes</h2>
+
+            <h3><code>/api/recipes</code></h3>
+            <h4>🔒<code>POST</code></h4>
+
+            <h3><code>/api/recipes/[id]</code></h3>
+            <h4><code>GET</code></h4>
+            <h4>🔒<code>PATCH</code></h4>
+            <h4>🔒<code>DELETE</code></h4>
+
+            <h3><code>/api/recipes/[id]/tags</code></h3>
+            <h4><code>GET</code></h4>
+
+            <h3><code>/api/recipes/[id]/full</code></h3>
+            <h4><code>GET</code></h4>
+
+            <h3><code>/api/recipes/count</code></h3>
+            <h4><code>GET</code></h4>
+
+            <h3><code>/api/recipes/all</code></h3>
+            <h4><code>GET</code></h4>
+
+            <h3><code>/api/recipes/bytag/[tag]</code></h3>
+            <h4><code>GET</code></h4>
+        </section>
+        <section id="Miscellaneous">
+            <h2>Miscellaneous</h2>
+
+            <h3><code>/api/ingredients/all</code></h3>
+            <h4><code>GET</code></h4>
+
+            <h3><code>/api/tags/all</code></h3>
+            <h4><code>GET</code></h4>
+        </section>
+    </body>
+</html>

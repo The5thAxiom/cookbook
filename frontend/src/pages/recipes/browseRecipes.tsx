@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import RecipeCards from '../../components/recipes/recipeCards';
+import RecipeCards from '../../components/recipes/recipeCards/recipeCards';
 import useFetch from '../../hooks/useFetch';
 
 export default function BrowseRecipes() {

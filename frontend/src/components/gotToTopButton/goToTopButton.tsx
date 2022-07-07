@@ -1,4 +1,4 @@
-import UpArrowIcon from './icons/upArrowIcon';
+import UpArrowIcon from '../icons/upArrowIcon';
 import './goToTopButton.css';
 import { useEffect, useState } from 'react';
 
@@ -19,3 +19,4 @@ export default function GoToTopButton() {
         <></>
     );
 }
+

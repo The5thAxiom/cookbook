@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import CloseIcon from '../../components/icons/closeIcon';
-import LoadingAnimation from '../../components/loadingAnimation';
-import RecipeCarousel from '../../components/recipes/recipeCarousel';
+import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation';
+import RecipeCarousel from '../../components/recipes/recipeCarousel/recipeCarousel';
 import useCollections from '../../hooks/useCollections';
 
-import collectionsStore from '../../stores/collectionsStore';
 import './profile.css';
 
 export default function Profile({ user }: { user: userData }) {
-    const collections = collectionsStore(state => state.collections);
-    const { addNewCollection, removeCollection } = useCollections();
+    const { collections, addNewCollection, removeCollection } =
+        useCollections();
 
     const [recipes, setRecipes] = useState<recipeMeta[]>(null as any);
 
