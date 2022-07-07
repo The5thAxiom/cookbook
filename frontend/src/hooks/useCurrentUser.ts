@@ -24,7 +24,7 @@ export default function useCurrentUser(): {
 
     const fetchUser = async () => {
         const data = await fetchJsonAsUser<userData>('/api/users/profile');
-        console.log('fetched user');
+        // console.log('fetched user');
         setUser(data);
     };
 
