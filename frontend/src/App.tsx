@@ -18,7 +18,7 @@ import EditRecipe from './pages/recipes/editRecipe/editRecipe';
 import BrowseRecipes from './pages/recipes/browseRecipes';
 
 import User from './pages/users/user';
-import Profile from './pages/users/profile';
+import Profile from './pages/users/profile/profile';
 import Login from './pages/users/login';
 import Signup from './pages/users/signup';
 
