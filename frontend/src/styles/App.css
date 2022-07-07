@@ -46,6 +46,8 @@ main {
     background: var(--primary-bg);
     margin-top: var(--navbar-height);
     flex: auto;
+
+    overflow-x: auto;
 }
 
 @media only screen and (max-width: 800px) {
