@@ -50,3 +50,13 @@
     margin-bottom: 10px;
 }
 
+@media only screen and (max-width: 600px) {
+    .recipe-cards-carousel-container > .arrow {
+        display: none;
+    }
+    .recipe-cards-carousel {
+        display: flex;
+        flex-direction: column;
+    }
+} ;
+
