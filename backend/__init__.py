@@ -31,8 +31,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"{os.environ.get('DB_URL')}"
 # we don't need real time updates as this is a REST based api
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-print(os.environ.get('DB_URL'))
-
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
