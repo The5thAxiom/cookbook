@@ -8,8 +8,7 @@ const collectionStore = create<{
     setCollections: (collections: collection[]) => void;
 }>(set => ({
     collections: null as any,
-    setCollections: (collections: collection[]) =>
-        set({ collections: collections })
+    setCollections: (collections: collection[]) => set({ collections })
 }));
 
 export default function useCollections(): {

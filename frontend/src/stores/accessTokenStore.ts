@@ -8,12 +8,13 @@ const accessTokenStore = create<{
     accessToken: localStorage.getItem('access_token') || '',
     setAccessToken: (accessToken: string) => {
         localStorage.setItem('access_token', accessToken);
-        set(state => ({ accessToken: accessToken }));
+        set({ accessToken });
     },
     removeAccessToken: () => {
         localStorage.setItem('access_token', '');
-        set(state => ({ accessToken: '' }));
+        set({ accessToken: '' });
     }
 }));
 
 export default accessTokenStore;
+

@@ -8,7 +8,7 @@ const userStore = create<{
     setUser: (user: userData) => void;
 }>(set => ({
     user: null as any,
-    setUser: (user: userData) => set(state => ({ user: user }))
+    setUser: (user: userData) => set({ user })
 }));
 
 export default function useCurrentUser(): {
