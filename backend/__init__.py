@@ -27,16 +27,11 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cookbook.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = f"""mysql+mysqlconnector://{
-    os.environ.get('MYSQL_USERNAME')
-}:{
-    os.environ.get('MYSQL_PASSWORD')
-}@{
-    os.environ.get('MYSQL_SERVER')
-}/{
-    os.environ.get('MYSQL_DB')
-}"""
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # we don't need real time updates as this is a REST based api
+app.config['SQLALCHEMY_DATABASE_URI'] = f"{os.environ.get('DB_URL')}"
+# we don't need real time updates as this is a REST based api
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+print(os.environ.get('DB_URL'))
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
