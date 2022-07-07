@@ -44,11 +44,17 @@ nav#navbar {
 }
 
 @media only screen and (max-width: 800px) {
+    .navbar-search > input {
+        width: 2.7rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
     .navbar-search {
         margin-inline: auto 0;
     }
-    .navbar-search > input {
-        width: 2.7rem;
+    .navbar-logo > div {
+        display: none;
     }
 }
 
@@ -88,3 +94,4 @@ nav#navbar {
 a.navbar-link-active .navbar-icon {
     fill: var(--orange-main);
 }
+
