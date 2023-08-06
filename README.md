@@ -12,7 +12,7 @@ Making a simple app using React and Flask.
 -   makefile
 
 ## Setup `venv`
-
+- Works on python 3.8
 -   Create a python virtual environment (venv) using the command `...`
 -   Activate the venv
 -   Run the command `pip install -r requirements.txt`
