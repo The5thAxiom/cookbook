@@ -9,8 +9,7 @@ from flask_jwt_extended import\
     get_jwt,\
     get_jwt_identity,\
     unset_jwt_cookies,\
-    jwt_required,\
-    JWTManager
+    jwt_required
 
 from backend import app, bcrypt
 from backend.models import Recipe
