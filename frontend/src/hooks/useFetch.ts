@@ -8,11 +8,13 @@ export default function useFetch(): {
     const { accessToken, setAccessToken, removeAccessToken } =
         accessTokenStore();
 
+    const apiUrl = 'http://localhost:5000';
+
     const fetchAsUser = async (
         input: RequestInfo,
         init?: RequestInit
     ): Promise<Response> => {
-        const res = await fetch(input, {
+        const res = await fetch(apiUrl + input, {
             ...init,
             headers: {
                 ...init?.headers,
@@ -36,7 +38,7 @@ export default function useFetch(): {
         input: RequestInfo,
         init?: RequestInit
     ): Promise<T> => {
-        const res = await fetch(input, {
+        const res = await fetch(apiUrl + input, {
             ...init,
             headers: {
                 ...init?.headers,
@@ -62,7 +64,7 @@ export default function useFetch(): {
         input: RequestInfo,
         init?: RequestInit
     ): Promise<T> => {
-        const res = await fetch(input, init);
+        const res = await fetch(apiUrl + input, init);
         const data = await res.json();
         return data as T;
     };

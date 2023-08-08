@@ -22,6 +22,8 @@ export default function useCurrentUser(): {
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
     const { startMainAction, endMainAction } = useMainAction();
 
+    const apiUrl = 'http://localhost:5000';
+
     const fetchUser = async () => {
         const data = await fetchJsonAsUser<userData>('/api/users/profile');
         // console.log('fetched user');
@@ -30,7 +32,7 @@ export default function useCurrentUser(): {
 
     const logInUser = async (data: userLoginData) => {
         startMainAction();
-        const res = await fetch('/api/users/login', {
+        const res = await fetch(apiUrl + '/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
