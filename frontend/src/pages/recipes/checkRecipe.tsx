@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
+import CommentForm from '../../components/comments/commentForm';
+import Comments from '../../components/comments/comments';
 import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation';
 import NextPreviousArrows from '../../components/nextPreviousArrows/nextPreviousArrows';
 import RecipeTags from '../../components/recipes/recipeTags/recipeTags';
@@ -11,6 +13,7 @@ export default function CheckRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const [nextRecipe, setNextRecipe] = useState<recipeMeta>(null as any);
     const [prevRecipe, setPrevRecipe] = useState<recipeMeta>(null as any);
+    const [comments, setComments] = useState<comment[]>([]);
     const params = useParams();
 
     const { fetchJson } = useFetch();
@@ -34,7 +37,7 @@ export default function CheckRecipe() {
         const fetchPrevRecipe = async () => {
             if (recipe.prev_id !== 0) {
                 const pr = await fetchJson<recipeMeta>(
-                    `api/recipes/${recipe.prev_id}`
+                    `/api/recipes/${recipe.prev_id}`
                 );
                 setPrevRecipe(pr);
             }
@@ -43,15 +46,23 @@ export default function CheckRecipe() {
         const fetchNextRecipe = async () => {
             if (recipe.next_id !== 0) {
                 const nr = await fetchJson<recipeMeta>(
-                    `api/recipes/${recipe.next_id}`
+                    `/api/recipes/${recipe.next_id}`
                 );
                 setNextRecipe(nr);
             }
         };
 
+        const fetchComments = async () => {
+            const { comments } = await fetchJson<{ comments: comment[] }>(
+                `/api/recipes/${recipe.id}/comments`
+            );
+            setComments(comments);
+        };
+
         if (recipe) {
             fetchPrevRecipe();
             fetchNextRecipe();
+            fetchComments();
         }
     }, [recipe]);
 
@@ -114,6 +125,11 @@ export default function CheckRecipe() {
                             )
                         )}
                     </ol>
+                </section>
+                <section id='comments'>
+                    <h2>Comments</h2>
+                    <CommentForm recipe={recipe} />
+                    <Comments comments={comments} />
                 </section>
                 <NextPreviousArrows
                     prevRecipe={prevRecipe}
