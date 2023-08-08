@@ -4,75 +4,87 @@ from backend.models import *
 
 def addFullRecipe(newRecipeFull: str, contributor_id: int, id=None):
     if id is None:
-        newRecipe = Recipe(**{
-            "name": newRecipeFull["name"],
-            "prep_time": newRecipeFull["prep_time"],
-            "description": newRecipeFull["description"],
-            "difficulty": newRecipeFull["difficulty"],
-            "contributor_id": contributor_id,
-            "vegetarian": newRecipeFull["vegetarian"],
-            "quantity": newRecipeFull["quantity"],
-            "unit": newRecipeFull["unit"]
-        })
+        newRecipe = Recipe(
+            **{
+                "name": newRecipeFull["name"],
+                "prep_time": newRecipeFull["prep_time"],
+                "description": newRecipeFull["description"],
+                "difficulty": newRecipeFull["difficulty"],
+                "contributor_id": contributor_id,
+                "vegetarian": newRecipeFull["vegetarian"],
+                "quantity": newRecipeFull["quantity"],
+                "unit": newRecipeFull["unit"],
+            }
+        )
         db.session.add(newRecipe)
         db.session.commit()
         id = newRecipe.id
     else:
-        db.session.add(Recipe(**{
-            "id": id,
-            "name": newRecipeFull["name"],
-            "prep_time": newRecipeFull["prep_time"],
-            "description": newRecipeFull["description"],
-            "difficulty": newRecipeFull["difficulty"],
-            "contributor_id": contributor_id,
-            "vegetarian": newRecipeFull["vegetarian"],
-            "quantity": newRecipeFull["quantity"],
-            "unit": newRecipeFull["unit"]
-        }))
+        db.session.add(
+            Recipe(
+                **{
+                    "id": id,
+                    "name": newRecipeFull["name"],
+                    "prep_time": newRecipeFull["prep_time"],
+                    "description": newRecipeFull["description"],
+                    "difficulty": newRecipeFull["difficulty"],
+                    "contributor_id": contributor_id,
+                    "vegetarian": newRecipeFull["vegetarian"],
+                    "quantity": newRecipeFull["quantity"],
+                    "unit": newRecipeFull["unit"],
+                }
+            )
+        )
         db.session.commit()
 
     for step in newRecipeFull["recipe_steps"]:
-        db.session.add(Recipe_Step(**{
-            "recipe_id": id,
-            "serial_number": step["serial_number"],
-            "instruction": step["instruction"]
-        }))
+        db.session.add(
+            Recipe_Step(
+                **{
+                    "recipe_id": id,
+                    "serial_number": step["serial_number"],
+                    "instruction": step["instruction"],
+                }
+            )
+        )
     db.session.commit()
 
     for tag in newRecipeFull["recipe_tags"]:
         newTag = Tag.query.filter_by(name=tag["name"]).first()
         if newTag is None:
-            newTag = Tag(**{
-                "name": tag["name"]
-            })
+            newTag = Tag(**{"name": tag["name"]})
             db.session.add(newTag)
             db.session.commit()
         db.engine.execute(
-            Recipe_Tag.insert().values(**{
-                'tag_id': newTag.id,
-                'recipe_id': id
-            })
+            Recipe_Tag.insert().values(**{"tag_id": newTag.id, "recipe_id": id})
         )
 
     # add all the ingredients (if they don't exist already)
     for ingredient in newRecipeFull["recipe_ingredients"]:
         newIngredient = Ingredient.query.filter_by(
-            english_name=ingredient["english_name"]).first()
+            english_name=ingredient["english_name"]
+        ).first()
         if newIngredient is None:
-            newIngredient = Ingredient(**{
-                "english_name": ingredient["english_name"],
-                "hindi_name_latin": ingredient["hindi_name_latin"],
-                "hindi_name_devnagari": ingredient["hindi_name_devnagari"]
-            })
+            newIngredient = Ingredient(
+                **{
+                    "english_name": ingredient["english_name"],
+                    "hindi_name_latin": ingredient["hindi_name_latin"],
+                    "hindi_name_devnagari": ingredient["hindi_name_devnagari"],
+                }
+            )
             db.session.add(newIngredient)
             db.session.commit()
 
-        db.session.add(Recipe_Ingredient(**{
-            "recipe_id": id,
-            "ingredient_id": newIngredient.id,
-            "quantity": ingredient["quantity"],
-            "unit": ingredient["unit"]
-        }))
+        db.session.add(
+            Recipe_Ingredient(
+                **{
+                    "recipe_id": id,
+                    "ingredient_id": newIngredient.id,
+                    "quantity": ingredient["quantity"],
+                    "unit": ingredient["unit"],
+                }
+            )
+        )
     db.session.commit()
 
 
@@ -86,15 +98,13 @@ def editRecipe(newRecipeFull, recipe: Recipe, user: User):
 
 
 def addNewUser(newUser: dict):
-    newUser['password'] = bcrypt.generate_password_hash(
-        newUser['password'].encode('utf-8'))
+    newUser["password"] = bcrypt.generate_password_hash(
+        newUser["password"].encode("utf-8")
+    )
     user = User(**newUser)
     db.session.add(user)
     db.session.commit()
-    db.session.add(Collection(**{
-        'name': 'favourites',
-        'user_id': user.id
-    }))
+    db.session.add(Collection(**{"name": "favourites", "user_id": user.id}))
     db.session.commit()
 
 
@@ -140,7 +150,7 @@ def getRecipeMeta(recipeById: Recipe):
         "unit": recipeById.unit,
         "contributor_username": recipeById.contributor.username,
         "next_id": getNextOf(recipeById.id),
-        "prev_id": getPrevOf(recipeById.id)
+        "prev_id": getPrevOf(recipeById.id),
     }
 
 
@@ -151,8 +161,9 @@ def getRecipeIngredients(recipe: Recipe):
             "hindi_name_latin": recipe_ingredient.ingredient.hindi_name_latin,
             "hindi_name_devnagari": recipe_ingredient.ingredient.hindi_name_devnagari,
             "quantity": recipe_ingredient.quantity,
-            "unit": recipe_ingredient.unit
-        } for recipe_ingredient in recipe.ingredients
+            "unit": recipe_ingredient.unit,
+        }
+        for recipe_ingredient in recipe.ingredients
     ]
 
 
@@ -169,7 +180,7 @@ def getContributor(recipe: Recipe):
     return {
         "contributor_name": recipe.contributor.name,
         "contributor_username": recipeById.contributor.username,
-        "contributor_bio": recipe.contributor.bio
+        "contributor_bio": recipe.contributor.bio,
     }
 
 
@@ -190,5 +201,32 @@ def getRecipeFull(recipeById: Recipe):
         "recipe_ingredients": getRecipeIngredients(recipeById),
         "recipe_steps": getRecipeSteps(recipeById),
         "next_id": getNextOf(recipeById.id),
-        "prev_id": getPrevOf(recipeById.id)
+        "prev_id": getPrevOf(recipeById.id),
     }
+
+
+def getCommentsTreeForRecipe(recipe: Recipe):
+    comments = Comment.query.filter(Comment.recipe_id == recipe.id)
+    coms = {
+        com.id: {
+            "id": com.id,
+            "text": com.text,
+            "commenter": User.query.filter(User.id == com.commenter_id).first().username,
+            "is_reply": com.is_reply,
+            "reply_to": com.original_comment_id,
+            "replies": [],
+        }
+        for com in comments
+    }
+    remove_list = []
+    for id, com in coms.items():
+        if com["is_reply"]:
+            coms[id]["replies"].append(com)
+            remove_list.append(id)
+    for id in remove_list:
+        del coms[id]
+    coms = [coms[id] for id in coms]
+    for com in coms:
+        del com['is_reply']
+        del com['reply_to']
+    return coms
