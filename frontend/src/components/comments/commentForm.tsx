@@ -4,10 +4,12 @@ import useFetch from '../../hooks/useFetch';
 
 export default function CommentForm({
     recipe,
-    reply_to
+    reply_to,
+    fetchComments
 }: {
     recipe: recipeFull;
     reply_to?: comment;
+    fetchComments: () => void;
 }) {
     const { fetchAsUser } = useFetch();
     const [text, setText] = useState<string>('');
@@ -28,8 +30,11 @@ export default function CommentForm({
                 body: JSON.stringify(commentData)
             }
         );
-        if (res.ok) alert('comment added!');
-        else {
+        if (res.ok) {
+            alert('comment added!');
+            fetchComments();
+            setText('');
+        } else {
             const data = await res.json();
             alert(data.msg);
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import CommentForm from '../../components/comments/commentForm';
 import Comments from '../../components/comments/comments';
@@ -30,6 +30,13 @@ export default function CheckRecipe() {
         }
     }, [params.id]);
 
+    const fetchComments = useCallback(async () => {
+        const { comments } = await fetchJson<{ comments: comment[] }>(
+            `/api/recipes/${recipe.id}/comments`
+        );
+        setComments(comments);
+    }, [recipe]);
+
     useEffect(() => {
         setNextRecipe(null as any);
         setPrevRecipe(null as any);
@@ -50,13 +57,6 @@ export default function CheckRecipe() {
                 );
                 setNextRecipe(nr);
             }
-        };
-
-        const fetchComments = async () => {
-            const { comments } = await fetchJson<{ comments: comment[] }>(
-                `/api/recipes/${recipe.id}/comments`
-            );
-            setComments(comments);
         };
 
         if (recipe) {
@@ -128,7 +128,10 @@ export default function CheckRecipe() {
                 </section>
                 <section id='comments'>
                     <h2>Comments</h2>
-                    <CommentForm recipe={recipe} />
+                    <CommentForm
+                        recipe={recipe}
+                        fetchComments={fetchComments}
+                    />
                     <Comments comments={comments} />
                 </section>
                 <NextPreviousArrows
