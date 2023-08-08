@@ -97,3 +97,10 @@ declare type collection = {
     recipes: recipeMeta[];
 };
 
+declare type comment = {
+    id: number;
+    commenter: string;
+    text: string;
+    replies: comment[];
+};
+
