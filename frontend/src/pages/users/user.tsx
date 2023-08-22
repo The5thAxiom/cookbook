@@ -5,11 +5,10 @@ import LoadingAnimation from '../../components/loadingAnimation/loadingAnimation
 export default function User() {
     const [user, setUser] = useState<userData>(null as any);
     const params = useParams();
-    const apiUrl = 'http://localhost:5000';
 
     useEffect(() => {
         setUser(null as any);
-        fetch(apiUrl + `/api/users/${params.username}`)
+        fetch(`/api/users/${params.username}`)
             .then(res => res.json())
             .then((data: userData) => setUser(data));
     }, [params.username]);
