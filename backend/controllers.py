@@ -221,7 +221,7 @@ def getCommentsTreeForRecipe(recipe: Recipe):
     remove_list = []
     for id, com in coms.items():
         if com["is_reply"]:
-            coms[id]["replies"].append(com)
+            coms[com['reply_to']]["replies"].append(com)
             remove_list.append(id)
     for id in remove_list:
         del coms[id]
