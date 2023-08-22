@@ -5,18 +5,18 @@ import useFetch from '../../hooks/useFetch';
 export default function CommentForm({
     recipe,
     reply_to,
-    fetchComments
+    onSuccess
 }: {
     recipe: recipeFull;
     reply_to?: comment;
-    fetchComments: () => void;
+    onSuccess: () => void;
 }) {
     const { fetchAsUser } = useFetch();
     const [text, setText] = useState<string>('');
 
     async function addComment() {
         const commentData = {
-            is_reply: reply_to === null,
+            is_reply: reply_to !== undefined,
             original_comment_id: reply_to ? reply_to.id : null,
             text
         };
@@ -32,7 +32,7 @@ export default function CommentForm({
         );
         if (res.ok) {
             alert('comment added!');
-            fetchComments();
+            onSuccess();
             setText('');
         } else {
             const data = await res.json();
@@ -43,11 +43,15 @@ export default function CommentForm({
     return (
         <>
             <input
-                placeholder='Add your comment here'
+                placeholder={
+                    reply_to ? 'Addy your reply here' : 'Add your comment here'
+                }
                 onChange={e => setText(e.target.value)}
                 value={text}
             />
-            <button onClick={addComment}>Add</button>
+            <button onClick={addComment}>
+                {reply_to ? 'Reply' : 'Comment'}
+            </button>
         </>
     );
 }
