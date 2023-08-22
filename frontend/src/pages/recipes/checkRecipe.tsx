@@ -128,11 +128,12 @@ export default function CheckRecipe() {
                 </section>
                 <section id='comments'>
                     <h2>Comments</h2>
-                    <CommentForm
+                    <CommentForm recipe={recipe} onSuccess={fetchComments} />
+                    <Comments
                         recipe={recipe}
+                        comments={comments}
                         fetchComments={fetchComments}
                     />
-                    <Comments comments={comments} />
                 </section>
                 <NextPreviousArrows
                     prevRecipe={prevRecipe}

@@ -1,0 +1,5 @@
+.reply-block {
+    padding-left: 1em;
+    margin-left: 1em;
+    border-left: 2px solid var(--green-main);
+}

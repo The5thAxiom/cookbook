@@ -1,19 +1,30 @@
 import React from 'react';
+import CommentWithReplies from './commentWithReplies';
 
-function printComment({ commenter, text, replies, id }: comment) {
-    return (
-        <div key={id}>
-            <b>{commenter}</b>: {text}
-            {replies.length > 0 && replies.map(printComment)}
-        </div>
-    );
-}
-
-export default function Comments({ comments }: { comments: comment[] }) {
+export default function Comments({
+    recipe,
+    comments,
+    fetchComments
+}: {
+    recipe: recipeFull;
+    comments: comment[];
+    fetchComments: () => void;
+}) {
     return (
         <div>
             {comments.length > 0 ? (
-                <>{comments.map(printComment)}</>
+                <>
+                    {comments.map(comment => (
+                        <div key={comment.id}>
+                            <CommentWithReplies
+                                isBaseLevel={true}
+                                recipe={recipe}
+                                comment={comment}
+                                fetchComments={fetchComments}
+                            />
+                        </div>
+                    ))}
+                </>
             ) : (
                 <>No comments found :(</>
             )}
