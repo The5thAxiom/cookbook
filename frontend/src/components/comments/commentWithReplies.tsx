@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import CommentForm from './commentForm';
 
 import './comments.css';
@@ -17,7 +18,12 @@ export default function CommentWithReplies({
     const [showReplyForm, setShowReplyForm] = useState(false);
     return (
         <>
-            <b>{comment.commenter}</b>: {comment.text}{' '}
+            <b>
+                <NavLink to={`/user/@${comment.commenter}`}>
+                    @{comment.commenter}
+                </NavLink>
+            </b>
+            : {comment.text}{' '}
             <button onClick={() => setShowReplyForm(!showReplyForm)}>
                 {showReplyForm ? 'Cancel' : 'Reply'}
             </button>
