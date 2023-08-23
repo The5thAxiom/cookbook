@@ -3,6 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import { MdSend } from 'react-icons/md';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { NavLink } from 'react-router-dom';
+import useMainAction from '../../hooks/useMainAction';
 
 export default function CommentForm({
     recipe,
@@ -16,8 +17,10 @@ export default function CommentForm({
     const { fetchAsUser } = useFetch();
     const [text, setText] = useState<string>('');
     const { user } = useCurrentUser();
+    const { startMainAction, endMainAction } = useMainAction();
 
     async function addComment() {
+        startMainAction();
         const commentData = {
             is_reply: reply_to !== undefined,
             original_comment_id: reply_to ? reply_to.id : null,
@@ -33,6 +36,7 @@ export default function CommentForm({
                 body: JSON.stringify(commentData)
             }
         );
+        endMainAction();
         if (res.ok) {
             alert('comment added!');
             onSuccess();
