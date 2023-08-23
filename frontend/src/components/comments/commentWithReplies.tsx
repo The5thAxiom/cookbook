@@ -37,7 +37,15 @@ export default function CommentWithReplies({
                 </button>
                 {comment.replies.length > 0 && (
                     <button onClick={() => setShowReplies(!showReplies)}>
-                        {showReplies ? <MdArrowDropUp /> : <MdArrowDropDown />}
+                        {showReplies ? (
+                            <MdArrowDropUp />
+                        ) : (
+                            <>
+                                <MdArrowDropDown /> {comment.replies.length}{' '}
+                                repl
+                                {comment.replies.length === 1 ? 'y' : 'ies'}
+                            </>
+                        )}
                     </button>
                 )}
             </div>
