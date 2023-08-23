@@ -1,8 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
-import BackwardArrowIcon from '../icons/backwardArrowIcon';
-import ForwardArrowIcon from '../icons/forwardArrowIcon';
 import './nextPreviousArrows.css';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 
 export default function NextPreviousArrows({
     nextRecipe,
@@ -18,7 +17,7 @@ export default function NextPreviousArrows({
                     className='arrow left-arrow'
                     to={`/recipes/${prevRecipe.id}`}
                 >
-                    <BackwardArrowIcon className='arrow-icon' />
+                    <MdArrowBack className='arrow-icon' />
                     <div className='arrow-page-name arrow-prev-page-name'>
                         Prev
                         <br />
@@ -37,7 +36,7 @@ export default function NextPreviousArrows({
                         <br />
                         {nextRecipe.name}
                     </div>
-                    <ForwardArrowIcon className='arrow-icon' />
+                    <MdArrowForward className='arrow-icon' />
                 </NavLink>
             )}
         </nav>

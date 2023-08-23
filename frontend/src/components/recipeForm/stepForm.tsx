@@ -1,5 +1,4 @@
-import EditIcon from '../icons/editIcon';
-import DeleteIcon from '../icons/deleteIcon';
+import { MdDelete } from 'react-icons/md';
 
 export default function StepForm({
     steps,
@@ -32,7 +31,7 @@ export default function StepForm({
                                     }}
                                     className='inline-button'
                                 >
-                                    <EditIcon />
+                                    <MdEdit />
                                 </button> */}
                                 <button
                                     onClick={e => {
@@ -43,7 +42,7 @@ export default function StepForm({
                                     }}
                                     className='inline-button'
                                 >
-                                    <DeleteIcon />
+                                    <MdDelete className='util-icon' />
                                 </button>
                             </li>
                         ))}

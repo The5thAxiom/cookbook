@@ -14,6 +14,8 @@
 
 .util-icon {
     fill: var(--orange-main);
+    height: 24px;
+    width: 24px;
 }
 
 .util-icon:hover {
@@ -26,3 +28,4 @@
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+

@@ -1,6 +1,6 @@
-import UpArrowIcon from '../icons/upArrowIcon';
-import './goToTopButton.css';
 import { useEffect, useState } from 'react';
+import { MdArrowUpward } from 'react-icons/md';
+import './goToTopButton.css';
 
 export default function GoToTopButton() {
     const [show, setShow] = useState<boolean>(false);
@@ -13,7 +13,7 @@ export default function GoToTopButton() {
 
     return show ? (
         <div className='to-top' onClick={() => window.scrollTo(0, 0)}>
-            <UpArrowIcon />
+            <MdArrowUpward className='util-icon' />
         </div>
     ) : (
         <></>

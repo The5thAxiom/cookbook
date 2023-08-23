@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import EditIcon from '../icons/editIcon';
-import DeleteIcon from '../icons/deleteIcon';
+import { MdDelete } from 'react-icons/md';
 
 export default function IngredientForm({
     ingredients,
@@ -79,7 +78,7 @@ export default function IngredientForm({
                                     }}
                                     className='inline-button'
                                 >
-                                    <EditIcon />
+                                    <MdEdit className='util-icon' />
                                 </button> */}
                                 <button
                                     onClick={e => {
@@ -92,7 +91,7 @@ export default function IngredientForm({
                                     }}
                                     className='inline-button'
                                 >
-                                    <DeleteIcon />
+                                    <MdDelete className='util-icon' />
                                 </button>
                             </li>
                         ))}

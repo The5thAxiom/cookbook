@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
 
-import BackwardArrowIcon from '../../icons/backwardArrowIcon';
-import ForwardArrowIcon from '../../icons/forwardArrowIcon';
 import LoadingAnimation from '../../loadingAnimation/loadingAnimation';
 import RecipeCard from '../recipeCard/recipeCard';
 import './recipeCarousel.css';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 
 export default function RecipeCarousel({
     recipes,
@@ -34,7 +33,7 @@ export default function RecipeCarousel({
         return (
             <div className='recipe-cards-carousel-container'>
                 <div className='arrow prev util-noselect' onClick={goLeft(400)}>
-                    <BackwardArrowIcon />
+                    <MdArrowBack className='util-icon' />
                 </div>
                 <div ref={carousel} className='recipe-cards-carousel'>
                     {(reversed ? recipes.slice().reverse() : recipes).map(r => (
@@ -45,7 +44,7 @@ export default function RecipeCarousel({
                     className='arrow next util-noselect'
                     onClick={goRight(400)}
                 >
-                    <ForwardArrowIcon />
+                    <MdArrowForward className='util-icon' />
                 </div>
             </div>
         );

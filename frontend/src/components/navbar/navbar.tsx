@@ -1,15 +1,15 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import icon from '../../assets/food-bar-image.png';
 
-import LogoutIcon from './logoutIcon';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
 import HomeIcon from './homeIcon';
 import BrowseIcon from './browseIcon';
 import AboutIcon from './aboutIcon';
-import SearchIcon from './searchIcon';
+
+import { MdClose, MdLogout, MdSearch } from 'react-icons/md';
+
 import { useRef, useState } from 'react';
-import CloseIcon from '../icons/closeIcon';
 
 import './navbar.css';
 
@@ -65,11 +65,11 @@ export default function Navbar() {
                 />
                 {searchString.trim().length > 0 && (
                     <div onClick={clearSearchBar}>
-                        <CloseIcon />
+                        <MdClose />
                     </div>
                 )}
                 <div onClick={search}>
-                    <SearchIcon />
+                    <MdSearch />
                 </div>
             </div>
 
@@ -91,7 +91,7 @@ export default function Navbar() {
                     onClick={logOutUser}
                     to='/user'
                 >
-                    <LogoutIcon />
+                    <MdLogout className='navbar-icon' />
                 </NavLink>
             )}
         </nav>

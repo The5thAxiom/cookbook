@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import CloseIcon from '../../../components/icons/closeIcon';
+
 import LoadingAnimation from '../../../components/loadingAnimation/loadingAnimation';
 import RecipeCarousel from '../../../components/recipes/recipeCarousel/recipeCarousel';
 import useCollections from '../../../hooks/useCollections';
 
 import './profile.css';
+import { MdDelete } from 'react-icons/md';
 
 export default function Profile({ user }: { user: userData }) {
     const { collections, addNewCollection, removeCollection } =
@@ -134,7 +135,7 @@ export default function Profile({ user }: { user: userData }) {
                                         className='util-icon util-clickable'
                                         onClick={() => removeCollection(c.name)}
                                     >
-                                        <CloseIcon />
+                                        <MdDelete className='util-icon' />
                                     </span>
                                 </h3>
                                 <RecipeCarousel recipes={c.recipes} />

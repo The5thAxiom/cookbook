@@ -89,6 +89,8 @@ nav#navbar {
 
 .navbar-icon {
     fill: var(--orange-main);
+    height: 24px;
+    width: 24px;
 }
 
 a.navbar-link-active .navbar-icon {

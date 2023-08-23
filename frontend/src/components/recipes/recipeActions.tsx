@@ -1,18 +1,19 @@
 import { useState } from 'react';
 
-import EditIcon from '../icons/editIcon';
-import DeleteIcon from '../icons/deleteIcon';
-import HeartIcon from '../icons/heartIcon';
-import BrokenHeartIcon from '../icons/brokenHeartIcon';
-import BookmarkAddIcon from '../icons/bookmarkAddIcon';
-import BookmarkIcon from '../icons/bookmarkIcon';
-import BookmarkRemoveIcon from '../icons/bookmarkRemoveIcon';
-
 import useCollections from '../../hooks/useCollections';
 import useFetch from '../../hooks/useFetch';
 import useMainAction from '../../hooks/useMainAction';
 import { NavLink } from 'react-router-dom';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import {
+    MdBookmark,
+    MdBookmarkAdd,
+    MdBookmarkRemove,
+    MdDelete,
+    MdEdit,
+    MdFavorite,
+    MdHeartBroken
+} from 'react-icons/md';
 
 export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const {
@@ -62,13 +63,13 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                         to={`/recipes/edit/${recipe.id}`}
                         className='util-clickable'
                     >
-                        <EditIcon />
+                        <MdEdit className='util-icon' />
                     </NavLink>
                 </div>
 
                 <div>
                     <div className='util-clickable' onClick={deleteRecipe}>
-                        <DeleteIcon />
+                        <MdDelete className='util-icon' />
                     </div>
                 </div>
 
@@ -84,7 +85,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                 ).showModal()
                             }
                         >
-                            <BookmarkRemoveIcon />
+                            <MdBookmarkRemove className='util-icon' />
                         </div>
                         <dialog open={false} id={`${recipe.id}-recipe-dialog`}>
                             <div className='cb-form'>
@@ -158,7 +159,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                                 ).showModal();
                             }}
                         >
-                            <BookmarkAddIcon />
+                            <MdBookmarkAdd className='util-icon' />
                         </div>
                         <dialog open={false} id={`${recipe.id}-add-dialog`}>
                             <div className='cb-form'>
@@ -231,7 +232,7 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                         ).showModal();
                     }}
                 >
-                    <BookmarkIcon />
+                    <MdBookmark className='util-icon' />
                 </div>
                 <dialog open={false} id={`${recipe.id}-new-collection-dialog`}>
                     <div className='cb-form'>
@@ -295,14 +296,14 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
                             removeFromCollection('favourites', recipe)
                         }
                     >
-                        <BrokenHeartIcon />
+                        <MdHeartBroken className='util-icon' />
                     </div>
                 ) : (
                     <div
                         className='util-clickable'
                         onClick={() => addToCollection('favourites', recipe)}
                     >
-                        <HeartIcon />
+                        <MdFavorite className='util-icon' />
                     </div>
                 )}
             </div>

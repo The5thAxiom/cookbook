@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import CloseIcon from '../icons/closeIcon';
+import { MdClose } from 'react-icons/md';
 
 export default function TagForm({
     tags,
@@ -42,7 +42,7 @@ export default function TagForm({
                                     setTags(tags.filter((t, i) => i !== index))
                                 }
                             >
-                                <CloseIcon />
+                                <MdClose className='util-icon' />
                             </div>
                         </div>
                     ))}
