@@ -3,3 +3,7 @@
     margin-left: 1em;
     border-left: 2px solid var(--green-main);
 }
+
+.author-comment {
+    text-decoration: underline dotted;
+}

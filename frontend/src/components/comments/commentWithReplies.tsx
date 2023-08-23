@@ -9,6 +9,7 @@ import {
     MdCancel,
     MdReply
 } from 'react-icons/md';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function CommentWithReplies({
     isBaseLevel,
@@ -21,6 +22,7 @@ export default function CommentWithReplies({
     comment: comment;
     fetchComments: () => void;
 }) {
+    const { user } = useCurrentUser();
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [showReplies, setShowReplies] = useState(false);
     return (
@@ -38,9 +40,11 @@ export default function CommentWithReplies({
                     </NavLink>
                 </b>
                 : {comment.text}{' '}
-                <button onClick={() => setShowReplyForm(!showReplyForm)}>
-                    {showReplyForm ? <MdCancel /> : <MdReply />}
-                </button>
+                {!!user && (
+                    <button onClick={() => setShowReplyForm(!showReplyForm)}>
+                        {showReplyForm ? <MdCancel /> : <MdReply />}
+                    </button>
+                )}
                 {comment.replies.length > 0 && (
                     <button onClick={() => setShowReplies(!showReplies)}>
                         {showReplies ? (
@@ -62,6 +66,7 @@ export default function CommentWithReplies({
                     onSuccess={() => {
                         setShowReplyForm(false);
                         fetchComments();
+                        setShowReplies(true);
                     }}
                 />
             </div>

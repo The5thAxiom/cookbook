@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { MdSend } from 'react-icons/md';
+import useCurrentUser from '../../hooks/useCurrentUser';
+import { NavLink } from 'react-router-dom';
 
 export default function CommentForm({
     recipe,
@@ -13,6 +15,7 @@ export default function CommentForm({
 }) {
     const { fetchAsUser } = useFetch();
     const [text, setText] = useState<string>('');
+    const { user } = useCurrentUser();
 
     async function addComment() {
         const commentData = {
@@ -40,7 +43,7 @@ export default function CommentForm({
         }
     }
 
-    return (
+    return user ? (
         <form onSubmit={e => e.preventDefault()}>
             <input
                 placeholder={
@@ -53,5 +56,9 @@ export default function CommentForm({
                 <MdSend />
             </button>
         </form>
+    ) : (
+        <div>
+            <NavLink to='/user'>Login</NavLink> to comment
+        </div>
     );
 }
