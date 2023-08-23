@@ -26,7 +26,13 @@ export default function CommentWithReplies({
     return (
         <>
             <div className='comment'>
-                <b>
+                <b
+                    className={
+                        comment.commenter === recipe.contributor_username
+                            ? 'author-comment'
+                            : 'other-comment'
+                    }
+                >
                     <NavLink to={`/user/@${comment.commenter}`}>
                         @{comment.commenter}
                     </NavLink>
