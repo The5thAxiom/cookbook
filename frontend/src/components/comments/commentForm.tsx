@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import useCurrentUser from '../../hooks/useCurrentUser';
 import useFetch from '../../hooks/useFetch';
+import { MdSend } from 'react-icons/md';
 
 export default function CommentForm({
     recipe,
@@ -41,7 +41,7 @@ export default function CommentForm({
     }
 
     return (
-        <>
+        <form onSubmit={e => e.preventDefault()}>
             <input
                 placeholder={
                     reply_to ? 'Addy your reply here' : 'Add your comment here'
@@ -50,8 +50,8 @@ export default function CommentForm({
                 value={text}
             />
             <button onClick={addComment}>
-                {reply_to ? 'Reply' : 'Comment'}
+                <MdSend />
             </button>
-        </>
+        </form>
     );
 }
