@@ -31,7 +31,7 @@ export default function EditRecipe() {
         if (currentId) {
             fetchFullRecipe(currentId);
         }
-    }, [params.id]);
+    }, [params.id, fetchJson]);
 
     const [recipeMeta, setRecipeMeta] = useState<recipeMeta>({
         id: 0,

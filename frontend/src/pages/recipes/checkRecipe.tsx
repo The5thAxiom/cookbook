@@ -28,14 +28,14 @@ export default function CheckRecipe() {
         if (currentId) {
             fetchFullRecipe(currentId);
         }
-    }, [params.id]);
+    }, [params.id, fetchJson]);
 
     const fetchComments = useCallback(async () => {
         const { comments } = await fetchJson<{ comments: comment[] }>(
             `/api/recipes/${recipe.id}/comments`
         );
         setComments(comments);
-    }, [recipe]);
+    }, [recipe, fetchJson]);
 
     useEffect(() => {
         setNextRecipe(null as any);
@@ -64,7 +64,7 @@ export default function CheckRecipe() {
             fetchNextRecipe();
             fetchComments();
         }
-    }, [recipe]);
+    }, [recipe, fetchJson, fetchComments]);
 
     if (recipe)
         return (

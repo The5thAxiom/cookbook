@@ -43,7 +43,7 @@ export default function BrowseRecipes() {
             } else setRecipes(data.recipes);
         };
         fetchRecipes();
-    }, [searchParams]);
+    }, [searchParams, fetchJson]);
     return (
         <main>
             <h1>{heading}</h1>

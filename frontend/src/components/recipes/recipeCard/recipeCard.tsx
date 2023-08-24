@@ -21,7 +21,7 @@ export default function RecipeCard({ recipe }: { recipe: recipeMeta }) {
             setTags(data.tags);
         };
         fetchRecipeTags(recipe.id);
-    }, [recipe.id]);
+    }, [recipe.id, fetchJson]);
 
     return (
         <div className='recipe-card' id={`${recipe.id}`}>
