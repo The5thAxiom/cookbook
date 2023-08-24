@@ -38,6 +38,10 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
     const { startMainAction, endMainAction } = useMainAction();
 
     const deleteRecipe = async () => {
+        if (user.username !== recipe.contributor_username) {
+            window.alert("Please do not delete someone else's recipe.");
+            return;
+        }
         if (window.confirm(`Are you sure you want to delete ${recipe.name}?`)) {
             startMainAction();
             await fetchAsUser(`/api/recipes/${recipe.id}`, {
@@ -58,20 +62,27 @@ export default function RecipeActions({ recipe }: { recipe: recipeMeta }) {
             );
         return (
             <div className='util-row-flexend'>
-                <div>
-                    <NavLink
-                        to={`/recipes/edit/${recipe.id}`}
-                        className='util-clickable'
-                    >
-                        <MdEdit className='util-icon' />
-                    </NavLink>
-                </div>
+                {user.username === recipe.contributor_username && (
+                    <>
+                        <div>
+                            <NavLink
+                                to={`/recipes/edit/${recipe.id}`}
+                                className='util-clickable'
+                            >
+                                <MdEdit className='util-icon' />
+                            </NavLink>
+                        </div>
 
-                <div>
-                    <div className='util-clickable' onClick={deleteRecipe}>
-                        <MdDelete className='util-icon' />
-                    </div>
-                </div>
+                        <div>
+                            <div
+                                className='util-clickable'
+                                onClick={deleteRecipe}
+                            >
+                                <MdDelete className='util-icon' />
+                            </div>
+                        </div>
+                    </>
+                )}
 
                 {collectionsWithCurrentRecipe.length > 0 && (
                     <>

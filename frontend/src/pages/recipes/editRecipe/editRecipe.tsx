@@ -10,10 +10,12 @@ import '../newRecipe/newRecipe.css';
 import useFetch from '../../../hooks/useFetch';
 import LoadingAnimation from '../../../components/loadingAnimation/loadingAnimation';
 import useMainAction from '../../../hooks/useMainAction';
+import useCurrentUser from '../../../hooks/useCurrentUser';
 
 export default function EditRecipe() {
     const [recipe, setRecipe] = useState<recipeFull>(null as any);
     const params = useParams();
+    const { user } = useCurrentUser();
 
     const { fetchJson } = useFetch();
 
@@ -63,6 +65,10 @@ export default function EditRecipe() {
     const [submitted, setSubmitted] = useState<boolean>(false);
 
     const submitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (user.username !== recipe.contributor_username) {
+            window.alert("Please do not delete someone else's recipe.");
+            return;
+        }
         e.preventDefault();
         startMainAction();
         let newRecipe = {
