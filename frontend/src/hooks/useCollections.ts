@@ -15,10 +15,16 @@ export default function useCollections(): {
     collections: collection[];
     setCollections: (collections: collection[]) => void;
     fetchCollections: () => void;
-    addNewCollection: (collection_name: string) => void;
-    removeCollection: (collection_name: string) => void;
-    addToCollection: (collection_name: string, recipe: recipeMeta) => void;
-    removeFromCollection: (collection_name: string, recipe: recipeMeta) => void;
+    addNewCollection: (collection_name: string) => Promise<void>;
+    removeCollection: (collection_name: string) => Promise<void>;
+    addToCollection: (
+        collection_name: string,
+        recipe: recipeMeta
+    ) => Promise<void>;
+    removeFromCollection: (
+        collection_name: string,
+        recipe: recipeMeta
+    ) => Promise<void>;
 } {
     const { collections, setCollections } = collectionStore();
     const { user } = useCurrentUser();
