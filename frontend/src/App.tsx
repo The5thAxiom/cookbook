@@ -37,12 +37,12 @@ export default function App() {
     useEffect(() => {
         if (accessToken !== '') fetchUser();
         else logOutUser();
-    }, [accessToken]);
+    }, [accessToken, fetchUser, logOutUser]);
 
     useEffect(() => {
         if (user) fetchCollections();
         else setCollections(null as any);
-    }, [user]);
+    }, [user, fetchCollections, setCollections]);
 
     return (
         <HashRouter basename=''>

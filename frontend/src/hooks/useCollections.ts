@@ -1,4 +1,4 @@
-import useCurrentUser from './useCurrentUser';
+import { useCallback } from 'react';
 import useFetch from './useFetch';
 import useMainAction from './useMainAction';
 import create from 'zustand';
@@ -27,23 +27,20 @@ export default function useCollections(): {
     ) => Promise<void>;
 } {
     const { collections, setCollections } = collectionStore();
-    const { user } = useCurrentUser();
 
     const { fetchAsUser, fetchJsonAsUser } = useFetch();
 
     const { startMainAction, endMainAction } = useMainAction();
 
-    const fetchCollections = async () => {
-        if (user) {
-            const data = await fetchJsonAsUser<{ collections: collection[] }>(
-                `/api/collections`
-            );
-            if (data) {
-                setCollections(data.collections);
-                // console.log('fetched collections');
-            } else console.log("couldn't fetch collections");
-        }
-    };
+    const fetchCollections = useCallback(async () => {
+        const data = await fetchJsonAsUser<{ collections: collection[] }>(
+            `/api/collections`
+        );
+        if (data) {
+            setCollections(data.collections);
+            // console.log('fetched collections');
+        } else console.log("couldn't fetch collections");
+    }, [fetchJsonAsUser, setCollections]);
 
     const addToCollection = async (
         collection_name: string,
