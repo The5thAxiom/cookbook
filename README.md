@@ -1,6 +1,6 @@
 # cookbook
 
-Making a simple app using React and Flask.
+Making a simple app using React and Flask. Deployed on railway.app and heroku.
 
 # How To Run Locally (For Development)
 
