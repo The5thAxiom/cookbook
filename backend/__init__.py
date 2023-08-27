@@ -10,7 +10,7 @@ from flask_jwt_extended import JWTManager
 
 # creating the flask app
 app = Flask(
-    __name__,
+    'backend',
     static_folder='../frontend/build',
     static_url_path='/'
 )
