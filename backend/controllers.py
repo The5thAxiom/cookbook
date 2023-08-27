@@ -179,7 +179,7 @@ def getRecipeSteps(recipe: Recipe):
 def getContributor(recipe: Recipe):
     return {
         "contributor_name": recipe.contributor.name,
-        "contributor_username": recipeById.contributor.username,
+        "contributor_username": recipe.contributor.username,
         "contributor_bio": recipe.contributor.bio,
     }
 
@@ -211,7 +211,9 @@ def getCommentsTreeForRecipe(recipe: Recipe):
         com.id: {
             "id": com.id,
             "text": com.text,
-            "commenter": User.query.filter(User.id == com.commenter_id).first().username,
+            "commenter": User.query.filter(User.id == com.commenter_id)
+            .first()
+            .username,
             "is_reply": com.is_reply,
             "reply_to": com.original_comment_id,
             "replies": [],
@@ -221,12 +223,12 @@ def getCommentsTreeForRecipe(recipe: Recipe):
     remove_list = []
     for id, com in coms.items():
         if com["is_reply"]:
-            coms[com['reply_to']]["replies"].append(com)
+            coms[com["reply_to"]]["replies"].append(com)
             remove_list.append(id)
     for id in remove_list:
         del coms[id]
     coms = [coms[id] for id in coms]
     for com in coms:
-        del com['is_reply']
-        del com['reply_to']
+        del com["is_reply"]
+        del com["reply_to"]
     return coms
