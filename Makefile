@@ -1,13 +1,16 @@
-backend:
-	flask --app run
+flask:
+	flask --app backend run
+
+flask-debug:
+	flask --app backend --debug run
 
 db:
 	python -c 'import run.py; db.create_all()'
 
-frontend:
+react:
 	cd frontend && npm start
 
-frontend-build:
+react-build:
 	cd frontend && npm run build
 
 deploy:
